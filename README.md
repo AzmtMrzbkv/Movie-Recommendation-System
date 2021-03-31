@@ -1,7 +1,7 @@
 # Software-Engineering---CSE36401
 
 This project is the assignment of Software Engineering! 
-Stage of prohect: Milestone 1.
+Stage of project: Milestone 1.
 
 # Team members: 
 
