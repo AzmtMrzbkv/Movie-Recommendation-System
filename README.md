@@ -1,7 +1,8 @@
 # Software-Engineering---CSE36401
 
 This project is the assignment of Software Engineering! 
-Stage of project: Milestone 1.
+
+# Group ID: 7
 
 # Team members: 
 
