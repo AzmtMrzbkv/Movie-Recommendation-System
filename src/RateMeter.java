@@ -1,12 +1,15 @@
 import java.util.*;
 import java.io.*;
 
+<<<<<<< HEAD
 // We need to debug this code
 // 1) occupation can be empty ("")
 // 2) Can other values be empty?
 // 3) What to print if there is no movie matches?
 // 4) Handling incorrect user inputs
 
+=======
+>>>>>>> 8d85577b71a10febb022af8c14204f7f483ccff0
 public class RateMeter {
     public static void main(String[] args) throws Exception {
         //we need to consider all edge cases of input values
@@ -30,6 +33,7 @@ public class RateMeter {
     }
 
     //implement this method
+<<<<<<< HEAD
     private static Set<String> getUserIDFromOccupation(String occupation, FileReader file) {
         return new HashSet<String>();
     }
@@ -87,4 +91,37 @@ public class RateMeter {
 
         return averageRating;
     }
+=======
+    private static Set<String> getUserIDFromOccupation(String occupation, FileReader file) throws IOException {
+        // UserID::Gender::Age::Occupation::Zip-code    in users.dat
+        BufferedReader br = new BufferedReader(file);
+        occupation = occupation.toLowerCase(Locale.ROOT);
+
+        String line = br.readLine();
+        Set<String> h = new HashSet<String>();
+
+        while (line != null) {
+
+            String[] arrOfStr = line.toLowerCase(Locale.ROOT).split("::");
+            if (occupation.equals(arrOfStr[3]))
+                h.add(arrOfStr[0]);
+
+            line = br.readLine();
+        }
+        return h;
+    }
+
+    //implement this method
+    private static Set<String> getMovieIDFromGenres(String genres, FileReader file) {
+        return new HashSet<String>();
+    }
+
+    //implement this method
+    private static double getAverageRating(Set<String> userIDs, Set<String> movieIds, FileReader file) {
+        return 0;
+    }
+
+
+>>>>>>> 8d85577b71a10febb022af8c14204f7f483ccff0
 }
+
