@@ -12,7 +12,7 @@ public class RateMeter {
         //we need to consider all edge cases of input values
         //This is simpler version of our implementation
 
-        String occupation = args[1];
+        String occupation = parseStringOccupation(args[1]);
         String genres = args[0];
 
         // read input file
@@ -25,8 +25,103 @@ public class RateMeter {
 
         double average_rating = getAverageRating(userIDs, movieIDs, ratings);
         System.out.println(average_rating);
+    }
 
+    private static String parseStringOccupation(String occupation){
+        String occupationIndex = "";
+        switch (occupation){
+            case "other":
+                occupationIndex = "0";
+                break;
+            case "academic":
+            case "educator":
+                occupationIndex = "1";
+                break;
+            case "artist":
+                occupationIndex = "2";
+                break;
+            case "clerical":
+            case "admin":
+                occupationIndex = "3";
+                break;
+            case "college":
+            case "grad student":
+            case "gradstudent":
+                occupationIndex = "4";
+                break;
+            case "customer service":
+            case "customerservice":
+                occupationIndex = "5";
+                break;
+            case "doctor":
+            case "health care":
+            case "healthcare":
+                occupationIndex = "6";
+                break;
+            case "executive":
+            case "managerial":
+                occupationIndex = "7";
+                break;
+            case "farmer":
+                occupationIndex = "8";
+                break;
+            case "homemaker":
+                occupationIndex = "9";
+                break;
+            case "K-12 studio":
+            case "K-12studio":
+                occupationIndex = "10";
+                break;
+            case "lawyer":
+                occupationIndex = "11";
+                break;
+            case "programmer":
+                occupationIndex = "12";
+                break;
+            case "retired":
+                occupationIndex = "13";
+                break;
+            case "sales":
+            case "marketing":
+                occupationIndex = "14";
+                break;
+            case "scientist":
+                occupationIndex = "15";
+                break;
+            case "self-employed":
+                occupationIndex = "16";
+                break;
+            case "technician":
+            case "engineer":
+                occupationIndex = "17";
+                break;
+            case "tradesman":
+            case "craftsman":
+                occupationIndex = "18";
+                break;
+            case "unemployed":
+                occupationIndex = "19";
+                break;
+            case "writing":
+                occupationIndex = "20";
+        }
+        return occupationIndex;
+    }
 
+    private static Set<String> getUserIDFromOccupation(String occupation, FileReader file) throws IOException {
+        // UserID::Gender::Age::Occupation::Zip-code    in users.dat
+        BufferedReader read = new BufferedReader(file);
+        occupation = occupation.toLowerCase(Locale.ROOT);
+
+        Set<String> userIDs = new HashSet<>();
+
+        String line = read.readLine();
+        while (line != null) {
+            String[] arrOfStr = line.toLowerCase(Locale.ROOT).split("::");
+            if (occupation.equals(arrOfStr[3])) userIDs.add(arrOfStr[0]);
+            line = read.readLine();
+        }
+        return userIDs;
     }
 
     //implement this method
@@ -82,25 +177,5 @@ public class RateMeter {
 
         return averageRating;
     }
-
-    private static Set<String> getUserIDFromOccupation(String occupation, FileReader file) throws IOException {
-        // UserID::Gender::Age::Occupation::Zip-code    in users.dat
-        BufferedReader br = new BufferedReader(file);
-        occupation = occupation.toLowerCase(Locale.ROOT);
-
-        String line = br.readLine();
-        Set<String> h = new HashSet<String>();
-
-        while (line != null) {
-
-            String[] arrOfStr = line.toLowerCase(Locale.ROOT).split("::");
-            if (occupation.equals(arrOfStr[3]))
-                h.add(arrOfStr[0]);
-
-            line = br.readLine();
-        }
-        return h;
-    }
-
 }
 
