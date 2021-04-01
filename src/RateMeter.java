@@ -6,6 +6,7 @@ import java.io.*;
 // 2) Can other values be empty?
 // 3) What to print if there is no movie matches?
 // 4) Handling incorrect user inputs
+// 5) Add trim() method to handle cases such as "Action| Advanture"
 
 public class RateMeter {
     public static void main(String[] args) throws Exception {
