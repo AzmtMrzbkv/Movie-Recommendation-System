@@ -13,13 +13,14 @@ public class RateMeter{
 		FileReader movies = new FileReader("../data/movies.dat");
 		FileReader ratings = new FileReader("../data/ratings.dat");
 		FileReader users = new FileReader("../data/users.dat");
+
+		Set<String> userIDs = getUserIDFromOccupation(occupation, users);
+		Set<String> movieIDs = getMovieIDFromGenres(genres, movies);
+
+		double average_rating = getAverageRating(userIDs, movieIDs, ratings);
+		System.out.println(average_rating);
 		
-		//Set<String> userIDs = getUserIDFromOccupation(occupation, users);
-		
-		//Set<String> movieIDs = getMovieIDFromGenres(genres, movies);
-		
-		//double average_rating = getAverageRating(userIDs, movieIDs, ratings);
-		//System.out.println(average_rating);
+
 	}
 
 	//implement this method
