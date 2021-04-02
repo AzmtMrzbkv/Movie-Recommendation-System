@@ -12,6 +12,8 @@ public class RateMeter {
         //we need to consider all edge cases of input values
         //This is simpler version of our implementation
 
+        // Handling incorrect args length ( != 2)
+
         String occupation = parseStringOccupation(args[1]);
         String genres = args[0];
 
@@ -27,9 +29,10 @@ public class RateMeter {
         System.out.println(average_rating);
     }
 
-    private static String parseStringOccupation(String occupation){
+    // add handling of not specified or unknown occupation
+    private static String parseStringOccupation(String occupation) {
         String occupationIndex = "";
-        switch (occupation){
+        switch (occupation) {
             case "other":
                 occupationIndex = "0";
                 break;
@@ -121,6 +124,7 @@ public class RateMeter {
             if (occupation.equals(arrOfStr[3])) userIDs.add(arrOfStr[0]);
             line = read.readLine();
         }
+        System.out.println(userIDs.toString());
         return userIDs;
     }
 
@@ -150,6 +154,7 @@ public class RateMeter {
             line = read.readLine();
         }
 
+        System.out.println(movieIDs.toString());
         return movieIDs;
     }
 
@@ -172,6 +177,8 @@ public class RateMeter {
 
             line = read.readLine();
         }
+
+        System.out.println(averageRating + " and number: " + number);
 
         if (number != 0) averageRating /= number;
 
