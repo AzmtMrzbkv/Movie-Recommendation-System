@@ -28,7 +28,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>cse364milestone1.Root</mainClass>
+							<mainClass>RateMeter.Root</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
