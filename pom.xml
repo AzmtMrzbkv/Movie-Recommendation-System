@@ -1,6 +1,7 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
-
+	
+	<groupId>Group-7</groupId>
 	<artifactId>cse364-project</artifactId>
 	<version>1.0-SNAPSHOT</version>
 
