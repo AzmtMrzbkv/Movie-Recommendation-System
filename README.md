@@ -18,7 +18,7 @@ Several Notes for users:
 Roles of each member:
 1) 20192022_Myrzabekov Azamat: creating the repository; dockerfile configurations; pom.xml configurations; main skeleton of java code (several functions that read and analyzes the ratings.dat, movies.dat; searching needed info in Google
 2) 20192017_Kobeisinov Nursultan: additional features of java code(from userID identify and search for occupation, comments); checking basic input cases; to fill and write instructions/ description for README.md; re-checking the java code
-3) 20192016_Khujaev Nodirkhuja: main debugging; adding exception handling; line corrections/enhancing readibility.
+3) 20192016_Khujaev Nodirkhuja: main debugging; adding exception handling; line corrections/enhancing readibility; pom.xml config.
 
 # Group ID: 7 | Team members: 
 
