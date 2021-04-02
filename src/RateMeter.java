@@ -8,6 +8,13 @@ import java.io.*;
 // 4) Handling incorrect user inputs
 // 5) Add trim() method to handle cases such as "Action| Advanture"
 
+
+//Logical ERROR of output: when type "horror|comedy|western doctor" it gives number
+// although there is no such film with these genres (not 100%, but i couldn't find)
+// is it our task to check whether user inout contains other chars except '|'???
+
+// afaik min rating is 1, so if there is no such film output is "No rating"??
+
 public class RateMeter {
     public static void main(String[] args) throws Exception {
         //we need to consider all edge cases of input values
@@ -32,6 +39,7 @@ public class RateMeter {
         String occupationIndex = "";
         switch (occupation){
             case "other":
+                //0:  "other" or not specified??
                 occupationIndex = "0";
                 break;
             case "academic":
@@ -128,7 +136,7 @@ public class RateMeter {
     //implement this method
     private static Set<String> getMovieIDFromGenres(String genreString, FileReader file) throws IOException {
         BufferedReader read = new BufferedReader(file);
-        String[] genres = genreString.toLowerCase(Locale.ROOT).split("|");
+        String[] genres = genreString.toLowerCase(Locale.ROOT).split("\\|");
         // this set will be returned
         Set<String> movieIDs = new HashSet<>();
 
@@ -136,7 +144,7 @@ public class RateMeter {
         // every line in .dat file => MovieID::Title::Genres
         while (line != null) {
             String[] lineArray = line.toLowerCase(Locale.ROOT).split("::");
-            Set<String> genreSet = new HashSet<>(Arrays.asList(lineArray[2].split("|")));
+            Set<String> genreSet = new HashSet<>(Arrays.asList(lineArray[2].split("\\|")));
             boolean correctMov = true;
 
             for (String genre : genres) {
