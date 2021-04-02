@@ -4,7 +4,9 @@ This project is the assignment of Software Engineering!
     
 For this milestone we finished dockerfile, pom.xml configurations and succesfully wrote the algorithm code to find rating by the occupation of user and genres he/she chooses. Exception handlings for incorrect user inputs are also considered.
 
-# How to run your program. An example of java command line.
+# How to run your program. 
+
+An example of java command line:
 
 *java RateMeter "Adventure" "educator"*
 
