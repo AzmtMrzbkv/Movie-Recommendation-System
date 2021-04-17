@@ -2,9 +2,15 @@
 
 This project is the assignment of Software Engineering! 
     
-For this milestone we finished dockerfile, pom.xml configurations and succesfully wrote the algorithm code to find rating by the occupation of user and genres he/she chooses. Exception handlings for incorrect user inputs are also considered.
+For this milestone we finished dockerfile, pom.xml configurations and succesfully wrote the algorithm code to find rating by the occupation of user and genres he/she chooses. From the data files we read the data, setup environment and according to genres of films and ratings taken from the some occupation we obtain all scores and evaluate the average. Exception handlings for incorrect user inputs are also considered.
 
 # How to run your program. 
+
+To build the image:
+*$ docker build -t image_name /path/to/Dockerfile*
+
+To run the container:
+*$ docker run -it image_name*
 
 An example of java command line:
 
