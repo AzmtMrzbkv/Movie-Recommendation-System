@@ -31,3 +31,7 @@ Roles of each member:
 20192017_Kobeisinov Nursultan, <br/>
 20192016_Khujaev Nodirkhuja, <br/>
 20192022_Myrzabekov Azamat
+
+
+# Comments:
+There is a problem with "pom.xml" file (or with a Dockerfile). Untill we can find it and solve it, our program does not performs as expected. We are working to solve it as fast as possible.
