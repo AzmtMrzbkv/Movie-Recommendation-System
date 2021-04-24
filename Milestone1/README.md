@@ -34,4 +34,4 @@ Roles of each member:
 
 
 # Comments:
-There is a problem with "pom.xml" file (or with a Dockerfile). Untill we can find it and solve it, our program does not performs as expected. We are working to solve it as fast as possible.
+There is a problem with "pom.xml" file (or with a Dockerfile). Untill we can find it and solve it, our program does not perform as expected. We are working to solve it as fast as possible.
