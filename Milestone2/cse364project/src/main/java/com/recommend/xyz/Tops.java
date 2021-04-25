@@ -20,6 +20,7 @@ public class Tops {
         else recTop10WithCat(args, movies, ratings, users, links);
     }
 
+
     private static void recTop10(String[] args, BufferedReader movies, BufferedReader ratings, BufferedReader users, BufferedReader links) {
 
     }
@@ -28,7 +29,7 @@ public class Tops {
 
     }
 
-    //Below are methods from previous Milestone. We can for sure reuse them fully or partly
+    //Below are methods from previous Milestone. We can for sure reuse them fully or partly.
     private static Set<String> getUserIDFromOccupation(String occupation, FileReader file) throws IOException {
         if(occupation.equals("-1")) return new HashSet<>();
 
