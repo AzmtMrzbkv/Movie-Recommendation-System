@@ -32,20 +32,20 @@ public class Tops {
         if(!isValidInput(args)) System.exit(0);
 
         // checking args to choose proper method to execute
-        if (args.length == 3) recTop10(args, movies, ratings, users, links);
-        else recTop10WithCat(args, movies, ratings, users, links);
+        if (args.length == 3) recTop10(args);
+        else recTop10WithCat(args);
     }
 
 
-    private static void recTop10(String[] args, BufferedReader movies, BufferedReader ratings, BufferedReader users, BufferedReader links) {
+    private static void recTop10(String[] args) {
 
     }
 
-    private static void recTop10WithCat(String[] args, BufferedReader movies, BufferedReader ratings, BufferedReader users, BufferedReader links) {
+    private static void recTop10WithCat(String[] args) {
 
     }
 
-    private static boolean isValidInput(String[] args){
+    private static boolean isValidInput(String[] args) throws IOException {
         boolean isValid = true;
         // Invalid sex error
         if(!isSex(args[0])){
@@ -65,23 +65,36 @@ public class Tops {
     }
 
     // If genre is present in movies, return true; otherwise false
-    private static boolean isGenre(String genre){
-        return true;
+    private static boolean isGenre(String genre) throws IOException {
+        Set<String> genres = new HashSet<String>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
+        Set<String> allGenres = new HashSet<>();
+        String line = movies.readLine();
+
+        while(line != null){
+            String[] arrOfStr = line.toLowerCase(Locale.ROOT).split("::");
+            allGenres.addAll(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split("\\|")));
+            line = movies.readLine();
+        }
+
+        return allGenres.containsAll(genres);
     }
 
-    // If sex is present in users, return true; otherwise return false
+    // If sex is either M or F, return true; otherwise return false
     private static boolean isSex(String sex){
-        return true;
+        return sex.equals("M") || sex.equals("F");
     }
 
+    // If age is greater than -1 and is number, return true; otherwise false;
     private static boolean isValidAge(String age){
         return !parseAge(age).equals("-1");
     }
 
+    // If translation of occupation to its number is successful, return true; otherwise false.
     private static boolean isOccupation(String occ){
         return !parseStringOccupation(occ).equals("-1");
     }
 
+    // Return range representation for each input age, using info in README.pm
     private static String parseAge(String age){
 
         try {
