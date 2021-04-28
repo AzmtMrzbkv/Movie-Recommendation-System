@@ -9,13 +9,29 @@ import java.util.Locale;
 import java.util.Set;
 
 public class Tops {
+
+    static BufferedReader movies, ratings, users, links;
+
+    // main function
     public static void main(String[] args) throws Exception {
 
-        BufferedReader movies = new BufferedReader(new FileReader("../data/movies.dat"));
-        BufferedReader ratings = new BufferedReader(new FileReader("../data/ratings.dat"));
-        BufferedReader users = new BufferedReader(new FileReader("../data/users.dat"));
-        BufferedReader links = new BufferedReader(new FileReader("../data/links.dat"));
+        // Reading .dat files
+        movies = new BufferedReader(new FileReader("../data/movies.dat"));
+        ratings = new BufferedReader(new FileReader("../data/ratings.dat"));
+        users = new BufferedReader(new FileReader("../data/users.dat"));
+        links = new BufferedReader(new FileReader("../data/links.dat"));
 
+        // Print invalid input (length) error
+        if(args.length != 4 && args.length != 3){
+            System.out.printf("Invalid input: %s\n", Arrays.toString(args));
+            System.out.println("Input example: \"M\" \"25\" \"gradstudent\" ");
+            System.exit(0);
+        }
+
+        // checking validity of sex, age, and occupation
+        if(!isValidInput(args)) System.exit(0);
+
+        // checking args to choose proper method to execute
         if (args.length == 3) recTop10(args, movies, ratings, users, links);
         else recTop10WithCat(args, movies, ratings, users, links);
     }
@@ -28,6 +44,50 @@ public class Tops {
     private static void recTop10WithCat(String[] args, BufferedReader movies, BufferedReader ratings, BufferedReader users, BufferedReader links) {
 
     }
+
+    private static boolean isValidInput(String[] args){
+        boolean isValid = true;
+        // Invalid sex error
+        if(!isSex(args[0])){
+            System.out.printf("Invalid sex: \"%s\"\n", args[0]);
+            isValid = false;
+        }
+        //Invalid age error
+        if(!isValidAge(args[1])){
+            System.out.printf("Invalid age: \"%s\"\n", args[1]);
+            isValid = false;
+        }
+        //Invalid occupation error
+        if(!isOccupation(args[2])){
+            System.out.printf("Invalid occupation: \"%s\"\n", args[2]);
+            isValid = false;
+        }
+        //Invalid genre error
+        if(args.length == 4 && !isGenre(args[3])){
+            System.out.printf("Invalid genre: \"%s\"\n", args[3]);
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    // If genre is present in movies, return true; otherwise false
+    private static boolean isGenre(String genre){
+        return true;
+    }
+
+    // If sex is present in users, return true; otherwise return false
+    private static boolean isSex(String sex){
+        return true;
+    }
+
+    private static boolean isValidAge(String age){
+        return true;
+    }
+
+    private static boolean isOccupation(String occ){
+        return true;
+    }
+
 
     //Below are methods from previous Milestone. We can for sure reuse them fully or partly.
     private static Set<String> getUserIDFromOccupation(String occupation, FileReader file) throws IOException {
