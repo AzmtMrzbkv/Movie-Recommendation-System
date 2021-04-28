@@ -53,15 +53,9 @@ public class Tops {
             isValid = false;
         }
         //Invalid age error
-        if(!isValidAge(args[1])){
-            System.out.printf("Invalid age: \"%s\"\n", args[1]);
-            isValid = false;
-        }
+        if(!isValidAge(args[1])) isValid = false;
         //Invalid occupation error
-        if(!isOccupation(args[2])){
-            System.out.printf("Invalid occupation: \"%s\"\n", args[2]);
-            isValid = false;
-        }
+        if(!isOccupation(args[2])) isValid = false;
         //Invalid genre error
         if(args.length == 4 && !isGenre(args[3])){
             System.out.printf("Invalid genre: \"%s\"\n", args[3]);
@@ -81,13 +75,31 @@ public class Tops {
     }
 
     private static boolean isValidAge(String age){
-        return true;
+        return !parseAge(age).equals("-1");
     }
 
     private static boolean isOccupation(String occ){
-        return true;
+        return !parseStringOccupation(occ).equals("-1");
     }
 
+    private static String parseAge(String age){
+
+        try {
+            int ageInt = Integer.parseInt(age);
+            if(ageInt < 0) return "-1";
+            if(ageInt < 18) return "1";
+            if(ageInt < 25) return "18";
+            if(ageInt < 35) return "25";
+            if(ageInt < 45) return "35";
+            if(ageInt < 50) return "45";
+            if(ageInt < 56) return "50";
+            return "56";
+        } catch(Exception e){
+            System.out.printf("Invalid age: \"%s\"\n", age);
+        }
+
+        return "-1";
+    }
 
     //Below are methods from previous Milestone. We can for sure reuse them fully or partly.
     private static Set<String> getUserIDFromOccupation(String occupation, FileReader file) throws IOException {
@@ -223,7 +235,7 @@ public class Tops {
                 break;
             default:
                 if(occupation.equals("")) occupation = "\"\"";
-                System.out.println("No such occupation: "+ occupation);
+                System.out.printf("Invalid occupation: \"%s\"\n", occupation);
                 occupationIndex = "-1";
         }
         return occupationIndex;
