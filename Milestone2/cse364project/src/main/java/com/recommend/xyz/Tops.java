@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Tops {
 
@@ -30,10 +31,24 @@ public class Tops {
 
         // checking args to choose proper method to execute
         if (args.length == 3) printTop10(mapWithNewRat(args));
-        else printTop10(mapWithNewRatCat(mapWithNewRat(args)));
+        else printTop10(mapWithNewRatCat(mapWithNewRat(args), args[3]));
     }
 
     private static void printTop10(HashMap<String, Double> map){
+        ArrayList<String> movies = new ArrayList<>();
+        AtomicReference<Double> maxV = new AtomicReference<>(Double.MIN_VALUE);
+        AtomicReference<String> maxID = null;
+        for(int i = 0; i < 10; i++){
+            map.forEach((key, val) -> {
+                if(val > maxV.get()){
+                    maxV.set(val);
+                    maxID.set(key);
+                }
+            });
+            movies.add(maxID.get());
+            map.remove(maxID.get());
+        }
+        //print links
 
     }
 
@@ -65,8 +80,25 @@ public class Tops {
         return relRat;
     }
 
-    private static HashMap<String, Double> mapWithNewRatCat(HashMap<String, Double> map) {
-        return new HashMap<>();
+    private static HashMap<String, Double> mapWithNewRatCat(HashMap<String, Double> map, String cat) throws IOException {
+        String[] catArr = cat.toLowerCase(Locale.ROOT).split("\\|");
+
+        String[] arrOfStr; Set<String> cats;
+        String line = movies.readLine();
+        while(line != null){
+            arrOfStr = line.split("::");
+            line = movies.readLine();
+            cats = new HashSet<>(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split("\\|")));
+            for(String s: catArr){
+                // promote movies with required genre
+                if(cats.contains(s)){
+                    map.replace(arrOfStr[0], map.get(arrOfStr[0]) * 10);
+                    break;
+                }
+            }
+        }
+
+        return map;
     }
 
     private static boolean isValidInput(String[] args) throws IOException {
