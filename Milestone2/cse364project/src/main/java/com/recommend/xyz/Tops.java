@@ -34,8 +34,8 @@ public class Tops {
         else printTop10(mapWithNewRatCat(mapWithNewRat(args), args[3]));
     }
 
-    private static void printTop10(HashMap<String, Double> map){
-        ArrayList<String> movies = new ArrayList<>();
+    private static void printTop10(HashMap<String, Double> map) throws IOException {
+        ArrayList<String> movieIDs = new ArrayList<>();
         AtomicReference<Double> maxV = new AtomicReference<>(Double.MIN_VALUE);
         AtomicReference<String> maxID = null;
         for(int i = 0; i < 10; i++){
@@ -45,10 +45,28 @@ public class Tops {
                     maxID.set(key);
                 }
             });
-            movies.add(maxID.get());
+            movieIDs.add(maxID.get());
             map.remove(maxID.get());
         }
-        //print links
+
+        HashMap<String, String> names = null, link = null;
+
+        String[] arrOfStr;
+        String line = movies.readLine();
+        while(line != null){
+            arrOfStr = line.split("::");
+            names.put(arrOfStr[0], arrOfStr[1]);
+            line = movies.readLine();
+        }   
+
+        line = links.readLine();
+        while(line != null){
+            arrOfStr = line.split("::");
+            names.put(arrOfStr[0], arrOfStr[1]);
+            line = links.readLine();
+        }
+
+        for(String s: movieIDs) System.out.printf("%s (%s)", names.get(s), link.get(s));
 
     }
 
@@ -128,7 +146,7 @@ public class Tops {
 
     // If genre is present in movies, return true; otherwise false
     private static boolean isGenre(String genre) throws IOException {
-        Set<String> genres = new HashSet<String>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
+        Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
         Set<String> allGenres = new HashSet<>();
         String line = movies.readLine();
 
