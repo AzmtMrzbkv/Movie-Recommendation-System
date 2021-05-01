@@ -14,10 +14,10 @@ public class Tops {
     public static void main(String[] args) throws Exception {
 
         // Reading .dat files
-        movies = new BufferedReader(new FileReader("../data/movies.dat"));
-        ratings = new BufferedReader(new FileReader("../data/ratings.dat"));
-        users = new BufferedReader(new FileReader("../data/users.dat"));
-        links = new BufferedReader(new FileReader("../data/links.dat"));
+        movies = new BufferedReader(new FileReader("./data/movies.dat"));
+        ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
+        users = new BufferedReader(new FileReader("./data/users.dat"));
+        links = new BufferedReader(new FileReader("./data/links.dat"));
 
         // Print invalid input (length) error
         if(args.length != 4 && args.length != 3){
@@ -57,7 +57,7 @@ public class Tops {
             arrOfStr = line.split("::");
             names.put(arrOfStr[0], arrOfStr[1]);
             line = movies.readLine();
-        }   
+        }
 
         line = links.readLine();
         while(line != null){
