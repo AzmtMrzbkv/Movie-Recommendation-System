@@ -3,10 +3,7 @@ package com.recommend.xyz;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 public class Tops {
 
@@ -28,34 +25,67 @@ public class Tops {
             System.exit(0);
         }
 
-        // checking validity of sex, age, and occupation
+        // checking validity of gender, age, and occupation
         if(!isValidInput(args)) System.exit(0);
 
         // checking args to choose proper method to execute
-        if (args.length == 3) recTop10(args);
-        else recTop10WithCat(args);
+        if (args.length == 3) printTop10(mapWithNewRat(args));
+        else printTop10(mapWithNewRatCat(mapWithNewRat(args)));
     }
 
-
-    private static void recTop10(String[] args) {
+    private static void printTop10(HashMap<String, Double> map){
 
     }
 
-    private static void recTop10WithCat(String[] args) {
+    private static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
+        double[] coef = {0.333, 0.333, 0.333};
+        HashMap<String, Double> userSig = new HashMap<>();
+        HashMap<String, Double> relRat = new HashMap<>();
 
+        args[1] = parseAge(args[1]);
+        args[2] = parseStringOccupation(args[2]);
+
+        String[] arrOfStr; double fac;
+        String line = users.readLine();
+        while(line != null){
+            fac = 0;
+            arrOfStr = line.split("::");
+            for(int i = 0; i < 3; i++) fac += arrOfStr[i + 1].equalsIgnoreCase(args[i]) ? coef[i]: 0;
+            userSig.put(arrOfStr[0], fac);
+            line = users.readLine();
+        }
+
+        line = ratings.readLine();
+        while(line != null){
+            arrOfStr = line.split("::");
+            relRat.put(arrOfStr[1], Integer.parseInt(arrOfStr[2])*userSig.get(arrOfStr[0]));
+            line = ratings.readLine();
+        }
+
+        return relRat;
+    }
+
+    private static HashMap<String, Double> mapWithNewRatCat(HashMap<String, Double> map) {
+        return new HashMap<>();
     }
 
     private static boolean isValidInput(String[] args) throws IOException {
         boolean isValid = true;
-        // Invalid sex error
-        if(!isSex(args[0])){
-            System.out.printf("Invalid sex: \"%s\"\n", args[0]);
+        // Invalid gender error
+        if(!isGender(args[0])){
+            System.out.printf("Invalid Gender: \"%s\"\n", args[0]);
             isValid = false;
         }
         //Invalid age error
-        if(!isValidAge(args[1])) isValid = false;
+        if(!isValidAge(args[1])){
+            System.out.printf("Invalid age: \"%s\"\n", args[1]);
+            isValid = false;
+        }
         //Invalid occupation error
-        if(!isOccupation(args[2])) isValid = false;
+        if(!isOccupation(args[2])){
+            System.out.printf("Invalid occupation: \"%s\"\n", args[2]);
+            isValid = false;
+        }
         //Invalid genre error
         if(args.length == 4 && !isGenre(args[3])){
             System.out.printf("Invalid genre: \"%s\"\n", args[3]);
@@ -79,9 +109,9 @@ public class Tops {
         return allGenres.containsAll(genres);
     }
 
-    // If sex is either M or F, return true; otherwise return false
-    private static boolean isSex(String sex){
-        return sex.equals("M") || sex.equals("F");
+    // If gender is either M or F, return true; otherwise return false
+    private static boolean isGender(String gender){
+        return gender.equals("M") || gender.equals("F");
     }
 
     // If age is greater than -1 and is number, return true; otherwise false;
@@ -108,67 +138,12 @@ public class Tops {
             if(ageInt < 56) return "50";
             return "56";
         } catch(Exception e){
-            System.out.printf("Invalid age: \"%s\"\n", age);
+            return "-1";
         }
-
-        return "-1";
-    }
-
-    //Below are methods from previous Milestone. We can for sure reuse them fully or partly.
-    private static Set<String> getUserIDFromOccupation(String occupation, FileReader file) throws IOException {
-        if(occupation.equals("-1")) return new HashSet<>();
-
-        // UserID::Gender::Age::Occupation::Zip-code    in users.dat
-        BufferedReader read = new BufferedReader(file);
-        occupation = occupation.toLowerCase(Locale.ROOT);
-
-        Set<String> userIDs = new HashSet<>();
-
-        String line = read.readLine();
-        while (line != null) {
-            String[] arrOfStr = line.toLowerCase(Locale.ROOT).split("::");
-            if (occupation.equals(arrOfStr[3])) userIDs.add(arrOfStr[0]);
-            line = read.readLine();
-        }
-
-        return userIDs;
-    }
-
-    private static Set<String> getMovieIDFromGenres(String genreString, FileReader file) throws IOException {
-        BufferedReader read = new BufferedReader(file);
-        String[] genres = genreString.toLowerCase(Locale.ROOT).split("\\|");
-        // this set will be returned
-        Set<String> movieIDs = new HashSet<>();
-
-        String line = read.readLine();
-        // every line in .dat file => MovieID::Title::Genres
-        while (line != null) {
-            String[] lineArray = line.toLowerCase(Locale.ROOT).split("::");
-            Set<String> genreSet = new HashSet<>(Arrays.asList(lineArray[2].split("\\|")));
-            boolean correctMov = true;
-
-            for (String genre : genres) {
-                if (!genreSet.contains(genre)) {
-                    correctMov = false;
-                    break;
-                }
-            }
-
-            if (correctMov) movieIDs.add(lineArray[0]);
-
-            line = read.readLine();
-        }
-
-        if(movieIDs.isEmpty()){
-            System.out.println("No movies with such genre(s) found!");
-            System.exit(0);
-        }
-
-        return movieIDs;
     }
 
     private static String parseStringOccupation(String occupation) {
-        String occupationIndex = "";
+        String occupationIndex;
         switch (occupation) {
 //            case "other":
 //                //0:  "other" or not specified??
@@ -247,8 +222,6 @@ public class Tops {
                 occupationIndex = "20";
                 break;
             default:
-                if(occupation.equals("")) occupation = "\"\"";
-                System.out.printf("Invalid occupation: \"%s\"\n", occupation);
                 occupationIndex = "-1";
         }
         return occupationIndex;
