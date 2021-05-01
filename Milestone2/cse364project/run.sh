@@ -6,5 +6,5 @@ cd ./Software-Engineering---CSE36401/Milestone2/cse364project
 
 mvn install
 
-java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar com.recoomend.xyz.Tops “” “” “”
-java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar com.recommend.xyz.Tops “” “” “” “Adventure” 
+java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar Tops “” “” “”
+java -cp target/cse364-project-1.0-SNAPSHOT-jar-with-dependencies.jar target/classes/com.recommend.xyx.Tops “” “” “” “Adventure” 
