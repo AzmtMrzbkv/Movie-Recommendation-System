@@ -2,7 +2,7 @@
 
 git clone https://github.com/AzmtMrzbkv/Software-Engineering---CSE36401.git
 
-cd Software-Engineering---CSE36401/Milestone2/
+cd Software-Engineering---CSE36401/Milestone2/cse364-project
 
 mvn install
 
