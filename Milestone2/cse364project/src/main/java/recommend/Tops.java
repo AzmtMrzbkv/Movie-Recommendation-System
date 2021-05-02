@@ -67,7 +67,7 @@ public class Tops {
             line = links.readLine();
         }
 
-        for(String s: movieIDs) System.out.printf("%s (%s)", names.get(s), link.get(s));
+        for(String s: movieIDs) System.out.printf("%s (http://www.imdb.com/title/%s)\n", names.get(s), link.get(s));
     }
 
     private static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
