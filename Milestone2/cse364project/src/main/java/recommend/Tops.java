@@ -1,4 +1,4 @@
-package com.recommend.xyz;
+package recommend;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -67,7 +67,6 @@ public class Tops {
         }
 
         for(String s: movieIDs) System.out.printf("%s (%s)", names.get(s), link.get(s));
-
     }
 
     private static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
@@ -122,17 +121,17 @@ public class Tops {
     private static boolean isValidInput(String[] args) throws IOException {
         boolean isValid = true;
         // Invalid gender error
-        if(!isGender(args[0])){
+        if(!isGender(args[0]) && !args[1].equals("")){
             System.out.printf("Invalid Gender: \"%s\"\n", args[0]);
             isValid = false;
         }
         //Invalid age error
-        if(!isValidAge(args[1])){
+        if(!isValidAge(args[1]) && !args[1].equals("")){
             System.out.printf("Invalid age: \"%s\"\n", args[1]);
             isValid = false;
         }
         //Invalid occupation error
-        if(!isOccupation(args[2])){
+        if(!isOccupation(args[2]) && !args[1].equals("")){
             System.out.printf("Invalid occupation: \"%s\"\n", args[2]);
             isValid = false;
         }
@@ -188,7 +187,7 @@ public class Tops {
             if(ageInt < 56) return "50";
             return "56";
         } catch(Exception e){
-            return "-1";
+            return age.equals("") ? "" : "-1";
         }
     }
 
@@ -199,6 +198,9 @@ public class Tops {
 //                //0:  "other" or not specified??
 //                occupationIndex = "0";
 //                break;
+            case "": // occupation is omitted
+                occupationIndex = "";
+                break;
             case "academic":
             case "educator":
                 occupationIndex = "1";
