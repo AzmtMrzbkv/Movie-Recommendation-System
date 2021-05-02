@@ -137,7 +137,7 @@ public class Tops {
             isValid = false;
         }
         //Invalid occupation error
-        if(!isOccupation(args[2]) && !args[1].equals("")){
+        if(!isOccupation(args[2].toLowerCase(Locale.ROOT)) && !args[1].equals("")){
             System.out.printf("Invalid occupation: \"%s\"\n", args[2]);
             isValid = false;
         }
