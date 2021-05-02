@@ -8,3 +8,4 @@ mvn install
 
 java -cp target/cse364-project-1.0-SNAPSHOT.jar recommend.Tops "" "" ""
 java -cp target/cse364-project-1.0-SNAPSHOT.jar recommend.Tops "" "" "" "Adventure" 
+java -cp target/cse364-project-1.0-SNAPSHOT.jar recommend.Tops "F" "25" "Grad student" "Action|Comedy"
