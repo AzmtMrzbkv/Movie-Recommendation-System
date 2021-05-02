@@ -36,20 +36,21 @@ public class Tops {
 
     private static void printTop10(HashMap<String, Double> map) throws IOException {
         ArrayList<String> movieIDs = new ArrayList<>();
-        AtomicReference<Double> maxV = new AtomicReference<>(Double.MIN_VALUE);
-        AtomicReference<String> maxID = null;
+
+        String movID = ""; Double maxR = Double.MIN_VALUE;
         for(int i = 0; i < 10; i++){
-            map.forEach((key, val) -> {
-                if(val > maxV.get()){
-                    maxV.set(val);
-                    maxID.set(key);
+            for(String key: map.keySet()){
+                if(map.get(key) > maxR){
+                    maxR = map.get(key);
+                    movID = key;
                 }
-            });
-            movieIDs.add(maxID.get());
-            map.remove(maxID.get());
+            }
+            movieIDs.add(movID);
+            map.remove(movID);
         }
 
-        HashMap<String, String> names = null, link = null;
+        HashMap<String, String> names = new HashMap<>();
+        HashMap<String, String> link = new HashMap<>();
 
         String[] arrOfStr;
         String line = movies.readLine();
@@ -62,7 +63,7 @@ public class Tops {
         line = links.readLine();
         while(line != null){
             arrOfStr = line.split("::");
-            names.put(arrOfStr[0], arrOfStr[1]);
+            link.put(arrOfStr[0], arrOfStr[1]);
             line = links.readLine();
         }
 
@@ -82,6 +83,7 @@ public class Tops {
         while(line != null){
             fac = 0;
             arrOfStr = line.split("::");
+            // this part is important
             for(int i = 0; i < 3; i++) fac += arrOfStr[i + 1].equalsIgnoreCase(args[i]) ? coef[i]: 0;
             userSig.put(arrOfStr[0], fac);
             line = users.readLine();
@@ -90,7 +92,8 @@ public class Tops {
         line = ratings.readLine();
         while(line != null){
             arrOfStr = line.split("::");
-            relRat.put(arrOfStr[1], Integer.parseInt(arrOfStr[2])*userSig.get(arrOfStr[0]));
+            // this part is important
+            relRat.put(arrOfStr[1], Integer.parseInt(arrOfStr[2])*(userSig.get(arrOfStr[0])+ 1));
             line = ratings.readLine();
         }
 
@@ -122,7 +125,7 @@ public class Tops {
         boolean isValid = true;
         // Invalid gender error
         if(!isGender(args[0]) && !args[1].equals("")){
-            System.out.printf("Invalid Gender: \"%s\"\n", args[0]);
+            System.out.printf("Invalid gender: \"%s\"\n", args[0]);
             isValid = false;
         }
         //Invalid age error
@@ -187,7 +190,7 @@ public class Tops {
             if(ageInt < 56) return "50";
             return "56";
         } catch(Exception e){
-            return age.equals("") ? "" : "-1";
+            return "-1";
         }
     }
 
