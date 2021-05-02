@@ -67,7 +67,9 @@ public class Tops {
             line = links.readLine();
         }
 
-        for(String s: movieIDs) System.out.printf("%s (http://www.imdb.com/title/%s)\n", names.get(s), link.get(s));
+        for(String s: movieIDs){
+            System.out.printf("%s (http://www.imdb.com/title/%s)\n", names.get(s), link.get(s));
+        }
     }
 
     private static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
@@ -107,15 +109,16 @@ public class Tops {
         String line = movies.readLine();
         while(line != null){
             arrOfStr = line.split("::");
-            line = movies.readLine();
             cats = new HashSet<>(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split("\\|")));
             for(String s: catArr){
                 // promote movies with required genre
                 if(cats.contains(s)){
+                    // this part is important
                     map.replace(arrOfStr[0], map.get(arrOfStr[0]) * 10);
                     break;
                 }
             }
+            line = movies.readLine();
         }
 
         return map;
