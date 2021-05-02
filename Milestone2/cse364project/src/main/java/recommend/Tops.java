@@ -8,16 +8,16 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class Tops {
 
-    static BufferedReader movies, ratings, users, links;
+    static FileReader moviesFile, ratingsFile, usersFile, linksFile;
 
     // main function
     public static void main(String[] args) throws Exception {
 
         // Reading .dat files
-        movies = new BufferedReader(new FileReader("./data/movies.dat"));
-        ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
-        users = new BufferedReader(new FileReader("./data/users.dat"));
-        links = new BufferedReader(new FileReader("./data/links.dat"));
+        moviesFile = new FileReader("./data/movies.dat");
+        ratingsFile = new FileReader("./data/ratings.dat");
+        usersFile = new FileReader("./data/users.dat");
+        linksFile = new FileReader("./data/links.dat");
 
         // Print invalid input (length) error
         if(args.length != 4 && args.length != 3){
@@ -53,6 +53,7 @@ public class Tops {
         HashMap<String, String> link = new HashMap<>();
 
         String[] arrOfStr;
+        BufferedReader movies = new BufferedReader(moviesFile);
         String line = movies.readLine();
         while(line != null){
             arrOfStr = line.split("::");
@@ -60,6 +61,7 @@ public class Tops {
             line = movies.readLine();
         }
 
+        BufferedReader links = new BufferedReader(linksFile);
         line = links.readLine();
         while(line != null){
             arrOfStr = line.split("::");
@@ -81,6 +83,7 @@ public class Tops {
         args[2] = parseStringOccupation(args[2]);
 
         String[] arrOfStr; double fac;
+        BufferedReader users = new BufferedReader(usersFile);
         String line = users.readLine();
         while(line != null){
             fac = 0;
@@ -91,6 +94,7 @@ public class Tops {
             line = users.readLine();
         }
 
+        BufferedReader ratings = new BufferedReader(ratingsFile);
         line = ratings.readLine();
         while(line != null){
             arrOfStr = line.split("::");
@@ -106,6 +110,7 @@ public class Tops {
         String[] catArr = cat.toLowerCase(Locale.ROOT).split("\\|");
 
         String[] arrOfStr; Set<String> cats;
+        BufferedReader movies = new BufferedReader(moviesFile);
         String line = movies.readLine();
         while(line != null){
             arrOfStr = line.split("::");
@@ -153,6 +158,7 @@ public class Tops {
     private static boolean isGenre(String genre) throws IOException {
         Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
         Set<String> allGenres = new HashSet<>();
+        BufferedReader movies = new BufferedReader(moviesFile);
         String line = movies.readLine();
 
         while(line != null){
