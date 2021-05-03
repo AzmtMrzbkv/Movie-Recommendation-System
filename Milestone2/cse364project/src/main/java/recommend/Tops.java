@@ -44,7 +44,6 @@ public class Tops {
         HashMap<String, String> link = new HashMap<>();
 
         BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-        BufferedReader links = new BufferedReader(new FileReader("./data/links.dat"));
 
         String line = movies.readLine();
         while(line != null){
@@ -53,6 +52,7 @@ public class Tops {
             line = movies.readLine();
         }
 
+        BufferedReader links = new BufferedReader(new FileReader("./data/links.dat"));
         line = links.readLine();
         while(line != null){
             String[] arrOfStr = line.split("::");
@@ -60,9 +60,7 @@ public class Tops {
             line = links.readLine();
         }
 
-        for(String s: movieIDs){
-            System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", names.get(s), link.get(s));
-        }
+        for(String s: movieIDs) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", names.get(s), link.get(s));
     }
 
     private static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
@@ -73,7 +71,6 @@ public class Tops {
         args[1] = parseAge(args[1]);
         args[2] = parseStringOccupation(args[2]);
 
-        BufferedReader ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
         BufferedReader users = new BufferedReader(new FileReader("./data/users.dat"));
 
         String[] arrOfStr; double fac;
@@ -88,6 +85,7 @@ public class Tops {
             line = users.readLine();
         }
 
+        BufferedReader ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
         line = ratings.readLine();
         while(line != null){
             arrOfStr = line.split("::");
@@ -109,8 +107,8 @@ public class Tops {
 
         String[] arrOfStr; Set<String> cats;
         BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-        String line = movies.readLine();
 
+        String line = movies.readLine();
         while(line != null){
             arrOfStr = line.split("::");
             cats = new HashSet<>(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split("\\|")));
