@@ -52,11 +52,10 @@ public class Tops {
         HashMap<String, String> names = new HashMap<>();
         HashMap<String, String> link = new HashMap<>();
 
-        String[] arrOfStr;
         BufferedReader movies = new BufferedReader(moviesFile);
         String line = movies.readLine();
         while(line != null){
-            arrOfStr = line.split("::");
+            String[] arrOfStr = line.split("::");
             names.put(arrOfStr[0], arrOfStr[1]);
             line = movies.readLine();
         }
@@ -64,7 +63,7 @@ public class Tops {
         BufferedReader links = new BufferedReader(linksFile);
         line = links.readLine();
         while(line != null){
-            arrOfStr = line.split("::");
+            String[] arrOfStr = line.split("::");
             link.put(arrOfStr[0], arrOfStr[1]);
             line = links.readLine();
         }
