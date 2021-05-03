@@ -6,6 +6,23 @@ import java.io.IOException;
 
 public class TopsTest {
     @Test
+    public void mapWithNewRatCat() throws IOException {
+        Tops tester = new Tops();
+        String[] a = {"", "", ""};
+        assertNotNull(tester.mapWithNewRatCat(tester.mapWithNewRat(a), "fantasy"));
+        assertEquals(true, tester.mapWithNewRatCat(tester.mapWithNewRat(a), "sci-fi").size() > 0);
+    }
+
+
+    @Test
+    public void mapWithNewRat() throws IOException {
+        Tops tester = new Tops();
+        String[] a = {"", "", ""};
+        assertNotNull(tester.mapWithNewRat(a));
+        assertEquals(true, tester.mapWithNewRat(a).size() > 0);
+    }
+
+    @Test
     public void testIsValidInput() throws IOException {
         Tops tester = new Tops();
         String[] a = {"M","23", "doctor"};
