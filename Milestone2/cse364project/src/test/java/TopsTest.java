@@ -6,7 +6,14 @@ import java.io.IOException;
 
 public class TopsTest {
     @Test
-    public void mapWithNewRatCat() throws IOException {
+    public void testPrintTop10() throws IOException {
+        Tops tester = new Tops();
+        String[] a = {"", "", ""};
+        assertEquals(true, tester.printTop10(tester.mapWithNewRatCat(tester.mapWithNewRat(a), "fantasy")));
+        assertEquals(true, tester.printTop10(tester.mapWithNewRat(a)));
+    }
+    @Test
+    public void testMapWithNewRatCat() throws IOException {
         Tops tester = new Tops();
         String[] a = {"", "", ""};
         assertNotNull(tester.mapWithNewRatCat(tester.mapWithNewRat(a), "fantasy"));
@@ -15,9 +22,12 @@ public class TopsTest {
 
 
     @Test
-    public void mapWithNewRat() throws IOException {
+    public void testMapWithNewRat() throws IOException {
         Tops tester = new Tops();
         String[] a = {"", "", ""};
+        assertNotNull(tester.mapWithNewRat(a));
+        assertEquals(true, tester.mapWithNewRat(a).size() > 0);
+        a = new String[]{"M", "23", "doctor"};
         assertNotNull(tester.mapWithNewRat(a));
         assertEquals(true, tester.mapWithNewRat(a).size() > 0);
     }
@@ -45,6 +55,8 @@ public class TopsTest {
         assertEquals(false, tester.isValidInput(a));
         a = new String[]{"M", "0", "unemployed", "Romanc"};
         assertEquals(false, tester.isValidInput(a));
+        a = new String[]{"", "", "", "comedy|horror"};
+        assertEquals(true, tester.isValidInput(a));
 
 
 
@@ -67,6 +79,7 @@ public class TopsTest {
         assertEquals("result", true, tester.isValidAge("0"));
         assertEquals("result", true, tester.isValidAge("19"));
         assertEquals("result", true, tester.isValidAge("34"));
+        assertEquals("result", true, tester.isValidAge("43"));
         assertEquals("result", true, tester.isValidAge("45"));
         assertEquals("result", true, tester.isValidAge("51"));
         assertEquals("result", false, tester.isValidAge("0x`"));

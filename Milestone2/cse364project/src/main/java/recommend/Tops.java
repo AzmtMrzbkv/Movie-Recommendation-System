@@ -25,7 +25,7 @@ public class Tops {
         else printTop10(mapWithNewRatCat(mapWithNewRat(args), args[3]));
     }
 
-    public static void printTop10(HashMap<String, Double> map) throws IOException {
+    public static boolean printTop10(HashMap<String, Double> map) throws IOException {
         ArrayList<String> movieIDs = new ArrayList<>();
 
         for(int i = 0; i < 10; i++){
@@ -63,6 +63,7 @@ public class Tops {
         links.close();
 
         for(int i = movieIDs.size() - 1; i > -1 ; i--) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", name.get(movieIDs.get(i)), link.get(movieIDs.get(i)));
+        return true;
     }
 
     public static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
@@ -158,7 +159,6 @@ public class Tops {
     // If genre is present in movies, return true; otherwise false
     public static boolean isGenre(String genre) throws IOException {
         Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
-        if(genres.contains("")) return false;
         Set<String> allGenres = new HashSet<>();
 
         BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
