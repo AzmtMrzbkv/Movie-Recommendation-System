@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="4" failures="0" name="TopsTest" time="0.008" errors="0" skipped="0">
+<testsuite tests="7" failures="0" name="TopsTest" time="0.085" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2021.1.1"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
@@ -62,8 +62,11 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="TopsTest" name="testIsValidInput" time="0.008"/>
+  <testcase classname="TopsTest" name="testIsValidInput" time="0.009"/>
   <testcase classname="TopsTest" name="testIsGender" time="0"/>
   <testcase classname="TopsTest" name="testIsOccupation" time="0"/>
   <testcase classname="TopsTest" name="testIsValidAge" time="0"/>
+  <testcase classname="TopsTest" name="testParseStringOccupation" time="0"/>
+  <testcase classname="TopsTest" name="testIsGenre" time="0.076"/>
+  <testcase classname="TopsTest" name="testParseAge" time="0"/>
 </testsuite>
