@@ -80,7 +80,6 @@ public class Tops {
             arrOfStr = line.split("::");
             // this part is important
             for(int i = 0; i < 3; i++) fac += arrOfStr[i + 1].equalsIgnoreCase(args[i]) ? coef[i]: 0;
-            // what of that movie already existed in map
             userSig.put(arrOfStr[0], fac);
             line = users.readLine();
         }
