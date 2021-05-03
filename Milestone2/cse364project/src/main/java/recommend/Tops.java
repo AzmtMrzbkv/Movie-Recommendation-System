@@ -7,16 +7,8 @@ import java.util.*;
 
 public class Tops {
 
-    static FileReader moviesFile, ratingsFile, usersFile, linksFile;
-
     // main function
     public static void main(String[] args) throws Exception {
-
-        // Reading .dat files
-        moviesFile = new FileReader("./data/movies.dat");
-        ratingsFile = new FileReader("./data/ratings.dat");
-        usersFile = new FileReader("./data/users.dat");
-        linksFile = new FileReader("./data/links.dat");
 
         // Print invalid input (length) error
         if(args.length != 4 && args.length != 3){
@@ -51,10 +43,10 @@ public class Tops {
         HashMap<String, String> names = new HashMap<>();
         HashMap<String, String> link = new HashMap<>();
 
-        FileReader filmy = new FileReader("./data/movies.dat");
-        BufferedReader movies = new BufferedReader(filmy);
+        BufferedReader moviesF = new BufferedReader(new FileReader("./data/movies.dat"));
+        BufferedReader linksF = new BufferedReader(new FileReader("./data/links.dat"));
 
-//        BufferedReader movies = new BufferedReader(moviesFile);
+        BufferedReader movies = new BufferedReader(moviesF);
         String line = movies.readLine();
         while(line != null){
             String[] arrOfStr = line.split("::");
@@ -62,7 +54,7 @@ public class Tops {
             line = movies.readLine();
         }
 
-        BufferedReader links = new BufferedReader(linksFile);
+        BufferedReader links = new BufferedReader(linksF);
         line = links.readLine();
         while(line != null){
             String[] arrOfStr = line.split("::");
@@ -83,8 +75,11 @@ public class Tops {
         args[1] = parseAge(args[1]);
         args[2] = parseStringOccupation(args[2]);
 
+        BufferedReader ratingsF = new BufferedReader(new FileReader("./data/ratings.dat"));
+        BufferedReader usersF = new BufferedReader(new FileReader("./data/users.dat"));
+
         String[] arrOfStr; double fac;
-        BufferedReader users = new BufferedReader(usersFile);
+        BufferedReader users = new BufferedReader(usersF);
         String line = users.readLine();
         while(line != null){
             fac = 0;
@@ -96,7 +91,7 @@ public class Tops {
             line = users.readLine();
         }
 
-        BufferedReader ratings = new BufferedReader(ratingsFile);
+        BufferedReader ratings = new BufferedReader(ratingsF);
         line = ratings.readLine();
         while(line != null){
             arrOfStr = line.split("::");
@@ -116,8 +111,10 @@ public class Tops {
     private static HashMap<String, Double> mapWithNewRatCat(HashMap<String, Double> map, String cat) throws IOException {
         String[] catArr = cat.toLowerCase(Locale.ROOT).split("\\|");
 
+        BufferedReader moviesF = new BufferedReader(new FileReader("./data/movies.dat"));
+
         String[] arrOfStr; Set<String> cats;
-        BufferedReader movies = new BufferedReader(moviesFile);
+        BufferedReader movies = new BufferedReader(moviesF);
         String line = movies.readLine();
         while(line != null){
             arrOfStr = line.split("::");
@@ -165,7 +162,8 @@ public class Tops {
     private static boolean isGenre(String genre) throws IOException {
         Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
         Set<String> allGenres = new HashSet<>();
-        BufferedReader movies = new BufferedReader(moviesFile);
+        BufferedReader moviesF = new BufferedReader(new FileReader("./data/movies.dat"));
+        BufferedReader movies = new BufferedReader(moviesF);
         String line = movies.readLine();
 
         while(line != null){
