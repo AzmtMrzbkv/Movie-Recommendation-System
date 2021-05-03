@@ -37,8 +37,8 @@ public class Tops {
     private static void printTop10(HashMap<String, Double> map) throws IOException {
         ArrayList<String> movieIDs = new ArrayList<>();
 
-        String movID = ""; Double maxR = Double.MIN_VALUE;
         for(int i = 0; i < 10; i++){
+            String movID = ""; Double maxR = Double.MIN_VALUE;
             for(String key: map.keySet()){
                 if(map.get(key) > maxR){
                     maxR = map.get(key);
