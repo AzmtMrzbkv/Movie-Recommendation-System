@@ -6,8 +6,28 @@ import java.io.IOException;
 
 public class TopsTest {
     @Test
-    public void testIsValidInput() {
+    public void testIsValidInput() throws IOException {
         Tops tester = new Tops();
+        String[] a = {"M","23", "doctor"};
+        assertEquals(true, tester.isValidInput(a));
+        a = new String[]{"", "", "executive", "comedy|horror"};
+        assertEquals(true, tester.isValidInput(a));
+        a = new String[]{"F", "", "e"};
+        assertEquals(false, tester.isValidInput(a));
+        a = new String[]{"F", "15", "college", "sci-fi"};
+        assertEquals(true, tester.isValidInput(a));
+        a = new String[]{"", "", "", "AdVenturE"};
+        assertEquals(true, tester.isValidInput(a));
+        a = new String[]{"", "", ""};
+        assertEquals(true, tester.isValidInput(a));
+        a = new String[]{"M", "1000", "sale"};
+        assertEquals(false, tester.isValidInput(a));
+        a = new String[]{"M", "0", "unemployed", "Romance"};
+        assertEquals(true, tester.isValidInput(a));
+        a = new String[]{"ad", "sdfs", "fds"};
+        assertEquals(false, tester.isValidInput(a));
+
+
 
 
     }
@@ -92,6 +112,7 @@ public class TopsTest {
         assertEquals("1", tester.parseAge("7"));
         assertEquals("45", tester.parseAge("45"));
         assertEquals("56", tester.parseAge("57"));
+        assertEquals("-1", tester.parseAge("4294967326"));
     }
 
     //NOTFULL
@@ -103,6 +124,8 @@ public class TopsTest {
         assertEquals(true, tester.isGenre("western|comedy"));
         assertEquals(true,tester.isGenre("drama|Thriller"));
         assertEquals(false, tester.isGenre("wesern"));
+        //assertEquals(false, tester.isGenre("|"));
+
     }
 
 }
