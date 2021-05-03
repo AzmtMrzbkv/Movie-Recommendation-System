@@ -62,7 +62,7 @@ public class Tops {
         }
         links.close();
 
-        for(String s: movieIDs) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", name.get(s), link.get(s));
+        for(int i = movieIDs.size() - 1; i > -1 ; i--) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", name.get(movieIDs.get(i)), link.get(movieIDs.get(i)));
     }
 
     public static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
