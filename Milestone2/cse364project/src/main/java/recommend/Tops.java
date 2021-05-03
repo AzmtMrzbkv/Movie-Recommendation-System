@@ -51,7 +51,10 @@ public class Tops {
         HashMap<String, String> names = new HashMap<>();
         HashMap<String, String> link = new HashMap<>();
 
-        BufferedReader movies = new BufferedReader(moviesFile);
+        FileReader filmy = new FileReader("./data/movies.dat");
+        BufferedReader movies = new BufferedReader(filmy);
+
+//        BufferedReader movies = new BufferedReader(moviesFile);
         String line = movies.readLine();
         while(line != null){
             String[] arrOfStr = line.split("::");
@@ -66,12 +69,6 @@ public class Tops {
             link.put(arrOfStr[0], arrOfStr[1]);
             line = links.readLine();
         }
-
-        System.out.println("---------------------------------------------");
-        System.out.println(names);
-        System.out.println("---------------------------------------------");
-        System.out.println(link);
-        System.out.println("---------------------------------------------");
 
         for(String s: movieIDs){
             System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", names.get(s), link.get(s));
