@@ -69,9 +69,7 @@ public class Tops {
             line = links.readLine();
         }
 
-        for(String s: movieIDs){
-            System.out.printf("%s (http://www.imdb.com/title/%s)\n", names.get(s), link.get(s));
-        }
+        for(String s: movieIDs) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", names.get(s), link.get(s));
     }
 
     private static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
@@ -90,6 +88,7 @@ public class Tops {
             arrOfStr = line.split("::");
             // this part is important
             for(int i = 0; i < 3; i++) fac += arrOfStr[i + 1].equalsIgnoreCase(args[i]) ? coef[i]: 0;
+            // what of that movie already existed in map
             userSig.put(arrOfStr[0], fac);
             line = users.readLine();
         }
@@ -99,7 +98,12 @@ public class Tops {
         while(line != null){
             arrOfStr = line.split("::");
             // this part is important
-            relRat.put(arrOfStr[1], Integer.parseInt(arrOfStr[2])*(userSig.get(arrOfStr[0])+ 1));
+            if(relRat.containsKey(arrOfStr[1])){
+                relRat.put(arrOfStr[1], (Integer.parseInt(arrOfStr[2])*(userSig.get(arrOfStr[0])+ 1) + relRat.get(arrOfStr[1]))/2);
+            }
+            else{
+                relRat.put(arrOfStr[1], Integer.parseInt(arrOfStr[2])*(userSig.get(arrOfStr[0])+ 1));
+            }
             line = ratings.readLine();
         }
 
