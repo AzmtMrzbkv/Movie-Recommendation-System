@@ -116,7 +116,7 @@ public class Tops {
                 // promote movies with required genre
                 if(cats.contains(s)){
                     // this part is important
-                    map.put(arrOfStr[0], map.get(arrOfStr[0]) * 10);
+                    if( map.get(arrOfStr[0]) != null) map.put(arrOfStr[0], map.get(arrOfStr[0]) * 10);
                     break;
                 }
             }
