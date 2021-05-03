@@ -43,6 +43,8 @@ public class TopsTest {
         assertEquals(true, tester.isValidInput(a));
         a = new String[]{"ad", "sdfs", "fds"};
         assertEquals(false, tester.isValidInput(a));
+        a = new String[]{"M", "0", "unemployed", "Romanc"};
+        assertEquals(false, tester.isValidInput(a));
 
 
 
@@ -144,7 +146,6 @@ public class TopsTest {
         //assertEquals(false, tester.isGenre("|"));
 
     }
-
 }
 
 
