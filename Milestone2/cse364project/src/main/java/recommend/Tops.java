@@ -170,7 +170,7 @@ public class Tops {
         }
 
         movies.close();
-        return allGenres.containsAll(genres);
+        return allGenres.containsAll(genres) && !genres.contains("");
     }
 
     // If gender is either M or F, return true; otherwise return false
