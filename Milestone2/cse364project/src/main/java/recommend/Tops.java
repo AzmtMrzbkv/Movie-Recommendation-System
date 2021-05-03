@@ -13,7 +13,7 @@ public class Tops {
         // Print invalid input (length) error
         if(args.length != 4 && args.length != 3){
             System.out.printf("Invalid input: %s\n", Arrays.toString(args));
-            System.out.println("Input example: \"M\" \"25\" \"gradstudent\" ");
+            System.out.println("Input example: \"M\" \"25\" \"gradstudent\"");
             System.exit(0);
         }
 
