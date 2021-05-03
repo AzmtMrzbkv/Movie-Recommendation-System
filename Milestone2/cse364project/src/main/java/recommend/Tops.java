@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class Tops {
 
@@ -68,7 +67,10 @@ public class Tops {
             line = links.readLine();
         }
 
-        for(String s: movieIDs) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", names.get(s), link.get(s));
+        for(String s: movieIDs){
+            System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", names.get(s), link.get(s));
+            System.out.println(s + "***" + names.get(s) + "***" + link.get(s));
+        }
     }
 
     private static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
