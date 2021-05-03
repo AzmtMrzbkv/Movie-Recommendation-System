@@ -143,7 +143,7 @@ public class Tops {
             isValid = false;
         }
         //Invalid occupation error
-        if(!isOccupation(args[2].toLowerCase(Locale.ROOT)) && !args[1].equals("")){
+        if(!isOccupation(args[2].toLowerCase(Locale.ROOT)) && !args[2].equals("")){
             System.out.printf("Invalid occupation: \"%s\"\n", args[2]);
             isValid = false;
         }
@@ -158,6 +158,7 @@ public class Tops {
     // If genre is present in movies, return true; otherwise false
     public static boolean isGenre(String genre) throws IOException {
         Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
+        if(genres.contains("") && genres.size() == 1) return false;
         Set<String> allGenres = new HashSet<>();
 
         BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
@@ -169,8 +170,8 @@ public class Tops {
             line = movies.readLine();
         }
         movies.close();
-        
-        return allGenres.containsAll(genres) && !(genres.contains("") && genre.length() > 0);
+
+        return allGenres.containsAll(genres);
     }
 
     // If gender is either M or F, return true; otherwise return false
