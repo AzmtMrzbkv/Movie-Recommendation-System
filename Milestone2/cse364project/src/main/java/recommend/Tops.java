@@ -25,7 +25,7 @@ public class Tops {
         else printTop10(mapWithNewRatCat(mapWithNewRat(args), args[3]));
     }
 
-    private static void printTop10(HashMap<String, Double> map) throws IOException {
+    public static void printTop10(HashMap<String, Double> map) throws IOException {
         ArrayList<String> movieIDs = new ArrayList<>();
 
         for(int i = 0; i < 10; i++){
@@ -65,7 +65,7 @@ public class Tops {
         for(String s: movieIDs) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", name.get(s), link.get(s));
     }
 
-    private static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
+    public static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
         double[] coef = {0.333, 0.333, 0.333};
         HashMap<String, Double> userSig = new HashMap<>();
         HashMap<String, Double> relRat = new HashMap<>();
@@ -105,7 +105,7 @@ public class Tops {
         return relRat;
     }
 
-    private static HashMap<String, Double> mapWithNewRatCat(HashMap<String, Double> map, String cat) throws IOException {
+    public static HashMap<String, Double> mapWithNewRatCat(HashMap<String, Double> map, String cat) throws IOException {
         String[] catArr = cat.toLowerCase(Locale.ROOT).split("\\|");
 
         String[] arrOfStr; Set<String> cats;
@@ -130,7 +130,7 @@ public class Tops {
         return map;
     }
 
-    private static boolean isValidInput(String[] args) throws IOException {
+    public static boolean isValidInput(String[] args) throws IOException {
         boolean isValid = true;
         // Invalid gender error
         if(!isGender(args[0]) && !args[1].equals("")){
@@ -156,7 +156,7 @@ public class Tops {
     }
 
     // If genre is present in movies, return true; otherwise false
-    private static boolean isGenre(String genre) throws IOException {
+    public static boolean isGenre(String genre) throws IOException {
         Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
         Set<String> allGenres = new HashSet<>();
 
@@ -174,22 +174,22 @@ public class Tops {
     }
 
     // If gender is either M or F, return true; otherwise return false
-    private static boolean isGender(String gender){
+    public static boolean isGender(String gender){
         return gender.equals("M") || gender.equals("F");
     }
 
     // If age is greater than -1 and is number, return true; otherwise false;
-    private static boolean isValidAge(String age){
+    public static boolean isValidAge(String age){
         return !parseAge(age).equals("-1");
     }
 
     // If translation of occupation to its number is successful, return true; otherwise false.
-    private static boolean isOccupation(String occ){
+    public static boolean isOccupation(String occ){
         return !parseStringOccupation(occ).equals("-1");
     }
 
     // Return range representation for each input age, using info in README.pm
-    private static String parseAge(String age){
+    public static String parseAge(String age){
 
         try {
             int ageInt = Integer.parseInt(age);
@@ -206,7 +206,7 @@ public class Tops {
         }
     }
 
-    private static String parseStringOccupation(String occupation) {
+    public static String parseStringOccupation(String occupation) {
         String occupationIndex;
         switch (occupation) {
 //            case "other":
