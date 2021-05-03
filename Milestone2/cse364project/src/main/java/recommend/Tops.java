@@ -158,7 +158,7 @@ public class Tops {
     // If genre is present in movies, return true; otherwise false
     public static boolean isGenre(String genre) throws IOException {
         Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
-        if(genres.contains("") && genres.size() == 1) return false;
+        if(genres.contains("")) return false;
         Set<String> allGenres = new HashSet<>();
 
         BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
