@@ -27,3 +27,16 @@ public class TopsTest {
         assertEquals("result", false, tester.isValidAge("-231"));
     }
 }
+
+
+// main
+// printTop10
+// movieIDs
+// mapwithNewRat
+// parseStringOccupation
+// mapWithNewRatCat
+// isValidInput
+// isGenre
+// isOccupation
+// parseAge
+// parseStringOccupation
