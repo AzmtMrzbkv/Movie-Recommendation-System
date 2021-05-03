@@ -67,6 +67,12 @@ public class Tops {
             line = links.readLine();
         }
 
+        System.out.println("---------------------------------------------");
+        System.out.println(names);
+        System.out.println("---------------------------------------------");
+        System.out.println(link);
+        System.out.println("---------------------------------------------");
+
         for(String s: movieIDs){
             System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", names.get(s), link.get(s));
         }
@@ -129,8 +135,6 @@ public class Tops {
             }
             line = movies.readLine();
         }
-
-        System.out.println(map.toString());
 
         return map;
     }
