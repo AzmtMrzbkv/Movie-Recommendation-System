@@ -43,10 +43,9 @@ public class Tops {
         HashMap<String, String> names = new HashMap<>();
         HashMap<String, String> link = new HashMap<>();
 
-        BufferedReader moviesF = new BufferedReader(new FileReader("./data/movies.dat"));
-        BufferedReader linksF = new BufferedReader(new FileReader("./data/links.dat"));
+        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+        BufferedReader links = new BufferedReader(new FileReader("./data/links.dat"));
 
-        BufferedReader movies = new BufferedReader(moviesF);
         String line = movies.readLine();
         while(line != null){
             String[] arrOfStr = line.split("::");
@@ -54,7 +53,6 @@ public class Tops {
             line = movies.readLine();
         }
 
-        BufferedReader links = new BufferedReader(linksF);
         line = links.readLine();
         while(line != null){
             String[] arrOfStr = line.split("::");
@@ -75,11 +73,10 @@ public class Tops {
         args[1] = parseAge(args[1]);
         args[2] = parseStringOccupation(args[2]);
 
-        BufferedReader ratingsF = new BufferedReader(new FileReader("./data/ratings.dat"));
-        BufferedReader usersF = new BufferedReader(new FileReader("./data/users.dat"));
+        BufferedReader ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
+        BufferedReader users = new BufferedReader(new FileReader("./data/users.dat"));
 
         String[] arrOfStr; double fac;
-        BufferedReader users = new BufferedReader(usersF);
         String line = users.readLine();
         while(line != null){
             fac = 0;
@@ -91,7 +88,6 @@ public class Tops {
             line = users.readLine();
         }
 
-        BufferedReader ratings = new BufferedReader(ratingsF);
         line = ratings.readLine();
         while(line != null){
             arrOfStr = line.split("::");
@@ -111,11 +107,10 @@ public class Tops {
     private static HashMap<String, Double> mapWithNewRatCat(HashMap<String, Double> map, String cat) throws IOException {
         String[] catArr = cat.toLowerCase(Locale.ROOT).split("\\|");
 
-        BufferedReader moviesF = new BufferedReader(new FileReader("./data/movies.dat"));
-
         String[] arrOfStr; Set<String> cats;
-        BufferedReader movies = new BufferedReader(moviesF);
+        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
         String line = movies.readLine();
+
         while(line != null){
             arrOfStr = line.split("::");
             cats = new HashSet<>(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split("\\|")));
@@ -162,8 +157,8 @@ public class Tops {
     private static boolean isGenre(String genre) throws IOException {
         Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
         Set<String> allGenres = new HashSet<>();
-        BufferedReader moviesF = new BufferedReader(new FileReader("./data/movies.dat"));
-        BufferedReader movies = new BufferedReader(moviesF);
+
+        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
         String line = movies.readLine();
 
         while(line != null){
