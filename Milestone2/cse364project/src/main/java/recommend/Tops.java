@@ -168,9 +168,9 @@ public class Tops {
             allGenres.addAll(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split("\\|")));
             line = movies.readLine();
         }
-
         movies.close();
-        return allGenres.containsAll(genres) && !(genres.contains("") && genre.length() > 1);
+        
+        return allGenres.containsAll(genres) && !(genres.contains("") && genre.length() > 0);
     }
 
     // If gender is either M or F, return true; otherwise return false
