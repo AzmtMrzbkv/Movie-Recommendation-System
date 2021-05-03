@@ -40,7 +40,7 @@ public class Tops {
             map.remove(movID);
         }
 
-        HashMap<String, String> names = new HashMap<>();
+        HashMap<String, String> name = new HashMap<>();
         HashMap<String, String> link = new HashMap<>();
 
         BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
@@ -48,9 +48,10 @@ public class Tops {
         String line = movies.readLine();
         while(line != null){
             String[] arrOfStr = line.split("::");
-            names.put(arrOfStr[0], arrOfStr[1]);
+            name.put(arrOfStr[0], arrOfStr[1]);
             line = movies.readLine();
         }
+        movies.close();
 
         BufferedReader links = new BufferedReader(new FileReader("./data/links.dat"));
         line = links.readLine();
@@ -59,8 +60,9 @@ public class Tops {
             link.put(arrOfStr[0], arrOfStr[1]);
             line = links.readLine();
         }
+        links.close();
 
-        for(String s: movieIDs) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", names.get(s), link.get(s));
+        for(String s: movieIDs) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", name.get(s), link.get(s));
     }
 
     private static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
@@ -83,6 +85,7 @@ public class Tops {
             userSig.put(arrOfStr[0], fac);
             line = users.readLine();
         }
+        users.close();
 
         BufferedReader ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
         line = ratings.readLine();
@@ -97,6 +100,7 @@ public class Tops {
             }
             line = ratings.readLine();
         }
+        ratings.close();
 
         return relRat;
     }
@@ -121,6 +125,7 @@ public class Tops {
             }
             line = movies.readLine();
         }
+        movies.close();
 
         return map;
     }
@@ -164,6 +169,7 @@ public class Tops {
             line = movies.readLine();
         }
 
+        movies.close();
         return allGenres.containsAll(genres);
     }
 
