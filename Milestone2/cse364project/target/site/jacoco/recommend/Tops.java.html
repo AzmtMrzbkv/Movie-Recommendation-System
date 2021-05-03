@@ -13,7 +13,7 @@ import java.util.*;
         // Print invalid input (length) error
 <span class="nc bnc" id="L14" title="All 4 branches missed.">        if(args.length != 4 &amp;&amp; args.length != 3){</span>
 <span class="nc" id="L15">            System.out.printf(&quot;Invalid input: %s\n&quot;, Arrays.toString(args));</span>
-<span class="nc" id="L16">            System.out.println(&quot;Input example: \&quot;M\&quot; \&quot;25\&quot; \&quot;gradstudent\&quot; &quot;);</span>
+<span class="nc" id="L16">            System.out.println(&quot;Input example: \&quot;M\&quot; \&quot;25\&quot; \&quot;gradstudent\&quot;&quot;);</span>
 <span class="nc" id="L17">            System.exit(0);</span>
         }
 
@@ -62,7 +62,7 @@ import java.util.*;
 <span class="nc" id="L62">        }</span>
 <span class="nc" id="L63">        links.close();</span>
 
-<span class="nc bnc" id="L65" title="All 2 branches missed.">        for(String s: movieIDs) System.out.printf(&quot;%s (http://www.imdb.com/title/tt%s)\n&quot;, name.get(s), link.get(s));</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        for(int i = movieIDs.size() - 1; i &gt; -1 ; i--) System.out.printf(&quot;%s (http://www.imdb.com/title/tt%s)\n&quot;, name.get(movieIDs.get(i)), link.get(movieIDs.get(i)));</span>
 <span class="nc" id="L66">    }</span>
 
     public static HashMap&lt;String, Double&gt; mapWithNewRat(String[] args) throws IOException {
@@ -157,20 +157,20 @@ import java.util.*;
 
     // If genre is present in movies, return true; otherwise false
     public static boolean isGenre(String genre) throws IOException {
-<span class="nc" id="L160">        Set&lt;String&gt; genres = new HashSet&lt;&gt;(Arrays.asList(genre.toLowerCase(Locale.ROOT).split(&quot;\\|&quot;)));</span>
-<span class="nc" id="L161">        Set&lt;String&gt; allGenres = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L160">        Set&lt;String&gt; genres = new HashSet&lt;&gt;(Arrays.asList(genre.toLowerCase(Locale.ROOT).split(&quot;\\|&quot;)));</span>
+<span class="fc" id="L161">        Set&lt;String&gt; allGenres = new HashSet&lt;&gt;();</span>
 
-<span class="nc" id="L163">        BufferedReader movies = new BufferedReader(new FileReader(&quot;./data/movies.dat&quot;));</span>
-<span class="nc" id="L164">        String line = movies.readLine();</span>
+<span class="fc" id="L163">        BufferedReader movies = new BufferedReader(new FileReader(&quot;./data/movies.dat&quot;));</span>
+<span class="fc" id="L164">        String line = movies.readLine();</span>
 
-<span class="nc bnc" id="L166" title="All 2 branches missed.">        while(line != null){</span>
-<span class="nc" id="L167">            String[] arrOfStr = line.toLowerCase(Locale.ROOT).split(&quot;::&quot;);</span>
-<span class="nc" id="L168">            allGenres.addAll(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split(&quot;\\|&quot;)));</span>
-<span class="nc" id="L169">            line = movies.readLine();</span>
-<span class="nc" id="L170">        }</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        while(line != null){</span>
+<span class="fc" id="L167">            String[] arrOfStr = line.toLowerCase(Locale.ROOT).split(&quot;::&quot;);</span>
+<span class="fc" id="L168">            allGenres.addAll(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split(&quot;\\|&quot;)));</span>
+<span class="fc" id="L169">            line = movies.readLine();</span>
+<span class="fc" id="L170">        }</span>
 
-<span class="nc" id="L172">        movies.close();</span>
-<span class="nc" id="L173">        return allGenres.containsAll(genres);</span>
+<span class="fc" id="L172">        movies.close();</span>
+<span class="fc" id="L173">        return allGenres.containsAll(genres);</span>
     }
 
     // If gender is either M or F, return true; otherwise return false
@@ -208,7 +208,7 @@ import java.util.*;
 
     public static String parseStringOccupation(String occupation) {
         String occupationIndex;
-<span class="pc bpc" id="L211" title="18 of 22 branches missed.">        switch (occupation) {</span>
+<span class="fc bfc" id="L211" title="All 22 branches covered.">        switch (occupation) {</span>
 //            case &quot;other&quot;:
 //                //0:  &quot;other&quot; or not specified??
 //                occupationIndex = &quot;0&quot;;
@@ -221,12 +221,12 @@ import java.util.*;
 <span class="fc" id="L221">                occupationIndex = &quot;1&quot;;</span>
 <span class="fc" id="L222">                break;</span>
             case &quot;artist&quot;:
-<span class="nc" id="L224">                occupationIndex = &quot;2&quot;;</span>
-<span class="nc" id="L225">                break;</span>
+<span class="fc" id="L224">                occupationIndex = &quot;2&quot;;</span>
+<span class="fc" id="L225">                break;</span>
             case &quot;clerical&quot;:
             case &quot;admin&quot;:
-<span class="nc" id="L228">                occupationIndex = &quot;3&quot;;</span>
-<span class="nc" id="L229">                break;</span>
+<span class="fc" id="L228">                occupationIndex = &quot;3&quot;;</span>
+<span class="fc" id="L229">                break;</span>
             case &quot;college&quot;:
             case &quot;grad student&quot;:
             case &quot;gradstudent&quot;:
@@ -234,60 +234,60 @@ import java.util.*;
 <span class="fc" id="L234">                break;</span>
             case &quot;customer service&quot;:
             case &quot;customerservice&quot;:
-<span class="nc" id="L237">                occupationIndex = &quot;5&quot;;</span>
-<span class="nc" id="L238">                break;</span>
+<span class="fc" id="L237">                occupationIndex = &quot;5&quot;;</span>
+<span class="fc" id="L238">                break;</span>
             case &quot;doctor&quot;:
             case &quot;health care&quot;:
             case &quot;healthcare&quot;:
-<span class="nc" id="L242">                occupationIndex = &quot;6&quot;;</span>
-<span class="nc" id="L243">                break;</span>
+<span class="fc" id="L242">                occupationIndex = &quot;6&quot;;</span>
+<span class="fc" id="L243">                break;</span>
             case &quot;executive&quot;:
             case &quot;managerial&quot;:
-<span class="nc" id="L246">                occupationIndex = &quot;7&quot;;</span>
-<span class="nc" id="L247">                break;</span>
+<span class="fc" id="L246">                occupationIndex = &quot;7&quot;;</span>
+<span class="fc" id="L247">                break;</span>
             case &quot;farmer&quot;:
-<span class="nc" id="L249">                occupationIndex = &quot;8&quot;;</span>
-<span class="nc" id="L250">                break;</span>
+<span class="fc" id="L249">                occupationIndex = &quot;8&quot;;</span>
+<span class="fc" id="L250">                break;</span>
             case &quot;homemaker&quot;:
-<span class="nc" id="L252">                occupationIndex = &quot;9&quot;;</span>
-<span class="nc" id="L253">                break;</span>
+<span class="fc" id="L252">                occupationIndex = &quot;9&quot;;</span>
+<span class="fc" id="L253">                break;</span>
             case &quot;K-12 studio&quot;:
             case &quot;K-12studio&quot;:
-<span class="nc" id="L256">                occupationIndex = &quot;10&quot;;</span>
-<span class="nc" id="L257">                break;</span>
+<span class="fc" id="L256">                occupationIndex = &quot;10&quot;;</span>
+<span class="fc" id="L257">                break;</span>
             case &quot;lawyer&quot;:
-<span class="nc" id="L259">                occupationIndex = &quot;11&quot;;</span>
-<span class="nc" id="L260">                break;</span>
+<span class="fc" id="L259">                occupationIndex = &quot;11&quot;;</span>
+<span class="fc" id="L260">                break;</span>
             case &quot;programmer&quot;:
-<span class="nc" id="L262">                occupationIndex = &quot;12&quot;;</span>
-<span class="nc" id="L263">                break;</span>
+<span class="fc" id="L262">                occupationIndex = &quot;12&quot;;</span>
+<span class="fc" id="L263">                break;</span>
             case &quot;retired&quot;:
-<span class="nc" id="L265">                occupationIndex = &quot;13&quot;;</span>
-<span class="nc" id="L266">                break;</span>
+<span class="fc" id="L265">                occupationIndex = &quot;13&quot;;</span>
+<span class="fc" id="L266">                break;</span>
             case &quot;sales&quot;:
             case &quot;marketing&quot;:
-<span class="nc" id="L269">                occupationIndex = &quot;14&quot;;</span>
-<span class="nc" id="L270">                break;</span>
+<span class="fc" id="L269">                occupationIndex = &quot;14&quot;;</span>
+<span class="fc" id="L270">                break;</span>
             case &quot;scientist&quot;:
-<span class="nc" id="L272">                occupationIndex = &quot;15&quot;;</span>
-<span class="nc" id="L273">                break;</span>
+<span class="fc" id="L272">                occupationIndex = &quot;15&quot;;</span>
+<span class="fc" id="L273">                break;</span>
             case &quot;self-employed&quot;:
-<span class="nc" id="L275">                occupationIndex = &quot;16&quot;;</span>
-<span class="nc" id="L276">                break;</span>
+<span class="fc" id="L275">                occupationIndex = &quot;16&quot;;</span>
+<span class="fc" id="L276">                break;</span>
             case &quot;technician&quot;:
             case &quot;engineer&quot;:
-<span class="nc" id="L279">                occupationIndex = &quot;17&quot;;</span>
-<span class="nc" id="L280">                break;</span>
+<span class="fc" id="L279">                occupationIndex = &quot;17&quot;;</span>
+<span class="fc" id="L280">                break;</span>
             case &quot;tradesman&quot;:
             case &quot;craftsman&quot;:
-<span class="nc" id="L283">                occupationIndex = &quot;18&quot;;</span>
-<span class="nc" id="L284">                break;</span>
+<span class="fc" id="L283">                occupationIndex = &quot;18&quot;;</span>
+<span class="fc" id="L284">                break;</span>
             case &quot;unemployed&quot;:
-<span class="nc" id="L286">                occupationIndex = &quot;19&quot;;</span>
-<span class="nc" id="L287">                break;</span>
+<span class="fc" id="L286">                occupationIndex = &quot;19&quot;;</span>
+<span class="fc" id="L287">                break;</span>
             case &quot;writing&quot;:
-<span class="nc" id="L289">                occupationIndex = &quot;20&quot;;</span>
-<span class="nc" id="L290">                break;</span>
+<span class="fc" id="L289">                occupationIndex = &quot;20&quot;;</span>
+<span class="fc" id="L290">                break;</span>
             default:
 <span class="fc" id="L292">                occupationIndex = &quot;-1&quot;;</span>
         }
