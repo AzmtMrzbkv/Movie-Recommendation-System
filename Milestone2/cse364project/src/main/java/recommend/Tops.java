@@ -13,7 +13,7 @@ public class Tops {
         // Print invalid input (length) error
         if(args.length != 4 && args.length != 3){
             System.out.printf("Invalid input: %s\n", Arrays.toString(args));
-            System.out.println("Input example: \"M\" \"25\" \"gradstudent\" ");
+            System.out.println("Input example: \"M\" \"25\" \"gradstudent\"");
             System.exit(0);
         }
 
@@ -62,7 +62,7 @@ public class Tops {
         }
         links.close();
 
-        for(String s: movieIDs) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", name.get(s), link.get(s));
+        for(int i = movieIDs.size() - 1; i > -1 ; i--) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", name.get(movieIDs.get(i)), link.get(movieIDs.get(i)));
     }
 
     public static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
