@@ -1,30 +1,11 @@
-package recommend;
+package RecS;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class Tops {
-
-    // main function
-    public static void main(String[] args) throws Exception {
-
-        // Print invalid input (length) error
-        if(args.length != 4 && args.length != 3){
-            System.out.printf("Invalid input: %s\n", Arrays.toString(args));
-            System.out.println("Input example: \"M\" \"25\" \"gradstudent\"");
-            System.exit(0);
-        }
-
-        // checking validity of gender, age, and occupation
-        if(!isValidInput(args)) System.exit(0);
-
-        // checking args to choose proper method to execute
-        if (args.length == 3) printTop10(mapWithNewRat(args));
-        else printTop10(mapWithNewRatCat(mapWithNewRat(args), args[3]));
-    }
-
+public class Recommender {
     public static boolean printTop10(HashMap<String, Double> map) throws IOException {
         ArrayList<String> movieIDs = new ArrayList<>();
 
