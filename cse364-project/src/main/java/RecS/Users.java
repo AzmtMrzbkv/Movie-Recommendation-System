@@ -47,4 +47,14 @@ public class Users {
     public void setSimilarity(double similarity){
         this.similarity = similarity;
     }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "age=" + age +
+                ", gender=" + gender +
+                ", occupation='" + occupation + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }
