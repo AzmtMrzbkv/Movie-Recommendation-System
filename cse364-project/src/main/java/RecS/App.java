@@ -12,7 +12,6 @@ import java.util.List;
 public class App {
     //here will be functions mapped to GET
 
-    //this function return recommendation list
     @GetMapping("/users/recommendations ")
     public List<Movies> recommendForUser(@RequestBody Users newUser) {
         // this part to be implemented
