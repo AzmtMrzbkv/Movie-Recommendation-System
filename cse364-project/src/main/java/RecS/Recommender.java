@@ -6,54 +6,32 @@ import java.io.IOException;
 import java.util.*;
 
 public class Recommender {
-    public static boolean printTop10(HashMap<String, Double> map) throws IOException {
-        ArrayList<String> movieIDs = new ArrayList<>();
+    static final int MAX_TOP = 3000;
 
-        for(int i = 0; i < 10; i++){
-            String movID = ""; Double maxR = Double.MIN_VALUE;
-            for(String key: map.keySet()){
+    private Recommender(){}; // private constructor
+
+    public static List<Movies> limitedTop(HashMap<Movies, Double> map, int limit ) throws IOException {
+        List<Movies> top = new ArrayList<>();
+
+        for(int i = 0; i < limit && i < MAX_TOP; i++){
+            Movies movie = null; Double maxR = Double.MIN_VALUE;
+            for(Movies key: map.keySet()){
                 if(map.get(key) > maxR){
                     maxR = map.get(key);
-                    movID = key;
+                    movie = key;
                 }
             }
-            movieIDs.add(movID);
-            map.remove(movID);
+            top.add(movie);
+            map.remove(movie);
         }
 
-        HashMap<String, String> name = new HashMap<>();
-        HashMap<String, String> link = new HashMap<>();
-
-        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-
-        String line = movies.readLine();
-        while(line != null){
-            String[] arrOfStr = line.split("::");
-            name.put(arrOfStr[0], arrOfStr[1]);
-            line = movies.readLine();
-        }
-        movies.close();
-
-        BufferedReader links = new BufferedReader(new FileReader("./data/links.dat"));
-        line = links.readLine();
-        while(line != null){
-            String[] arrOfStr = line.split("::");
-            link.put(arrOfStr[0], arrOfStr[1]);
-            line = links.readLine();
-        }
-        links.close();
-
-        for(int i = movieIDs.size() - 1; i > -1 ; i--) System.out.printf("%s (http://www.imdb.com/title/tt%s)\n", name.get(movieIDs.get(i)), link.get(movieIDs.get(i)));
-        return true;
+        return top;
     }
 
-    public static HashMap<String, Double> mapWithNewRat(String[] args) throws IOException {
+    public static HashMap<String, Double> findSimilarUsers(Users user) throws IOException {
         double[] coef = {0.333, 0.333, 0.333};
-        HashMap<String, Double> userSig = new HashMap<>();
-        HashMap<String, Double> relRat = new HashMap<>();
-
-        args[1] = parseAge(args[1]);
-        args[2] = parseStringOccupation(args[2]);
+        HashMap<String, Double> simUsers = new HashMap<>();
+        HashMap<Movies, Double> movies = new HashMap<>();
 
         BufferedReader users = new BufferedReader(new FileReader("./data/users.dat"));
 
@@ -63,28 +41,41 @@ public class Recommender {
             fac = 0;
             arrOfStr = line.split("::");
             // this part is important
-            for(int i = 0; i < 3; i++) fac += arrOfStr[i + 1].equalsIgnoreCase(args[i]) ? coef[i]: 0;
-            userSig.put(arrOfStr[0], fac);
+
+            fac = (arrOfStr[1].equalsIgnoreCase(user.getGender()) ? coef[0]: 0)
+                    + (arrOfStr[2].equalsIgnoreCase(parseAge(user.getAge())) ? coef[1]: 0)
+                    + (arrOfStr[3].equalsIgnoreCase(parseStringOccupation(user.getOccupation())) ? coef[2]: 0);
+
+            simUsers.put(arrOfStr[0], fac);
             line = users.readLine();
         }
         users.close();
 
         BufferedReader ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
+
         line = ratings.readLine();
         while(line != null){
             arrOfStr = line.split("::");
             // this part is important
-            if(relRat.containsKey(arrOfStr[1])){
-                relRat.put(arrOfStr[1], (Integer.parseInt(arrOfStr[2])*(userSig.get(arrOfStr[0])+ 1) + relRat.get(arrOfStr[1]))/2);
+            if(movies.containsKey(arrOfStr[1])){
+                // VOT ZDES PRODOLJU
+                movies.put(new Movies(), (Integer.parseInt(arrOfStr[2])*(movies.get(arrOfStr[0])+ 1) + movies.get(arrOfStr[1]))/2);
             }
             else{
-                relRat.put(arrOfStr[1], Integer.parseInt(arrOfStr[2])*(userSig.get(arrOfStr[0])+ 1));
+                movies.put(arrOfStr[1], Integer.parseInt(arrOfStr[2])*(movies.get(arrOfStr[0])+ 1));
             }
             line = ratings.readLine();
         }
         ratings.close();
 
-        return relRat;
+        return movies;
+    }
+
+    public static String getIMDB(String movieID){
+        // to be implemented
+        String link = ""; // get this from links.dat
+
+        return "https://www.imdb.com/title/ttXXXXXXX" + link;
     }
 
     public static HashMap<String, Double> mapWithNewRatCat(HashMap<String, Double> map, String cat) throws IOException {
@@ -131,7 +122,7 @@ public class Recommender {
         }
         //Invalid genre error
         if(args.length == 4 && !isGenre(args[3])){
-            System.out.printf("Invalid genre: \"%s\"\n", args[3]);
+            System.out.printf("Invalid genres: \"%s\"\n", args[3]);
             isValid = false;
         }
         return isValid;
