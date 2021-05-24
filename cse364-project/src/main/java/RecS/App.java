@@ -12,6 +12,7 @@ import java.util.List;
 public class App {
     //here will be functions mapped to GET
 
+    //this function return recommendation list
     @GetMapping("/users/recommendations ")
     public List<Movies> recommendForUser(@RequestBody Users newUser) {
         // this part to be implemented
@@ -19,7 +20,7 @@ public class App {
     }
 
     @GetMapping("/movies/recommendations ")
-    public List<Movies> recommendByMovie(@RequestBody Users newUser) {
+    public List<Movies> recommendByMovie(@RequestBody LimitedRec newRequest) {
         // this part to be implemented
         return null;
     }
