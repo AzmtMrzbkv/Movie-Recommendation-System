@@ -2,51 +2,39 @@ package RecS;
 
 public class Movies {
     private final String title;
-    private final String id;
-    private final String link;
-    private double rating = -1;
+    private final String genres;
+    private final String imdb;
 
-
-    public Movies(String title, String id, String link) {
+    public Movies(String title, String id, String imdb, String genres) {
         this.title = title;
-        this.id = id;
-        this.link = link;
+        this.imdb = imdb;
+        this.genres = genres;
     }
 
-    public Movies(String title, String id, String link, double rating) {
+    public Movies(String title, String id, String imdb, String genres, double rating) {
         this.title = title;
-        this.id = id;
-        this.link = link;
-        this.rating = rating;
+        this.imdb = imdb;
+        this.genres = genres;
     }
-
 
     public String getTitle() {
         return title;
     }
 
-    public String getId() {
-        return id;
+    public String getImdb() {
+        return imdb;
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating){
-        this.rating = rating;
+    public String getGenres() {
+        return genres;
     }
 
     @Override
     public String toString() {
         return "Movies{" +
                 "title='" + title + '\'' +
-                ", id='" + id + '\'' +
-                ", link='" + link + '\'' +
+                ", genres='" + genres + '\'' +
+                ", imdb='" + imdb + '\'' +
                 '}';
     }
 }
