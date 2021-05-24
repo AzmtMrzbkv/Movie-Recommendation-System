@@ -1,34 +1,23 @@
 package RecS;
 
 public class Users {
+    private final String gender;
     private final int age;
-    private final char gender;
     private final String occupation;
-    private final String id;
-    private double similarity = 0;
+    private final String genres; //favorite genre
 
-
-    public Users(int age, char gender, String occupation, String id) {
+    public Users(String gender, int age, String occupation, String genres) {
         this.age = age;
         this.gender = gender;
         this.occupation = occupation;
-        this.id = id;
+        this.genres = genres;
     }
-
-    public Users(int age, char gender, String occupation, String id, double similarity) {
-        this.age = age;
-        this.gender = gender;
-        this.occupation = occupation;
-        this.id = id;
-        this.similarity = similarity;
-    }
-
 
     public int getAge() {
         return age;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
@@ -36,25 +25,17 @@ public class Users {
         return occupation;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public double getSimilarity() {
-        return similarity;
-    }
-
-    public void setSimilarity(double similarity){
-        this.similarity = similarity;
+    public String getGenres() {
+        return genres;
     }
 
     @Override
     public String toString() {
         return "Users{" +
-                "age=" + age +
-                ", gender=" + gender +
+                "gender=" + gender +
+                ", age=" + age +
                 ", occupation='" + occupation + '\'' +
-                ", id='" + id + '\'' +
+                ", genres=" + genres +
                 '}';
     }
 }
