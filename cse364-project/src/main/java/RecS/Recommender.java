@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class Recommender {
+public class Recommender  {
     public static boolean printTop10(HashMap<String, Double> map) throws IOException {
         ArrayList<String> movieIDs = new ArrayList<>();
 

@@ -14,6 +14,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="RecS" options="-parameters" />
+      <module name="cse364-project" options="-parameters" />
     </option>
   </component>
 </project>
