@@ -40,10 +40,8 @@ public class Recommender {
         String[] arrOfStr; double fac;
         String line = users.readLine();
         while(line != null){
-            fac = 0;
             arrOfStr = line.split("::");
             // this part is important
-
             fac = (arrOfStr[1].equalsIgnoreCase(user.getGender()) ? coef[0]: 0)
                     + (arrOfStr[2].equalsIgnoreCase(parseAge(user.getAge())) ? coef[1]: 0)
                     + (arrOfStr[3].equalsIgnoreCase(parseStringOccupation(user.getOccupation())) ? coef[2]: 0);
