@@ -71,12 +71,11 @@ public class Recommender {
         return movies;
     }
 
-    public static String getIMDB(String movieID) throws IOException, FileNotFoundException{
-        // to be implemented
+    public static String getIMDB(String movieID) throws IOException{
         String link = ""; // get this from links.dat
 
 
-        BufferedReader movies = new BufferedReader(new FileReader("../../../data/links.dat"));
+        BufferedReader movies = new BufferedReader(new FileReader("./data/links.dat"));
 
         String line = movies.readLine();
 
@@ -88,11 +87,6 @@ public class Recommender {
             }
             line = movies.readLine();
         }
-
-
-
-
-
         return "https://www.imdb.com/title/tt" + link;
     }
 
