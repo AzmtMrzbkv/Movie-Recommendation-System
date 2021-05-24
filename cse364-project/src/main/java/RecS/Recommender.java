@@ -1,6 +1,7 @@
 package RecS;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -72,11 +73,29 @@ public class Recommender {
         return movies;
     }
 
-    public static String getIMDB(String movieID){
+    public static String getIMDB(String movieID) throws IOException, FileNotFoundException{
         // to be implemented
         String link = ""; // get this from links.dat
 
-        return "https://www.imdb.com/title/ttXXXXXXX" + link;
+
+        BufferedReader movies = new BufferedReader(new FileReader("../../../data/links.dat"));
+
+        String line = movies.readLine();
+
+        while ((line != null)) {
+            String[] film = line.split("::");
+            if (film[0].equals(movieID)) {
+                link = film[1];
+                break;
+            }
+            line = movies.readLine();
+        }
+
+
+
+
+
+        return "https://www.imdb.com/title/tt" + link;
     }
 
     public static HashMap<String, Double> mapWithNewRatCat(HashMap<String, Double> map, String cat) throws IOException {
