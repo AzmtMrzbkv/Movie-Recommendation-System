@@ -11,12 +11,6 @@ public class Movies {
         this.genres = genres;
     }
 
-    public Movies(String title, String id, String imdb, String genres, double rating) {
-        this.title = title;
-        this.imdb = imdb;
-        this.genres = genres;
-    }
-
     public String getTitle() {
         return title;
     }
