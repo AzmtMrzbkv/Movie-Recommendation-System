@@ -1,12 +1,14 @@
 package RecS;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
 public class Recommender {
     static final int MAX_TOP = 3000;
+
 
     private Recommender(){}; // private constructor
 
@@ -69,11 +71,29 @@ public class Recommender {
         return movies;
     }
 
-    public static String getIMDB(String movieID){
+    public static String getIMDB(String movieID) throws IOException, FileNotFoundException{
         // to be implemented
         String link = ""; // get this from links.dat
 
-        return "https://www.imdb.com/title/ttXXXXXXX" + link;
+
+        BufferedReader movies = new BufferedReader(new FileReader("../../../data/links.dat"));
+
+        String line = movies.readLine();
+
+        while ((line != null)) {
+            String[] film = line.split("::");
+            if (film[0].equals(movieID)) {
+                link = film[1];
+                break;
+            }
+            line = movies.readLine();
+        }
+
+
+
+
+
+        return "https://www.imdb.com/title/tt" + link;
     }
 
     public static HashMap<String, Double> mapWithNewRatCat(HashMap<String, Double> map, String cat) throws IOException {
@@ -101,26 +121,29 @@ public class Recommender {
         return map;
     }
 
-    public static boolean isValidInput(String[] args) throws IOException {
+    public static boolean isValidInput(String age, String gender, String occupation, String genre) throws IOException {
         boolean isValid = true;
         // Invalid gender error
-        if(!isGender(args[0]) && !args[1].equals("")){
-            System.out.printf("Invalid gender: \"%s\"\n", args[0]);
+
+
+        if(!isGender(gender) && !gender.equals("")){ // check here
+            System.out.printf("Invalid gender: \"%s\"\n", gender);
             isValid = false;
         }
         //Invalid age error
-        if(!isValidAge(args[1]) && !args[1].equals("")){
-            System.out.printf("Invalid age: \"%s\"\n", args[1]);
+        if(!isValidAge(age) && !age.equals("")){
+            System.out.printf("Invalid age: \"%s\"\n", age);
             isValid = false;
         }
         //Invalid occupation error
-        if(!isOccupation(args[2].toLowerCase(Locale.ROOT)) && !args[2].equals("")){
-            System.out.printf("Invalid occupation: \"%s\"\n", args[2]);
+        if(!isOccupation(occupation.toLowerCase(Locale.ROOT)) && !occupation.equals("")){
+            System.out.printf("Invalid occupation: \"%s\"\n", occupation);
             isValid = false;
         }
         //Invalid genre error
-        if(args.length == 4 && !isGenre(args[3])){
-            System.out.printf("Invalid genres: \"%s\"\n", args[3]);
+        if(!isGenre(genre)){
+            System.out.printf("Invalid genre: \"%s\"\n", genre);
+
             isValid = false;
         }
         return isValid;
