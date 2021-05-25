@@ -3,8 +3,6 @@ package RecS;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-import java.io.IOException;
-
 public class RecommenderTest {
 
     @Test
