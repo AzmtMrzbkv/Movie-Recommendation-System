@@ -30,11 +30,6 @@ public class Recommender    {
         return top;
     }
 
-    // Overridden method that handles queries without argument "limit"
-    public static List<Movies> limitedTop(HashMap<String, Double> map) {
-        return limitedTop(map, 10);
-    }
-
     // Calculate and assign relevancy score for each movie
     public static HashMap<String, Double> gradeMovies(String[] args) {
         double[] coef = {0.333, 0.333, 0.333};
