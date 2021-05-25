@@ -37,13 +37,13 @@ root@containerID$ . run.sh
 
 ## Example input/output
 
-Input: 
+Input (part 1): 
 
 ```sh
 java -cp target/cse364-project-1.0-SNAPSHOT.jar RecS.recommender “F” “25” “Grad student” “Action|Comedy”
 ```
 
-Output:
+Output (part 1):
 
 ```sh
 Big One, The (1997) (http://www.imdb.com/title/tt0124295)
@@ -57,6 +57,18 @@ Gold Rush, The (1925) (http://www.imdb.com/title/tt0015864)
 March of the Wooden Soldiers (a.k.a. Laurel & Hardy in Toyland) (1934) (http://www.imdb.com/title/tt0024852)
 Close Shave, A (1995) (http://www.imdb.com/title/tt0112691)
 
+```
+
+Input (part 2): 
+
+```sh
+-
+```
+
+Output (part 2):
+
+```sh
+-
 ```
 
 ## Roles
