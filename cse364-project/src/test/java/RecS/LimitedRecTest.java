@@ -14,7 +14,7 @@ public class LimitedRecTest {
 
     @Test
     public void getLimit() {
-        LimitedRec lr = new LimitedRec("Matrix, The (1999)", "10");
+        LimitedRec lr = new LimitedRec("Matrix, The (1999)");
         assertEquals("10", lr.getLimit());
     }
 
