@@ -6,30 +6,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
-<span class="nc" id="L12">public class App {</span>
+<span class="nc" id="L13">public class App {</span>
     //here will be functions mapped to GET
 
     @GetMapping(&quot;/users/recommendations&quot;)
-    public List&lt;Movies&gt; recommendForUser(@RequestBody Users newUser){
+    public List&lt;Movies&gt; recommendForUser(@RequestBody Users newUser) throws IOException {
         // this part to be implemented
-<span class="nc" id="L18">        String age = newUser.getAge();</span>
-<span class="nc" id="L19">        String genre = newUser.getGenres();</span>
-<span class="nc" id="L20">        String gender = newUser.getGender();</span>
-<span class="nc" id="L21">        String occupation = newUser.getOccupation();</span>
+<span class="nc" id="L19">        String age = newUser.getAge();</span>
+<span class="nc" id="L20">        String genre = newUser.getGenres();</span>
+<span class="nc" id="L21">        String gender = newUser.getGender();</span>
+<span class="nc" id="L22">        String occupation = newUser.getOccupation();</span>
 
-//        // check the input validity
-<span class="nc bnc" id="L24" title="All 2 branches missed.">        if(!Recommender.isValidInput(gender, age, occupation, genre)) { return null;}</span>
+        // check the input validity
+<span class="nc bnc" id="L25" title="All 2 branches missed.">        if (!Recommender.isValidInput(gender, age, occupation, genre)) {</span>
+<span class="nc" id="L26">            return null;</span>
+        }
 
-<span class="nc" id="L26">        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}), 10);</span>
+<span class="nc" id="L29">        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}), 10);</span>
     }
 
     @GetMapping(&quot;/movies/recommendations&quot;)
-    public List&lt;Movies&gt; recommendByMovie(@RequestBody LimitedRec newRequest) {
+    public List&lt;Movies&gt; recommendByMovie(@RequestBody LimitedRec newRequest) throws IOException {
         // this part to be implemented
-<span class="nc" id="L32">        return null;</span>
+<span class="nc" id="L35">        Users newUser = Recommender.posFanFromMovieID(Recommender.getIdByTitle(newRequest.getTitle()));</span>
+<span class="nc" id="L36">        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{newUser.getGender(), newUser.getAge(), newUser.getOccupation(), newUser.getGenres()}), Integer.parseInt(newRequest.getLimit()));</span>
     }
 
 }
