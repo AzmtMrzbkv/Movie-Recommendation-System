@@ -181,8 +181,8 @@ public class Recommender    {
     //has changes from mile2
     public static boolean isValidInput(String age, String gender, String occupation, String genre) {
         boolean isValid = true;
-        // Invalid gender error
 
+        // Invalid gender error
         if (!isGender(gender) && !gender.equals("")) { // check here
             System.out.printf("Invalid gender: \"%s\"\n", gender);
             isValid = false;
@@ -200,7 +200,6 @@ public class Recommender    {
         //Invalid genre error
         if (!isGenre(genre)) {
             System.out.printf("Invalid genre: \"%s\"\n", genre);
-
             isValid = false;
         }
         return isValid;
