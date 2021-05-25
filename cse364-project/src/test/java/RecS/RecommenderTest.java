@@ -103,4 +103,19 @@ public class RecommenderTest {
         assertEquals(false, tester.isValidInput("0", "M", "unemployed", "Romanc"));
         assertEquals(true, tester.isValidInput("", "", "", "comedy|horror"));
     }
+
+    @Test
+    public void testIsGenre() throws IOException {
+        Recommender tester = new Recommender();
+
+        assertEquals(true, tester.isGenre("comedy|horror"));
+        assertEquals(true, tester.isGenre("western|comedy"));
+        assertEquals(true,tester.isGenre("drama|Thriller"));
+        assertEquals(false, tester.isGenre("wesern"));
+        assertEquals(false, tester.isGenre(""));
+        //assertEquals(false, tester.isGenre("|"));
+
+    }
+
+
 }
