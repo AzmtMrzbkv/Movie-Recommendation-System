@@ -25,7 +25,7 @@ public class App {
         String gender = newUser.getGender();
         String occupation = newUser.getOccupation();
 
-        if (!Recommender.isValidInput(age, gender, occupation, genre)) { return null; }
+        if(!Recommender.isValidInput(age, gender, occupation, genre)) { return null; }
 
         return null;
     }
