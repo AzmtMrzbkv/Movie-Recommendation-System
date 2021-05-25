@@ -5,11 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class Recommender    {
+public class Recommender {
 
     // Creates the List of #limit-top movies and returns it
     //changes from mile2 starts here
-    public static List<Movies> limitedTop(HashMap<String, Double> map, int limit) {
+    public static List<Movies> limitedTop(HashMap<String, Double> map, int limit) throws IOException {
         List<Movies> top = new ArrayList<>();
 
         for (int i = 0; i < limit && i < map.size(); i++) {
@@ -29,7 +29,7 @@ public class Recommender    {
     }
 
     // Calculate and assign relevancy score for each movie
-    public static HashMap<String, Double> gradeMovies(String[] args) {
+    public static HashMap<String, Double> gradeMovies(String[] args) throws IOException {
         double[] coef = {0.333, 0.333, 0.333};
         HashMap<String, Double> simUsers = new HashMap<>();
         HashMap<String, Double> movies = new HashMap<>();
@@ -41,120 +41,115 @@ public class Recommender    {
         String[] arrOfStr;
         double fac;
         String line = "";
-            BufferedReader users = new BufferedReader(new FileReader("./data/users.dat"));
-            line = users.readLine(); //UserID::Gender::Age::Occupation::Zip-code
-            while (line != null) {
-                fac = 0;
-                arrOfStr = line.split("::");
-                for (int i = 0; i < 3; i++) fac += arrOfStr[i + 1].equalsIgnoreCase(args[i]) ? coef[i] : 0;
-                simUsers.put(arrOfStr[0], fac);
-                line = users.readLine();
-            }
-            users.close();
+        BufferedReader users = new BufferedReader(new FileReader("./data/users.dat"));
+        line = users.readLine(); //UserID::Gender::Age::Occupation::Zip-code
+        while (line != null) {
+            fac = 0;
+            arrOfStr = line.split("::");
+            for (int i = 0; i < 3; i++) fac += arrOfStr[i + 1].equalsIgnoreCase(args[i]) ? coef[i] : 0;
+            simUsers.put(arrOfStr[0], fac);
+            line = users.readLine();
+        }
+        users.close();
         // map new rating to movies
-            BufferedReader ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
-            line = ratings.readLine(); //UserID::MovieID::Rating::Timestamp
-            while (line != null) {
-                arrOfStr = line.split("::");
-                if (movies.containsKey(arrOfStr[1])) {
-                    movies.put(arrOfStr[1], (Integer.parseInt(arrOfStr[2]) * (simUsers.get(arrOfStr[0]) + 1) + movies.get(arrOfStr[1])) / 2);
-                } else {
-                    movies.put(arrOfStr[1], Integer.parseInt(arrOfStr[2]) * (simUsers.get(arrOfStr[0]) + 1));
-                }
-                line = ratings.readLine();
+        BufferedReader ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
+        line = ratings.readLine(); //UserID::MovieID::Rating::Timestamp
+        while (line != null) {
+            arrOfStr = line.split("::");
+            if (movies.containsKey(arrOfStr[1])) {
+                movies.put(arrOfStr[1], (Integer.parseInt(arrOfStr[2]) * (simUsers.get(arrOfStr[0]) + 1) + movies.get(arrOfStr[1])) / 2);
+            } else {
+                movies.put(arrOfStr[1], Integer.parseInt(arrOfStr[2]) * (simUsers.get(arrOfStr[0]) + 1));
             }
-            ratings.close();
+            line = ratings.readLine();
+        }
+        ratings.close();
         if (!args[3].equals("")) return promoteFavGenre(movies, args[3]);
         return movies;
     }
 
     // if favorite genre is given, promote movies with such genres
-    public static HashMap<String, Double> promoteFavGenre(HashMap<String, Double> map, String cat) {
+    public static HashMap<String, Double> promoteFavGenre(HashMap<String, Double> map, String cat) throws IOException {
         String[] catArr = cat.toLowerCase().split("\\|");
 
         String[] arrOfStr;
         Set<String> cats;
-       
-            BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-            String line = movies.readLine();
-            while (line != null) {
-                arrOfStr = line.split("::");
-                cats = new HashSet<>(Arrays.asList(arrOfStr[2].toLowerCase().split("\\|")));
-                for (String s : catArr) {
-                    if (cats.contains(s)) {
-                        if (map.get(arrOfStr[0]) != null) map.put(arrOfStr[0], map.get(arrOfStr[0]) * 10);
-                        break;
-                    }
-                }
-                line = movies.readLine();
-            }
-            movies.close();
-        return map;
-    }
-    
-    
-    
 
-    // in the movies.dat file searches for movies with given ID and returns its genre
-    public static String getGenreByID(String movieID) {
-        String genre = "";
-            BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-
-            String line = movies.readLine();
-
-            while ((line != null)) {
-                String[] film = line.split("::");
-                if (film[0].equals(movieID)) {
-                    genre = film[2];
+        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+        String line = movies.readLine();
+        while (line != null) {
+            arrOfStr = line.split("::");
+            cats = new HashSet<>(Arrays.asList(arrOfStr[2].toLowerCase().split("\\|")));
+            for (String s : catArr) {
+                if (cats.contains(s)) {
+                    if (map.get(arrOfStr[0]) != null) map.put(arrOfStr[0], map.get(arrOfStr[0]) * 10);
                     break;
                 }
-                line = movies.readLine();
             }
-            movies.close();
+            line = movies.readLine();
+        }
+        movies.close();
+        return map;
+    }
+
+
+    // in the movies.dat file searches for movies with given ID and returns its genre
+    public static String getGenreByID(String movieID) throws IOException {
+        String genre = "";
+        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+
+        String line = movies.readLine();
+
+        while ((line != null)) {
+            String[] film = line.split("::");
+            if (film[0].equals(movieID)) {
+                genre = film[2];
+                break;
+            }
+            line = movies.readLine();
+        }
+        movies.close();
         return genre;
     }
-    
+
     //find the user that has given the greatest rating to the movie with movieID
     public static Users posFanFromMovieID(String movieID) throws IOException {
-        String userId = ""; int maxRating = 0;// get this from ratings.dat file
-        try {
-            BufferedReader ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
-            String line = ratings.readLine();
+        String userId = "";
+        int maxRating = 0;// get this from ratings.dat file
+        BufferedReader ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
+        String line = ratings.readLine();
 
-            while ((line != null)) {
-                String[] arr = line.split("::");
-                if (arr[1].equals(movieID) && Integer.parseInt(arr[2]) > maxRating){
-                    maxRating = Integer.parseInt(arr[2]);
-                    userId = arr[0];
-                }
-                line = ratings.readLine();
+        while ((line != null)) {
+            String[] arr = line.split("::");
+            if (arr[1].equals(movieID) && Integer.parseInt(arr[2]) > maxRating) {
+                maxRating = Integer.parseInt(arr[2]);
+                userId = arr[0];
             }
-            ratings.close();
-        } catch (IOException e) {
-            System.out.println("Internal error! The following file is missing\n \"./data/ratings.dat\"");
+            line = ratings.readLine();
         }
+        ratings.close();
 
         return getUserById(userId);
     }
 
     // in the movies.dat file searches for movies with given ID and returns its title
-    public static String getTitleByID(String movieID) {
+    public static String getTitleByID(String movieID) throws IOException {
         String title = "";
-            BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-            String line = movies.readLine();
+        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+        String line = movies.readLine();
 
-            while ((line != null)) {
-                String[] film = line.split("::");
-                if (film[0].equals(movieID)) {
-                    title = film[1];
-                    break;
-                }
-                line = movies.readLine();
+        while ((line != null)) {
+            String[] film = line.split("::");
+            if (film[0].equals(movieID)) {
+                title = film[1];
+                break;
             }
-            movies.close();
+            line = movies.readLine();
+        }
+        movies.close();
         return title;
     }
-    
+
     //find user with given userId
     public static Users getUserById(String userID) throws IOException {
         BufferedReader users = new BufferedReader(new FileReader("./data/users.dat"));
@@ -170,43 +165,43 @@ public class Recommender    {
         return null;
     }
 
-    public static String getImdbByID(String movieID) {
+    public static String getImdbByID(String movieID) throws IOException {
         String link = ""; // get this from links.dat
-            BufferedReader movies = new BufferedReader(new FileReader("./data/links.dat"));
-            String line = movies.readLine();
+        BufferedReader movies = new BufferedReader(new FileReader("./data/links.dat"));
+        String line = movies.readLine();
 
-            while ((line != null)) {
-                String[] film = line.split("::");
-                if (film[0].equals(movieID)) {
-                    link = film[1];
-                    break;
-                }
-                line = movies.readLine();
+        while ((line != null)) {
+            String[] film = line.split("::");
+            if (film[0].equals(movieID)) {
+                link = film[1];
+                break;
             }
-            movies.close();
+            line = movies.readLine();
+        }
+        movies.close();
         return "https://www.imdb.com/title/tt" + link;
     }
-    
-    
+
+
     // in the movies.dat file searches for movie with given title and returns its ID
     public static String getIdByTitle(String title) throws IOException {
         String id = ""; // get this from movies.dat file
-            BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-            String line = movies.readLine();
+        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+        String line = movies.readLine();
 
-            while ((line != null)) {
-                String[] film = line.split("::");
-                if (film[1].equals(title)) {
-                    id = film[0];
-                    break;
-                }
-                line = movies.readLine();
+        while ((line != null)) {
+            String[] film = line.split("::");
+            if (film[1].equals(title)) {
+                id = film[0];
+                break;
             }
-            movies.close();
+            line = movies.readLine();
+        }
+        movies.close();
         return id;
     }
 
-    public static boolean isValidInput(String gender, String age, String occupation, String genre) {
+    public static boolean isValidInput(String gender, String age, String occupation, String genre) throws IOException {
         boolean isValid = true;
 
         // Invalid gender error
@@ -234,20 +229,20 @@ public class Recommender    {
 
     // If genre is present in movies, return true; otherwise false
     // has changes from mile2 (end here)
-    public static boolean isGenre(String genre) {
-        if(genre.equals("")) return true;
+    public static boolean isGenre(String genre) throws IOException {
+        if (genre.equals("")) return true;
         Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase().split("\\|")));
         Set<String> allGenres = new HashSet<>();
 
-            BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-            String line = movies.readLine();
+        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+        String line = movies.readLine();
 
-            while (line != null) {
-                String[] arrOfStr = line.toLowerCase().split("::");
-                allGenres.addAll(Arrays.asList(arrOfStr[2].toLowerCase().split("\\|")));
-                line = movies.readLine();
-            }
-            movies.close();
+        while (line != null) {
+            String[] arrOfStr = line.toLowerCase().split("::");
+            allGenres.addAll(Arrays.asList(arrOfStr[2].toLowerCase().split("\\|")));
+            line = movies.readLine();
+        }
+        movies.close();
         return allGenres.containsAll(genres);
     }
 
