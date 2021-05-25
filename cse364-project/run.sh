@@ -6,4 +6,4 @@ cd ./Software-Engineering---CSE36401/cse364-project
 
 mvn package
 
-java -jar target/RecS-1.0-SNAPSHOT.jar recommend.Tops "" "" ""
+java -jar target/RecS-1.0-SNAPSHOT.jar
