@@ -12,7 +12,7 @@ import java.util.List;
 public class App {
     //here will be functions mapped to GET
 
-    @GetMapping("/users/recommendations ")
+    @GetMapping("/users/recommendations")
     public List<Movies> recommendForUser(@RequestBody Users newUser){
         // this part to be implemented
         String age = newUser.getAge();
@@ -26,7 +26,7 @@ public class App {
         return Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}));
     }
 
-    @GetMapping("/movies/recommendations ")
+    @GetMapping("/movies/recommendations")
     public List<Movies> recommendByMovie(@RequestBody LimitedRec newRequest) {
         // this part to be implemented
         return null;
