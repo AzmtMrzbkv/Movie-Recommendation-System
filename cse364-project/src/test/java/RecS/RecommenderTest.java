@@ -2,6 +2,7 @@ package RecS;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import RecS.Recommender;
 
 import java.io.IOException;
 
@@ -35,9 +36,54 @@ public class RecommenderTest {
         assertEquals("result", "18", tester.parseStringOccupation("tradesman"));
         assertEquals("result", "19", tester.parseStringOccupation("unemployed"));
         assertEquals("result", "20", tester.parseStringOccupation("writing"));
+    }
+
+    @Test
+    public void testParseAge() {
+        Recommender tester = new Recommender();
+        assertEquals("-1", tester.parseAge("-2123"));
+        assertEquals("-1", tester.parseAge("gradstud"));
+        assertEquals("1", tester.parseAge("7"));
+        assertEquals("45", tester.parseAge("45"));
+        assertEquals("56", tester.parseAge("57"));
+        assertEquals("-1", tester.parseAge("4294967326"));
+    }
 
 
+    @Test
+    public void testIsOccupation(){
+        Recommender tester = new Recommender();
+        assertEquals("result", true, tester.isOccupation("academic"));
+        assertEquals("result", true, tester.isOccupation(""));
+        assertEquals("result", false, tester.isOccupation("academc"));
+        assertEquals("result", true, tester.isOccupation("educator"));
+        assertEquals("result", true, tester.isOccupation("gradstudent"));
+        assertEquals("result", false, tester.isOccupation("programer"));
+    }
 
+    @Test
+    public void testIsValidAge() {
+        Recommender tester = new Recommender();
+        assertEquals("result", true, tester.isValidAge("5"));
+        assertEquals("result", true, tester.isValidAge("0"));
+        assertEquals("result", true, tester.isValidAge("19"));
+        assertEquals("result", true, tester.isValidAge("34"));
+        assertEquals("result", true, tester.isValidAge("43"));
+        assertEquals("result", true, tester.isValidAge("45"));
+        assertEquals("result", true, tester.isValidAge("51"));
+        assertEquals("result", false, tester.isValidAge("0x`"));
+        assertEquals("result", true, tester.isValidAge("0"));
+        assertEquals("result", true, tester.isValidAge("57"));
+        assertEquals("result", false, tester.isValidAge("Ffsfs"));
+        assertEquals("result", false, tester.isValidAge("-231"));
+    }
 
+    @Test
+    public void testIsGender() {
+        Recommender tester = new Recommender();
+        assertEquals("result", true, tester.isGender("M"));
+        assertEquals("result", false, tester.isGender("f"));
+        assertEquals("result", true, tester.isGender("F"));
+        assertEquals("result", false, tester.isGender(""));
     }
 }
