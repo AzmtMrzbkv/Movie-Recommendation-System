@@ -29,6 +29,8 @@ public class App {
     @GetMapping("/movies/recommendations")
     public List<Movies> recommendByMovie(@RequestBody LimitedRec newRequest) {
         // this part to be implemented
+        Users newUser = Recommender.posFanFromMovieID(Recommender.getIdByTitle(newRequest.getTitle()));
+        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{newUser.getGender(), newUser.getAge(), newUser.getOccupation(), newUser.getGenres()}), Integer.parseInt(newRequest.getLimit()));
         return null;
     }
 
