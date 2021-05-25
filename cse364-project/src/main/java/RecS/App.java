@@ -13,17 +13,19 @@ public class App {
     //here will be functions mapped to GET
 
     @GetMapping("/users/recommendations")
-    public List<Movies> recommendForUser(@RequestBody Users newUser){
+    public Users/*List<Movies>*/ recommendForUser(@RequestBody Users newUser){
         // this part to be implemented
         String age = newUser.getAge();
         String genre = newUser.getGenres();
         String gender = newUser.getGender();
         String occupation = newUser.getOccupation();
 
-        // check the input validity
-        if(!Recommender.isValidInput(gender, age, occupation, genre)) { return null;}
+        return new Users(gender, age, occupation, genre);
 
-        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}));
+//        // check the input validity
+//        if(!Recommender.isValidInput(gender, age, occupation, genre)) { return null;}
+//
+//        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}));
     }
 
     @GetMapping("/movies/recommendations")
