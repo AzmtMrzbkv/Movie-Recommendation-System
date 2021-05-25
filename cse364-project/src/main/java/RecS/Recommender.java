@@ -10,6 +10,7 @@ public class Recommender    {
     public Recommender() {} // private constructor
 
     // Creates the List of #limit-top movies and returns it
+    //changes from mile2 starts here
     public static List<Movies> limitedTop(HashMap<String, Double> map, int limit) {
         List<Movies> top = new ArrayList<>();
 
@@ -177,6 +178,7 @@ public class Recommender    {
         return "https://www.imdb.com/title/tt" + link;
     }
 
+    //has changes from mile2
     public static boolean isValidInput(String age, String gender, String occupation, String genre) {
         boolean isValid = true;
         // Invalid gender error
@@ -205,6 +207,7 @@ public class Recommender    {
     }
 
     // If genre is present in movies, return true; otherwise false
+    // has changes from mile2 (end here)
     public static boolean isGenre(String genre) {
         Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
         Set<String> allGenres = new HashSet<>();
