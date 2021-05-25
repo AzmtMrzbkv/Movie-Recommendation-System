@@ -2,7 +2,6 @@ package RecS;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import RecS.Recommender;
 
 public class RecommenderTest {
 
