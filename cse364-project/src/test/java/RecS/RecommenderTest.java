@@ -83,4 +83,21 @@ public class RecommenderTest {
         assertEquals("result", true, tester.isGender("F"));
         assertEquals("result", false, tester.isGender(""));
     }
+
+    @Test
+    public void testIsValidInput() throws IOException {
+        Recommender tester = new Recommender();
+
+        assertEquals(true, tester.isValidInput("23","M", "doctor", ""));
+        assertEquals(true, tester.isValidInput("", "", "executive", "comedy|horror"));
+        assertEquals(false, tester.isValidInput("", "F", "e", ""));
+        assertEquals(true, tester.isValidInput("15", "F", "college", "sci-fi"));
+        assertEquals(true, tester.isValidInput("", "", "", "AdVenturE"));
+        assertEquals(true, tester.isValidInput("", "", "", ""));
+        assertEquals(false, tester.isValidInput("1000", "M", "sale", ""));
+        assertEquals(true, tester.isValidInput("0", "M", "unemployed", "Romance"));
+        assertEquals(false, tester.isValidInput("ad", "sdfs", "fds", ""));
+        assertEquals(false, tester.isValidInput("0", "M", "unemployed", "Romanc"));
+        assertEquals(true, tester.isValidInput("", "", "", "comedy|horror"));
+    }
 }
