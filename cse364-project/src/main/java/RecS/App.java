@@ -2,6 +2,7 @@ package RecS;
 
 // this class will be the controller
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ public class App {
     //here will be functions mapped to GET
 
     @GetMapping("/users/recommendations")
-    public List<Movies> recommendForUser(@RequestBody Users newUser){
+    public ResponseEntity<List<Movies>> recommendForUser(@RequestBody Users newUser){
         // this part to be implemented
         String age = newUser.getAge();
         String genre = newUser.getGenres();
@@ -23,7 +24,7 @@ public class App {
 //        // check the input validity
         if(!Recommender.isValidInput(gender, age, occupation, genre)) { return null;}
 
-        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}), 10);
+        return ResponseEntity.ok(Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}), 10));
     }
 
     @GetMapping("/movies/recommendations")
