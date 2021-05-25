@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecommenderTest {
 
@@ -115,5 +117,61 @@ public class RecommenderTest {
 
     }
 
+    @Test
+    public void testGradeMovies() throws IOException{
+        Recommender tester = new Recommender();
+        String[] a = {"", "", "", ""};
+        assertNotNull(tester.gradeMovies(a));
+        assertEquals(true, tester.gradeMovies(a).size() > 0);
+        a = new String[]{"M", "23", "doctor", ""};
+        assertNotNull(tester.gradeMovies(a));
+        assertEquals(true, tester.gradeMovies(a).size() > 0);
+
+    }
+
+    @Test
+    public void testPromoteFavGenre() {
+        Recommender tester = new Recommender();
+        String[] a = {"", "", "", ""};
+        assertNotNull(tester.promoteFavGenre(tester.gradeMovies(a), "fantasy"));
+        assertEquals(true, tester.promoteFavGenre(tester.gradeMovies(a), "sci-fi").size() > 0);
+    }
+
+
+    @Test
+    public void getGenreByID() {
+        assertEquals("Animation|Children's|Comedy", Recommender.getGenreByID("1"));
+        assertEquals("Adventure|Children's|Fantasy", Recommender.getGenreByID("2"));
+    }
+
+    @Test
+    public void getTitleByID() {
+        assertEquals("Toy Story (1995)", Recommender.getTitleByID("1"));
+        assertEquals("Jumanji (1995)", Recommender.getTitleByID("2"));
+    }
+
+    @Test
+    public void getImdbByID() {
+        assertEquals("https://www.imdb.com/title/tt0114709", Recommender.getImdbByID("1"));
+        assertEquals("https://www.imdb.com/title/tt0113497", Recommender.getImdbByID("2"));
+    }
+
+    @Test
+    public void limTop() {
+        List<Movies> expected = new ArrayList<>();
+        Movies movie1 = new Movies("Braveheart (1995)", "https://www.imdb.com/title/tt0112573", "Action|Drama|War");
+        Movies movie2 = new Movies("Schindler's List (1993)", "https://www.imdb.com/title/tt0108052", "Drama|War");
+
+        expected.add(movie1);
+        expected.add(movie2);
+
+        List<Movies> arr = Recommender.limitedTop(Recommender.gradeMovies(new String[]{"F", "25", "Grad student", "Action|War"}), 2);
+
+        for(int i = 0; i < 2; i++){
+            assertEquals(expected.get(i).getGenres(), arr.get(i).getGenres());
+            assertEquals(expected.get(i).getTitle(), arr.get(i).getTitle());
+            assertEquals(expected.get(i).getImdb(), arr.get(i).getImdb());
+        }
+    }
 
 }
