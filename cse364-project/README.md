@@ -1,10 +1,9 @@
-# This is the second project of CSE36401 course
+# This is the third project of CSE36401 course
 
 ## Algorithm Overview
 
 The Milestone 3 (part 1) project proposes a Top-10 Movie Recommendation System based on User's Age, Gender, Occupation and Favorite Genres.
 The suggested Algorithm works as follows: 
-
 
 1. An input is parsed into a Gender, Age and Occupation (GAO) triplet and compared with the data in users.dat file.
 
@@ -14,10 +13,13 @@ The suggested Algorithm works as follows:
 
 4. If the input contains information about the favorite genre, then we "promote" the movies which includes one (or more) provided genres as: NewRating = GivenRating * 10. 
 
-5. Finally, the Top-10 Movies with the highest rating are printed.
+5. Finally, the Top-10 Movies with the highest rating are returned.
 
 The Milestone 3 (part 2) project proposes a Top-N Movie Recommendation System (N is a limit, if N is absent, it is by default 10) based on  Movie Title (further some User's Age, Gender, Occupation and Favorite Genres are used).
 The suggested Algorithm works as follows: 
+
+1. Find a user that has given the greatest rating for movie with given Movie Title
+2. 
 
 
 ## How to run
