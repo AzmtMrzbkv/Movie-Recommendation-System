@@ -18,5 +18,5 @@ public class LimitedRecTest {
         assertEquals("10", lr.getLimit());
     }
 
-    
+
 }
