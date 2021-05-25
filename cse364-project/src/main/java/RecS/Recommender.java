@@ -222,6 +222,7 @@ public class Recommender    {
             movies.close();
         } catch (IOException e) {
             System.out.println("Internal error! The following file is missing\n \"./data/movies.dat\"");
+            return false;
         }
 
         return allGenres.containsAll(genres);
