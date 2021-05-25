@@ -130,7 +130,7 @@ public class RecommenderTest {
     }
 
     @Test
-    public void testPromoteFavGenre() {
+    public void testPromoteFavGenre() throws IOException {
         Recommender tester = new Recommender();
         String[] a = {"", "", "", ""};
         assertNotNull(tester.promoteFavGenre(tester.gradeMovies(a), "fantasy"));
@@ -139,25 +139,25 @@ public class RecommenderTest {
 
 
     @Test
-    public void getGenreByID() {
+    public void getGenreByID() throws IOException {
         assertEquals("Animation|Children's|Comedy", Recommender.getGenreByID("1"));
         assertEquals("Adventure|Children's|Fantasy", Recommender.getGenreByID("2"));
     }
 
     @Test
-    public void getTitleByID() {
+    public void getTitleByID() throws IOException {
         assertEquals("Toy Story (1995)", Recommender.getTitleByID("1"));
         assertEquals("Jumanji (1995)", Recommender.getTitleByID("2"));
     }
 
     @Test
-    public void getImdbByID() {
+    public void getImdbByID() throws IOException {
         assertEquals("https://www.imdb.com/title/tt0114709", Recommender.getImdbByID("1"));
         assertEquals("https://www.imdb.com/title/tt0113497", Recommender.getImdbByID("2"));
     }
 
     @Test
-    public void limTop() {
+    public void limTop() throws IOException {
         List<Movies> expected = new ArrayList<>();
         Movies movie1 = new Movies("Braveheart (1995)", "https://www.imdb.com/title/tt0112573", "Action|Drama|War");
         Movies movie2 = new Movies("Schindler's List (1993)", "https://www.imdb.com/title/tt0108052", "Drama|War");
@@ -172,6 +172,18 @@ public class RecommenderTest {
             assertEquals(expected.get(i).getTitle(), arr.get(i).getTitle());
             assertEquals(expected.get(i).getImdb(), arr.get(i).getImdb());
         }
+    }
+
+    @Test
+    public void getIDByTitle() throws IOException {
+        assertEquals("1", Recommender.getIdByTitle("Toy Story (1995)"));
+        assertEquals("2", Recommender.getIdByTitle("Jumanji (1995)"));
+    }
+
+    @Test
+    public void getUserByID() throws IOException {
+        Users user = new Users("F", "1", "10", "");
+        
     }
 
 }
