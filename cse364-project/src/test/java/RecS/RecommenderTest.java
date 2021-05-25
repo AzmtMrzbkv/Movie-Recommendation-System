@@ -2,7 +2,10 @@ package RecS;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+<<<<<<< HEAD
 import RecS.Recommender;
+=======
+>>>>>>> aef7e5f953e42ec4e538ce70cb120d3fefa4aee9
 
 public class RecommenderTest {
 
