@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Recommender.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RecS</a> &gt; <a href="index.source.html" class="el_package">RecS</a> &gt; <span class="el_source">Recommender.java</span></div><h1>Recommender.java</h1><pre class="source lang-java linenums">package RecS;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+
+<span class="fc" id="L8">public class Recommender    {</span>
+
+    // Creates the List of #limit-top movies and returns it
+    //changes from mile2 starts here
+    public static List&lt;Movies&gt; limitedTop(HashMap&lt;String, Double&gt; map, int limit) {
+<span class="fc" id="L13">        List&lt;Movies&gt; top = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L15" title="1 of 4 branches missed.">        for (int i = 0; i &lt; limit &amp;&amp; i &lt; map.size(); i++) {</span>
+<span class="fc" id="L16">            String id = null;</span>
+<span class="fc" id="L17">            Double maxR = Double.MIN_VALUE;</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">            for (String key : map.keySet()) {</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">                if (map.get(key) &gt; maxR) {</span>
+<span class="fc" id="L20">                    maxR = map.get(key);</span>
+<span class="fc" id="L21">                    id = key;</span>
+                }
+<span class="fc" id="L23">            }</span>
+<span class="fc" id="L24">            top.add(new Movies(getTitleByID(id), getImdbByID(id), getGenreByID(id)));</span>
+<span class="fc" id="L25">            map.remove(id);</span>
+        }
+
+<span class="fc" id="L28">        return top;</span>
+    }
+
+    // Calculate and assign relevancy score for each movie
+    public static HashMap&lt;String, Double&gt; gradeMovies(String[] args) {
+<span class="fc" id="L33">        double[] coef = {0.333, 0.333, 0.333};</span>
+<span class="fc" id="L34">        HashMap&lt;String, Double&gt; simUsers = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L35">        HashMap&lt;String, Double&gt; movies = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L37">        args[1] = parseAge(args[1]);</span>
+<span class="fc" id="L38">        args[2] = parseStringOccupation(args[2]);</span>
+
+        //Calculate the similarity of users
+        String[] arrOfStr;
+        double fac;
+<span class="fc" id="L43">        String line = &quot;&quot;;</span>
+
+        try {
+<span class="fc" id="L46">            BufferedReader users = new BufferedReader(new FileReader(&quot;./data/users.dat&quot;));</span>
+<span class="fc" id="L47">            line = users.readLine(); //UserID::Gender::Age::Occupation::Zip-code</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            while (line != null) {</span>
+<span class="fc" id="L49">                fac = 0;</span>
+<span class="fc" id="L50">                arrOfStr = line.split(&quot;::&quot;);</span>
+<span class="fc bfc" id="L51" title="All 4 branches covered.">                for (int i = 0; i &lt; 3; i++) fac += arrOfStr[i + 1].equalsIgnoreCase(args[i]) ? coef[i] : 0;</span>
+<span class="fc" id="L52">                simUsers.put(arrOfStr[0], fac);</span>
+<span class="fc" id="L53">                line = users.readLine();</span>
+            }
+<span class="fc" id="L55">            users.close();</span>
+<span class="nc" id="L56">        } catch (IOException e) {</span>
+<span class="nc" id="L57">            System.out.println(&quot;Internal error! The following file is missing\n \&quot;./data/users.dat\&quot;&quot;);</span>
+<span class="nc" id="L58">            return null;</span>
+<span class="fc" id="L59">        }</span>
+        // map new rating to movie
+        try {
+<span class="fc" id="L62">            BufferedReader ratings = new BufferedReader(new FileReader(&quot;./data/ratings.dat&quot;));</span>
+<span class="fc" id="L63">            line = ratings.readLine(); //UserID::MovieID::Rating::Timestamp</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            while (line != null) {</span>
+<span class="fc" id="L65">                arrOfStr = line.split(&quot;::&quot;);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">                if (movies.containsKey(arrOfStr[1])) {</span>
+<span class="fc" id="L67">                    movies.put(arrOfStr[1], (Integer.parseInt(arrOfStr[2]) * (simUsers.get(arrOfStr[0]) + 1) + movies.get(arrOfStr[1])) / 2);</span>
+                } else {
+<span class="fc" id="L69">                    movies.put(arrOfStr[1], Integer.parseInt(arrOfStr[2]) * (simUsers.get(arrOfStr[0]) + 1));</span>
+                }
+<span class="fc" id="L71">                line = ratings.readLine();</span>
+            }
+<span class="fc" id="L73">            ratings.close();</span>
+<span class="nc" id="L74">        } catch (IOException e) {</span>
+<span class="nc" id="L75">            System.out.println(&quot;Internal error! The following file is missing\n \&quot;./data/ratings.dat\&quot;&quot;);</span>
+<span class="fc" id="L76">        }</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (!args[3].equals(&quot;&quot;)) return promoteFavGenre(movies, args[3]);</span>
+<span class="fc" id="L78">        return movies;</span>
+    }
+
+    // if favorite genre is given, promote movies with such genres
+    public static HashMap&lt;String, Double&gt; promoteFavGenre(HashMap&lt;String, Double&gt; map, String cat) {
+<span class="fc" id="L83">        String[] catArr = cat.toLowerCase().split(&quot;\\|&quot;);</span>
+
+        String[] arrOfStr;
+        Set&lt;String&gt; cats;
+        try {
+<span class="fc" id="L88">            BufferedReader movies = new BufferedReader(new FileReader(&quot;./data/movies.dat&quot;));</span>
+<span class="fc" id="L89">            String line = movies.readLine();</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">            while (line != null) {</span>
+<span class="fc" id="L91">                arrOfStr = line.split(&quot;::&quot;);</span>
+<span class="fc" id="L92">                cats = new HashSet&lt;&gt;(Arrays.asList(arrOfStr[2].toLowerCase().split(&quot;\\|&quot;)));</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                for (String s : catArr) {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">                    if (cats.contains(s)) {</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">                        if (map.get(arrOfStr[0]) != null) map.put(arrOfStr[0], map.get(arrOfStr[0]) * 10);</span>
+                        break;
+                    }
+                }
+<span class="fc" id="L99">                line = movies.readLine();</span>
+            }
+<span class="fc" id="L101">            movies.close();</span>
+
+<span class="nc" id="L103">        } catch (IOException e) {</span>
+<span class="nc" id="L104">            System.out.println(&quot;Internal error! The following file is missing\n \&quot;./data/movies.dat\&quot;&quot;);</span>
+<span class="pc" id="L105">            return null;}</span>
+<span class="fc" id="L106">        return map;</span>
+    }
+
+    // in the movies.dat file searches for movies with given ID and returns its genre
+    public static String getGenreByID(String movieID) {
+<span class="fc" id="L111">        String genre = &quot;&quot;;</span>
+        try {
+<span class="fc" id="L113">            BufferedReader movies = new BufferedReader(new FileReader(&quot;./data/movies.dat&quot;));</span>
+
+<span class="fc" id="L115">            String line = movies.readLine();</span>
+
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">            while ((line != null)) {</span>
+<span class="fc" id="L118">                String[] film = line.split(&quot;::&quot;);</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">                if (film[0].equals(movieID)) {</span>
+<span class="fc" id="L120">                    genre = film[2];</span>
+<span class="fc" id="L121">                    break;</span>
+                }
+<span class="fc" id="L123">                line = movies.readLine();</span>
+<span class="fc" id="L124">            }</span>
+<span class="fc" id="L125">            movies.close();</span>
+<span class="nc" id="L126">        } catch (IOException e) {</span>
+<span class="nc" id="L127">            System.out.println(&quot;Internal error! The following file is missing\n \&quot;./data/link.dat\&quot;&quot;);</span>
+<span class="fc" id="L128">        }</span>
+<span class="fc" id="L129">        return genre;</span>
+    }
+
+    // in the movies.dat file searches for movies with given ID and returns its title
+    public static String getTitleByID(String movieID) {
+<span class="fc" id="L134">        String title = &quot;&quot;;</span>
+        try {
+<span class="fc" id="L136">            BufferedReader movies = new BufferedReader(new FileReader(&quot;./data/movies.dat&quot;));</span>
+<span class="fc" id="L137">            String line = movies.readLine();</span>
+
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">            while ((line != null)) {</span>
+<span class="fc" id="L140">                String[] film = line.split(&quot;::&quot;);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">                if (film[0].equals(movieID)) {</span>
+<span class="fc" id="L142">                    title = film[1];</span>
+<span class="fc" id="L143">                    break;</span>
+                }
+<span class="fc" id="L145">                line = movies.readLine();</span>
+<span class="fc" id="L146">            }</span>
+<span class="fc" id="L147">            movies.close();</span>
+<span class="nc" id="L148">        } catch (IOException e) {</span>
+<span class="nc" id="L149">            System.out.println(&quot;Internal error! The following file is missing\n \&quot;./data/link.dat\&quot;&quot;);</span>
+<span class="fc" id="L150">        }</span>
+<span class="fc" id="L151">        return title;</span>
+    }
+
+    public static String getImdbByID(String movieID) {
+<span class="fc" id="L155">        String link = &quot;&quot;; // get this from links.da</span>
+        try {
+<span class="fc" id="L157">            BufferedReader movies = new BufferedReader(new FileReader(&quot;./data/links.dat&quot;));</span>
+<span class="fc" id="L158">            String line = movies.readLine();</span>
+
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">            while ((line != null)) {</span>
+<span class="fc" id="L161">                String[] film = line.split(&quot;::&quot;);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">                if (film[0].equals(movieID)) {</span>
+<span class="fc" id="L163">                    link = film[1];</span>
+<span class="fc" id="L164">                    break;</span>
+                }
+<span class="fc" id="L166">                line = movies.readLine();</span>
+<span class="fc" id="L167">            }</span>
+<span class="fc" id="L168">            movies.close();</span>
+<span class="nc" id="L169">        } catch (IOException e) {</span>
+<span class="nc" id="L170">            System.out.println(&quot;Internal error! The following file is missing\n \&quot;./data/link.dat\&quot;&quot;);</span>
+<span class="fc" id="L171">        }</span>
+<span class="fc" id="L172">        return &quot;https://www.imdb.com/title/tt&quot; + link;</span>
+    }
+
+    public static boolean isValidInput(String gender, String age, String occupation, String genre) {
+<span class="fc" id="L176">        boolean isValid = true;</span>
+
+        // Invalid gender error
+<span class="fc bfc" id="L179" title="All 4 branches covered.">        if (!isGender(gender) &amp;&amp; !gender.equals(&quot;&quot;)) { // check here</span>
+<span class="fc" id="L180">            System.out.printf(&quot;Invalid gender: \&quot;%s\&quot;\n&quot;, gender);</span>
+<span class="fc" id="L181">            isValid = false;</span>
+        }
+        //Invalid age error
+<span class="fc bfc" id="L184" title="All 4 branches covered.">        if (!isValidAge(age) &amp;&amp; !age.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L185">            System.out.printf(&quot;Invalid age: \&quot;%s\&quot;\n&quot;, age);</span>
+<span class="fc" id="L186">            isValid = false;</span>
+        }
+        //Invalid occupation error
+<span class="pc bpc" id="L189" title="1 of 4 branches missed.">        if (!isOccupation(occupation.toLowerCase()) &amp;&amp; !occupation.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L190">            System.out.printf(&quot;Invalid occupation: \&quot;%s\&quot;\n&quot;, occupation);</span>
+<span class="fc" id="L191">            isValid = false;</span>
+        }
+        //Invalid genre error
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        if (!isGenre(genre)) {</span>
+<span class="fc" id="L195">            System.out.printf(&quot;Invalid genre: \&quot;%s\&quot;\n&quot;, genre);</span>
+<span class="fc" id="L196">            isValid = false;</span>
+        }
+<span class="fc" id="L198">        return isValid;</span>
+    }
+
+    // If genre is present in movies, return true; otherwise false
+    // has changes from mile2 (end here)
+    public static boolean isGenre(String genre) {
+<span class="fc bfc" id="L204" title="All 2 branches covered.">        if(genre.equals(&quot;&quot;)) return true;</span>
+<span class="fc" id="L205">        Set&lt;String&gt; genres = new HashSet&lt;&gt;(Arrays.asList(genre.toLowerCase().split(&quot;\\|&quot;)));</span>
+<span class="fc" id="L206">        Set&lt;String&gt; allGenres = new HashSet&lt;&gt;();</span>
+
+        try {
+<span class="fc" id="L209">            BufferedReader movies = new BufferedReader(new FileReader(&quot;./data/movies.dat&quot;));</span>
+<span class="fc" id="L210">            String line = movies.readLine();</span>
+
+<span class="fc bfc" id="L212" title="All 2 branches covered.">            while (line != null) {</span>
+<span class="fc" id="L213">                String[] arrOfStr = line.toLowerCase().split(&quot;::&quot;);</span>
+<span class="fc" id="L214">                allGenres.addAll(Arrays.asList(arrOfStr[2].toLowerCase().split(&quot;\\|&quot;)));</span>
+<span class="fc" id="L215">                line = movies.readLine();</span>
+<span class="fc" id="L216">            }</span>
+<span class="fc" id="L217">            movies.close();</span>
+<span class="nc" id="L218">        } catch (IOException e) {</span>
+<span class="nc" id="L219">            System.out.println(&quot;Internal error! The following file is missing\n \&quot;./data/movies.dat\&quot;&quot;);</span>
+<span class="fc" id="L220">        }</span>
+
+<span class="fc" id="L222">        return allGenres.containsAll(genres);</span>
+    }
+
+    // If gender is either M or F, return true; otherwise return false
+    public static boolean isGender(String gender) {
+<span class="fc bfc" id="L227" title="All 4 branches covered.">        return gender.equals(&quot;M&quot;) || gender.equals(&quot;F&quot;);</span>
+    }
+
+    // If age is greater than -1 and is number, return true; otherwise false;
+    public static boolean isValidAge(String age) {
+<span class="fc bfc" id="L232" title="All 2 branches covered.">        return !parseAge(age).equals(&quot;-1&quot;);</span>
+    }
+
+    // If translation of occupation to its number is successful, return true; otherwise false.
+    public static boolean isOccupation(String occ) {
+<span class="fc bfc" id="L237" title="All 2 branches covered.">        return !parseStringOccupation(occ).equals(&quot;-1&quot;);</span>
+    }
+
+    // Return range representation for each input age, using info in README.pm
+    public static String parseAge(String age) {
+
+        try {
+<span class="fc" id="L244">            int ageInt = Integer.parseInt(age);</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">            if (ageInt &lt; 0) return &quot;-1&quot;;</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">            if (ageInt &lt; 18) return &quot;1&quot;;</span>
+<span class="fc bfc" id="L247" title="All 2 branches covered.">            if (ageInt &lt; 25) return &quot;18&quot;;</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">            if (ageInt &lt; 35) return &quot;25&quot;;</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">            if (ageInt &lt; 45) return &quot;35&quot;;</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">            if (ageInt &lt; 50) return &quot;45&quot;;</span>
+<span class="fc bfc" id="L251" title="All 2 branches covered.">            if (ageInt &lt; 56) return &quot;50&quot;;</span>
+<span class="fc" id="L252">            return &quot;56&quot;;</span>
+<span class="fc" id="L253">        } catch (Exception e) {</span>
+<span class="fc" id="L254">            return &quot;-1&quot;;</span>
+        }
+    }
+
+    public static String parseStringOccupation(String occupation) {
+        String occupationIndex;
+<span class="fc bfc" id="L260" title="All 22 branches covered.">        switch (occupation) {</span>
+//            case &quot;other&quot;:
+//                //0:  &quot;other&quot; or not specified??
+//                occupationIndex = &quot;0&quot;;
+//                break;
+            case &quot;&quot;: // occupation is omitted
+<span class="fc" id="L266">                occupationIndex = &quot;&quot;;</span>
+<span class="fc" id="L267">                break;</span>
+            case &quot;academic&quot;:
+            case &quot;educator&quot;:
+<span class="fc" id="L270">                occupationIndex = &quot;1&quot;;</span>
+<span class="fc" id="L271">                break;</span>
+            case &quot;artist&quot;:
+<span class="fc" id="L273">                occupationIndex = &quot;2&quot;;</span>
+<span class="fc" id="L274">                break;</span>
+            case &quot;clerical&quot;:
+            case &quot;admin&quot;:
+<span class="fc" id="L277">                occupationIndex = &quot;3&quot;;</span>
+<span class="fc" id="L278">                break;</span>
+            case &quot;college&quot;:
+            case &quot;grad student&quot;:
+            case &quot;gradstudent&quot;:
+<span class="fc" id="L282">                occupationIndex = &quot;4&quot;;</span>
+<span class="fc" id="L283">                break;</span>
+            case &quot;customer service&quot;:
+            case &quot;customerservice&quot;:
+<span class="fc" id="L286">                occupationIndex = &quot;5&quot;;</span>
+<span class="fc" id="L287">                break;</span>
+            case &quot;doctor&quot;:
+            case &quot;health care&quot;:
+            case &quot;healthcare&quot;:
+<span class="fc" id="L291">                occupationIndex = &quot;6&quot;;</span>
+<span class="fc" id="L292">                break;</span>
+            case &quot;executive&quot;:
+            case &quot;managerial&quot;:
+<span class="fc" id="L295">                occupationIndex = &quot;7&quot;;</span>
+<span class="fc" id="L296">                break;</span>
+            case &quot;farmer&quot;:
+<span class="fc" id="L298">                occupationIndex = &quot;8&quot;;</span>
+<span class="fc" id="L299">                break;</span>
+            case &quot;homemaker&quot;:
+<span class="fc" id="L301">                occupationIndex = &quot;9&quot;;</span>
+<span class="fc" id="L302">                break;</span>
+            case &quot;K-12 studio&quot;:
+            case &quot;K-12studio&quot;:
+<span class="fc" id="L305">                occupationIndex = &quot;10&quot;;</span>
+<span class="fc" id="L306">                break;</span>
+            case &quot;lawyer&quot;:
+<span class="fc" id="L308">                occupationIndex = &quot;11&quot;;</span>
+<span class="fc" id="L309">                break;</span>
+            case &quot;programmer&quot;:
+<span class="fc" id="L311">                occupationIndex = &quot;12&quot;;</span>
+<span class="fc" id="L312">                break;</span>
+            case &quot;retired&quot;:
+<span class="fc" id="L314">                occupationIndex = &quot;13&quot;;</span>
+<span class="fc" id="L315">                break;</span>
+            case &quot;sales&quot;:
+            case &quot;marketing&quot;:
+<span class="fc" id="L318">                occupationIndex = &quot;14&quot;;</span>
+<span class="fc" id="L319">                break;</span>
+            case &quot;scientist&quot;:
+<span class="fc" id="L321">                occupationIndex = &quot;15&quot;;</span>
+<span class="fc" id="L322">                break;</span>
+            case &quot;self-employed&quot;:
+<span class="fc" id="L324">                occupationIndex = &quot;16&quot;;</span>
+<span class="fc" id="L325">                break;</span>
+            case &quot;technician&quot;:
+            case &quot;engineer&quot;:
+<span class="fc" id="L328">                occupationIndex = &quot;17&quot;;</span>
+<span class="fc" id="L329">                break;</span>
+            case &quot;tradesman&quot;:
+            case &quot;craftsman&quot;:
+<span class="fc" id="L332">                occupationIndex = &quot;18&quot;;</span>
+<span class="fc" id="L333">                break;</span>
+            case &quot;unemployed&quot;:
+<span class="fc" id="L335">                occupationIndex = &quot;19&quot;;</span>
+<span class="fc" id="L336">                break;</span>
+            case &quot;writing&quot;:
+<span class="fc" id="L338">                occupationIndex = &quot;20&quot;;</span>
+<span class="fc" id="L339">                break;</span>
+            default:
+<span class="fc" id="L341">                occupationIndex = &quot;-1&quot;;</span>
+        }
+<span class="fc" id="L343">        return occupationIndex;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
