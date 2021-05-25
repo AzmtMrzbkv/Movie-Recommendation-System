@@ -5,9 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class Recommender {
+public class Recommender    {
 
-    private Recommender() {} // private constructor
+    public Recommender() {} // private constructor
 
     // Creates the List of #limit-top movies and returns it
     public static List<Movies> limitedTop(HashMap<String, Double> map, int limit) {
