@@ -28,11 +28,6 @@ public class Recommender    {
         return top;
     }
 
-    // Overridden method that handles queries without argument "limit"
-    public static List<Movies> limitedTop(HashMap<String, Double> map) {
-        return limitedTop(map, 10);
-    }
-
     // Calculate and assign relevancy score for each movie
     public static HashMap<String, Double> gradeMovies(String[] args) {
         double[] coef = {0.333, 0.333, 0.333};
@@ -85,7 +80,7 @@ public class Recommender    {
 
     // if favorite genre is given, promote movies with such genres
     public static HashMap<String, Double> promoteFavGenre(HashMap<String, Double> map, String cat) {
-        String[] catArr = cat.toLowerCase(Locale.ROOT).split("\\|");
+        String[] catArr = cat.toLowerCase().split("\\|");
 
         String[] arrOfStr;
         Set<String> cats;
@@ -94,7 +89,7 @@ public class Recommender    {
             String line = movies.readLine();
             while (line != null) {
                 arrOfStr = line.split("::");
-                cats = new HashSet<>(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split("\\|")));
+                cats = new HashSet<>(Arrays.asList(arrOfStr[2].toLowerCase().split("\\|")));
                 for (String s : catArr) {
                     if (cats.contains(s)) {
                         if (map.get(arrOfStr[0]) != null) map.put(arrOfStr[0], map.get(arrOfStr[0]) * 10);
@@ -177,11 +172,10 @@ public class Recommender    {
         return "https://www.imdb.com/title/tt" + link;
     }
 
-    //has changes from mile2
-    public static boolean isValidInput(String age, String gender, String occupation, String genre) {
+    public static boolean isValidInput(String gender, String age, String occupation, String genre) {
         boolean isValid = true;
-        // Invalid gender error
 
+        // Invalid gender error
         if (!isGender(gender) && !gender.equals("")) { // check here
             System.out.printf("Invalid gender: \"%s\"\n", gender);
             isValid = false;
@@ -192,14 +186,13 @@ public class Recommender    {
             isValid = false;
         }
         //Invalid occupation error
-        if (!isOccupation(occupation.toLowerCase(Locale.ROOT)) && !occupation.equals("")) {
+        if (!isOccupation(occupation.toLowerCase()) && !occupation.equals("")) {
             System.out.printf("Invalid occupation: \"%s\"\n", occupation);
             isValid = false;
         }
         //Invalid genre error
         if (!isGenre(genre)) {
             System.out.printf("Invalid genre: \"%s\"\n", genre);
-
             isValid = false;
         }
         return isValid;
@@ -208,7 +201,7 @@ public class Recommender    {
     // If genre is present in movies, return true; otherwise false
     // has changes from mile2 (end here)
     public static boolean isGenre(String genre) {
-        Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
+        Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase().split("\\|")));
         Set<String> allGenres = new HashSet<>();
 
         try {
@@ -216,14 +209,16 @@ public class Recommender    {
             String line = movies.readLine();
 
             while (line != null) {
-                String[] arrOfStr = line.toLowerCase(Locale.ROOT).split("::");
-                allGenres.addAll(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split("\\|")));
+                String[] arrOfStr = line.toLowerCase().split("::");
+                allGenres.addAll(Arrays.asList(arrOfStr[2].toLowerCase().split("\\|")));
                 line = movies.readLine();
             }
             movies.close();
         } catch (IOException e) {
             System.out.println("Internal error! The following file is missing\n \"./data/movies.dat\"");
+            return false;
         }
+
         return allGenres.containsAll(genres);
     }
 

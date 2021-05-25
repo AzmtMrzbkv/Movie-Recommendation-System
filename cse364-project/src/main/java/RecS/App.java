@@ -20,10 +20,10 @@ public class App {
         String gender = newUser.getGender();
         String occupation = newUser.getOccupation();
 
-        // check the input validity
-        if(!Recommender.isValidInput(Recommender.parseAge(age), gender, Recommender.parseStringOccupation(occupation), genre)) { return null;}
+//        // check the input validity
+        if(!Recommender.isValidInput(gender, age, occupation, genre)) { return null;}
 
-        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}));
+        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}), 10);
     }
 
     @GetMapping("/movies/recommendations")
