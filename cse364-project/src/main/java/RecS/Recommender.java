@@ -10,7 +10,7 @@ public class Recommender {
     private Recommender(){}; // private constructor
 
     // Creates the List of #limit-top movies and returns it
-    public static List<Movies> limitedTop(HashMap<String, Double> map, int limit ) throws IOException {
+    public static List<Movies> limitedTop(HashMap<String, Double> map, int limit ){
         List<Movies> top = new ArrayList<>();
 
         for(int i = 0; i < limit && i < map.size(); i++){
@@ -26,6 +26,11 @@ public class Recommender {
         }
 
         return top;
+    }
+
+    // Overridden method that handles queries without argument "limit"
+    public static List<Movies> limitedTop(HashMap<String, Double> map){
+        return limitedTop(map, 10);
     }
 
     // Calculate and assign relevancy score for each movie
@@ -123,10 +128,9 @@ public class Recommender {
         return "https://www.imdb.com/title/tt" + link;
     }
 
-    public static boolean isValidInput(String age, String gender, String occupation, String genre) throws IOException {
+    public static boolean isValidInput(String age, String gender, String occupation, String genre){
         boolean isValid = true;
         // Invalid gender error
-
 
         if(!isGender(gender) && !gender.equals("")){ // check here
             System.out.printf("Invalid gender: \"%s\"\n", gender);
@@ -152,20 +156,23 @@ public class Recommender {
     }
 
     // If genre is present in movies, return true; otherwise false
-    public static boolean isGenre(String genre) throws IOException {
+    public static boolean isGenre(String genre){
         Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase(Locale.ROOT).split("\\|")));
         Set<String> allGenres = new HashSet<>();
 
-        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-        String line = movies.readLine();
+        try {
+            BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+            String line = movies.readLine();
 
-        while(line != null){
-            String[] arrOfStr = line.toLowerCase(Locale.ROOT).split("::");
-            allGenres.addAll(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split("\\|")));
-            line = movies.readLine();
+            while (line != null) {
+                String[] arrOfStr = line.toLowerCase(Locale.ROOT).split("::");
+                allGenres.addAll(Arrays.asList(arrOfStr[2].toLowerCase(Locale.ROOT).split("\\|")));
+                line = movies.readLine();
+            }
+            movies.close();
+        } catch (IOException e) {
+            System.out.println("Internal error! The following file is missing\n \"./data/movies.dat\"");
         }
-        movies.close();
-
         return allGenres.containsAll(genres);
     }
 
