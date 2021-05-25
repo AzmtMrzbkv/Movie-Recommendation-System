@@ -114,22 +114,22 @@ import java.util.*;
 
     //find the user that has given the greatest rating to the movie with movieID
     public static Users posFanFromMovieID(String movieID) throws IOException {
-<span class="nc" id="L117">        String userId = &quot;&quot;;</span>
-<span class="nc" id="L118">        int maxRating = 0;// get this from ratings.dat file</span>
-<span class="nc" id="L119">        BufferedReader ratings = new BufferedReader(new FileReader(&quot;./data/ratings.dat&quot;));</span>
-<span class="nc" id="L120">        String line = ratings.readLine();</span>
+<span class="fc" id="L117">        String userId = &quot;&quot;;</span>
+<span class="fc" id="L118">        int maxRating = 0;// get this from ratings.dat file</span>
+<span class="fc" id="L119">        BufferedReader ratings = new BufferedReader(new FileReader(&quot;./data/ratings.dat&quot;));</span>
+<span class="fc" id="L120">        String line = ratings.readLine();</span>
 
-<span class="nc bnc" id="L122" title="All 2 branches missed.">        while ((line != null)) {</span>
-<span class="nc" id="L123">            String[] arr = line.split(&quot;::&quot;);</span>
-<span class="nc bnc" id="L124" title="All 4 branches missed.">            if (arr[1].equals(movieID) &amp;&amp; Integer.parseInt(arr[2]) &gt; maxRating) {</span>
-<span class="nc" id="L125">                maxRating = Integer.parseInt(arr[2]);</span>
-<span class="nc" id="L126">                userId = arr[0];</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        while ((line != null)) {</span>
+<span class="fc" id="L123">            String[] arr = line.split(&quot;::&quot;);</span>
+<span class="fc bfc" id="L124" title="All 4 branches covered.">            if (arr[1].equals(movieID) &amp;&amp; Integer.parseInt(arr[2]) &gt; maxRating) {</span>
+<span class="fc" id="L125">                maxRating = Integer.parseInt(arr[2]);</span>
+<span class="fc" id="L126">                userId = arr[0];</span>
             }
-<span class="nc" id="L128">            line = ratings.readLine();</span>
-<span class="nc" id="L129">        }</span>
-<span class="nc" id="L130">        ratings.close();</span>
+<span class="fc" id="L128">            line = ratings.readLine();</span>
+<span class="fc" id="L129">        }</span>
+<span class="fc" id="L130">        ratings.close();</span>
 
-<span class="nc" id="L132">        return getUserById(userId);</span>
+<span class="fc" id="L132">        return getUserById(userId);</span>
     }
 
     // in the movies.dat file searches for movies with given ID and returns its title
@@ -152,17 +152,17 @@ import java.util.*;
 
     //find user with given userId
     public static Users getUserById(String userID) throws IOException {
-<span class="nc" id="L155">        BufferedReader users = new BufferedReader(new FileReader(&quot;./data/users.dat&quot;));</span>
-<span class="nc" id="L156">        String line = users.readLine();</span>
+<span class="fc" id="L155">        BufferedReader users = new BufferedReader(new FileReader(&quot;./data/users.dat&quot;));</span>
+<span class="fc" id="L156">        String line = users.readLine();</span>
 
-<span class="nc bnc" id="L158" title="All 2 branches missed.">        while ((line != null)) {</span>
-<span class="nc" id="L159">            String[] arr = line.split(&quot;::&quot;);</span>
-<span class="nc bnc" id="L160" title="All 2 branches missed.">            if (arr[0].equals(userID)) {</span>
-<span class="nc" id="L161">                return new Users(arr[1], arr[2], arr[3], &quot;&quot;);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        while ((line != null)) {</span>
+<span class="fc" id="L159">            String[] arr = line.split(&quot;::&quot;);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">            if (arr[0].equals(userID)) {</span>
+<span class="fc" id="L161">                return new Users(arr[1], arr[2], arr[3], &quot;&quot;);</span>
             }
-<span class="nc" id="L163">            line = users.readLine();</span>
-<span class="nc" id="L164">        }</span>
-<span class="nc" id="L165">        return null;</span>
+<span class="fc" id="L163">            line = users.readLine();</span>
+<span class="fc" id="L164">        }</span>
+<span class="fc" id="L165">        return null;</span>
     }
 
     public static String getImdbByID(String movieID) throws IOException {
@@ -185,20 +185,20 @@ import java.util.*;
 
     // in the movies.dat file searches for movie with given title and returns its ID
     public static String getIdByTitle(String title) throws IOException {
-<span class="nc" id="L188">        String id = &quot;&quot;; // get this from movies.dat file</span>
-<span class="nc" id="L189">        BufferedReader movies = new BufferedReader(new FileReader(&quot;./data/movies.dat&quot;));</span>
-<span class="nc" id="L190">        String line = movies.readLine();</span>
+<span class="fc" id="L188">        String id = &quot;&quot;; // get this from movies.dat file</span>
+<span class="fc" id="L189">        BufferedReader movies = new BufferedReader(new FileReader(&quot;./data/movies.dat&quot;));</span>
+<span class="fc" id="L190">        String line = movies.readLine();</span>
 
-<span class="nc bnc" id="L192" title="All 2 branches missed.">        while ((line != null)) {</span>
-<span class="nc" id="L193">            String[] film = line.split(&quot;::&quot;);</span>
-<span class="nc bnc" id="L194" title="All 2 branches missed.">            if (film[1].equals(title)) {</span>
-<span class="nc" id="L195">                id = film[0];</span>
-<span class="nc" id="L196">                break;</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">        while ((line != null)) {</span>
+<span class="fc" id="L193">            String[] film = line.split(&quot;::&quot;);</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">            if (film[1].equals(title)) {</span>
+<span class="fc" id="L195">                id = film[0];</span>
+<span class="fc" id="L196">                break;</span>
             }
-<span class="nc" id="L198">            line = movies.readLine();</span>
-<span class="nc" id="L199">        }</span>
-<span class="nc" id="L200">        movies.close();</span>
-<span class="nc" id="L201">        return id;</span>
+<span class="fc" id="L198">            line = movies.readLine();</span>
+<span class="fc" id="L199">        }</span>
+<span class="fc" id="L200">        movies.close();</span>
+<span class="fc" id="L201">        return id;</span>
     }
 
     public static boolean isValidInput(String gender, String age, String occupation, String genre) throws IOException {

@@ -181,9 +181,18 @@ public class RecommenderTest {
     }
 
     @Test
-    public void getUserByID() throws IOException {
+    public void getUserByID() throws IOException, NullPointerException {
         Users user = new Users("F", "1", "10", "");
-        
+        assertEquals(user.getAge(), Recommender.getUserById("1").getAge());
+        assertEquals(user.getGender(), Recommender.getUserById("1").getGender());
+        assertNull(Recommender.getUserById("-5"));
+    }
+
+    @Test
+    public void fanTest() throws IOException, NullPointerException {
+        Users user = new Users("F", "1", "10", "");
+        assertEquals(user.getGenres(), Recommender.posFanFromMovieID("1").getGenres());
+        assertEquals(user.getOccupation(), Recommender.posFanFromMovieID("1").getOccupation());
     }
 
 }
