@@ -21,7 +21,7 @@ public class App {
         String occupation = newUser.getOccupation();
 
         // check the input validity
-        if(!Recommender.isValidInput(Recommender.parseAge(age), gender, Recommender.parseStringOccupation(occupation), genre)) { return null;}
+        //if(!Recommender.isValidInput(Recommender.parseAge(age), gender, Recommender.parseStringOccupation(occupation), genre)) { return null;}
 
         return Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}));
     }
