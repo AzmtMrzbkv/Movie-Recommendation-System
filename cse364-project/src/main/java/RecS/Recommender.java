@@ -7,8 +7,6 @@ import java.util.*;
 
 public class Recommender    {
 
-    public Recommender() {} // private constructor
-
     // Creates the List of #limit-top movies and returns it
     //changes from mile2 starts here
     public static List<Movies> limitedTop(HashMap<String, Double> map, int limit) {
@@ -62,6 +60,7 @@ public class Recommender    {
             users.close();
         } catch (IOException e) {
             System.out.println("Internal error! The following file is missing\n \"./data/users.dat\"");
+            return null;
         }
         // map new rating to movie
         try {
@@ -108,7 +107,7 @@ public class Recommender    {
 
         } catch (IOException e) {
             System.out.println("Internal error! The following file is missing\n \"./data/movies.dat\"");
-        }
+            return null;}
         return map;
     }
 
