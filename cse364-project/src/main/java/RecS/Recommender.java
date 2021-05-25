@@ -94,15 +94,43 @@ public class Recommender {
     }
 
     // in the movies.dat file searches for movies with given ID and returns its genre
-    public static String getGenreByID(String movieID){
-        //to be implemented
-        return "";
+    public static String getGenreByID(String movieID) throws  IOException{
+        String genre = "";
+        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+
+        String line = movies.readLine();
+
+        while ((line != null)) {
+            String[] film = line.split("::");
+            if (film[0].equals(movieID)) {
+                genre = film[2];
+                break;
+            }
+            line = movies.readLine();
+        }
+        movies.close();
+        return genre;
     }
 
     // in the movies.dat file searches for movies with given ID and returns its title
-    public static String getTitleByID(String movieID){
-        //to be implemented
-        return "";
+    public static String getTitleByID(String movieID) throws IOException{
+        String title = "";
+
+        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+
+        String line = movies.readLine();
+
+        while ((line != null)) {
+            String[] film = line.split("::");
+            if (film[0].equals(movieID)) {
+                title = film[1];
+                break;
+            }
+            line = movies.readLine();
+        }
+        movies.close();
+
+        return title;
     }
 
     public static String getImdbByID(String movieID) throws IOException{
@@ -119,6 +147,7 @@ public class Recommender {
             }
             line = movies.readLine();
         }
+        movies.close();
 
         return "https://www.imdb.com/title/tt" + link;
     }
