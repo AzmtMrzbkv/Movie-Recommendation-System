@@ -201,6 +201,7 @@ public class Recommender    {
     // If genre is present in movies, return true; otherwise false
     // has changes from mile2 (end here)
     public static boolean isGenre(String genre) {
+        if(genre.equals("")) return true;
         Set<String> genres = new HashSet<>(Arrays.asList(genre.toLowerCase().split("\\|")));
         Set<String> allGenres = new HashSet<>();
 
@@ -216,7 +217,6 @@ public class Recommender    {
             movies.close();
         } catch (IOException e) {
             System.out.println("Internal error! The following file is missing\n \"./data/movies.dat\"");
-            return false;
         }
 
         return allGenres.containsAll(genres);
