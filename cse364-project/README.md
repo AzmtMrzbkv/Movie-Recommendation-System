@@ -19,7 +19,7 @@ The Milestone 3 (part 2) project proposes a Top-N Movie Recommendation System (N
 The suggested Algorithm works as follows: 
 
 1. Find a user that has given the greatest rating for movie with given Movie Title
-2. 
+2. Use found-user's Gender, Age, and Occupation to recommend top-N movies using the algorithm for part 1.
 
 
 ## How to run
@@ -42,35 +42,38 @@ root@containerID$ . run.sh
 Input (part 1): 
 
 ```sh
-java -cp target/cse364-project-1.0-SNAPSHOT.jar RecS.recommender “F” “25” “Grad student” “Action|Comedy”
+curl -X GET http://localhost:8080/users/recommendations -H ‘Content-type:application/json’ -d ‘{“gender”: “”, “age”: “15”, “occupation”: “”, “genres”: “Drama”}’
 ```
+Note: genre atribute must be "genres"
 
 Output (part 1):
 
 ```sh
-Big One, The (1997) (http://www.imdb.com/title/tt0124295)
-Nightmare Before Christmas, The (1993) (http://www.imdb.com/title/tt0107688)
-Great Dictator, The (1940) (http://www.imdb.com/title/tt0032553)
-Clerks (1994) (http://www.imdb.com/title/tt0109445)
-City Lights (1931) (http://www.imdb.com/title/tt0021749)
-When the Cats Away (Chacun cherche son chat) (1996) (http://www.imdb.com/title/tt0115856)
-Braveheart (1995) (http://www.imdb.com/title/tt0112573)
-Gold Rush, The (1925) (http://www.imdb.com/title/tt0015864)
-March of the Wooden Soldiers (a.k.a. Laurel & Hardy in Toyland) (1934) (http://www.imdb.com/title/tt0024852)
-Close Shave, A (1995) (http://www.imdb.com/title/tt0112691)
+[{"title":"Alley Cats, The (1968)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0064006"},{"title":"Hate (Haine, La) (1995)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0113247"},{"title":"Song of Freedom (1936)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0028282"},{"title":"Schlafes Bruder (Brother of Sleep) (1995)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0114354"},{"title":"One Little Indian (1973)","genres":"Comedy|Drama|Western","imdb":"https://www.imdb.com/title/tt0070481"},{"title":"World of Apu, The (Apur Sansar) (1959)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0052572"},{"title":"Pather Panchali (1955)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0048473"},{"title":"Paths of Glory (1957)","genres":"Drama|War","imdb":"https://www.imdb.com/title/tt0050825"},{"title":"City Lights (1931)","genres":"Comedy|Drama|Romance","imdb":"https://www.imdb.com/title/tt0021749"},{"title":"Lamerica (1994)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0110299"}]
 
 ```
 
-Input (part 2): 
+Input (part 2.1): 
 
 ```sh
--
+curl -X GET http://localhost:8080/movies/recommendations -H ‘Content-type:application/json’ -d ‘{“title”: “Toy Story (1995)”, “limit”: 20}’
 ```
 
-Output (part 2):
+Output (part 2.1):
 
 ```sh
--
+[{"title":"Bittersweet Motel (2000)","genres":"Documentary","imdb":"https://www.imdb.com/title/tt0168515"},{"title":"Song of Freedom (1936)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0028282"},{"title":"One Little Indian (1973)","genres":"Comedy|Drama|Western","imdb":"https://www.imdb.com/title/tt0070481"},{"title":"Alley Cats, The (1968)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0064006"},{"title":"Marcello Mastroianni: I Remember Yes, I Remember (1997)","genres":"Documentary","imdb":"https://www.imdb.com/title/tt0119614"},{"title":"Three Seasons (1999)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0138874"},{"title":"Close Shave, A (1995)","genres":"Animation|Comedy|Thriller","imdb":"https://www.imdb.com/title/tt0112691"},{"title":"Firelight (1997)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0119125"},{"title":"Tango Lesson, The (1997)","genres":"Romance","imdb":"https://www.imdb.com/title/tt0120275"},{"title":"Some Folks Call It a Sling Blade (1993)","genres":"Drama|Thriller","imdb":"https://www.imdb.com/title/tt0108181"},{"title":"White Christmas (1954)","genres":"Musical","imdb":"https://www.imdb.com/title/tt0047673"},{"title":"Sunset Blvd. (a.k.a. Sunset Boulevard) (1950)","genres":"Film-Noir","imdb":"https://www.imdb.com/title/tt0043014"},{"title":"Rebecca (1940)","genres":"Romance|Thriller","imdb":"https://www.imdb.com/title/tt0032976"},{"title":"Robin Hood (1973)","genres":"Animation|Children's","imdb":"https://www.imdb.com/title/tt0070608"},{"title":"Hunger, The (1983)","genres":"Horror","imdb":"https://www.imdb.com/title/tt0085701"},{"title":"Great Dictator, The (1940)","genres":"Comedy","imdb":"https://www.imdb.com/title/tt0032553"},{"title":"Prince of Egypt, The (1998)","genres":"Animation|Musical","imdb":"https://www.imdb.com/title/tt0120794"},{"title":"Bandits (1997)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0118682"},{"title":"Love Jones (1997)","genres":"Romance","imdb":"https://www.imdb.com/title/tt0119572"},{"title":"March of the Wooden Soldiers (a.k.a. Laurel & Hardy in Toyland) (1934)","genres":"Comedy","imdb":"https://www.imdb.com/title/tt0024852"}]
+```
+Input (part 2.2): 
+
+
+```sh
+curl -X GET http://localhost:8080/movies/recommendations -H ‘Content-type:application/json’ -d ‘{“title”: “Toy Story (1995)”}’
+```
+Output (part 2.2):
+
+```sh
+[{"title":"Bittersweet Motel (2000)","genres":"Documentary","imdb":"https://www.imdb.com/title/tt0168515"},{"title":"Song of Freedom (1936)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0028282"},{"title":"One Little Indian (1973)","genres":"Comedy|Drama|Western","imdb":"https://www.imdb.com/title/tt0070481"},{"title":"Alley Cats, The (1968)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0064006"},{"title":"Marcello Mastroianni: I Remember Yes, I Remember (1997)","genres":"Documentary","imdb":"https://www.imdb.com/title/tt0119614"},{"title":"Three Seasons (1999)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0138874"},{"title":"Close Shave, A (1995)","genres":"Animation|Comedy|Thriller","imdb":"https://www.imdb.com/title/tt0112691"},{"title":"Firelight (1997)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0119125"},{"title":"Tango Lesson, The (1997)","genres":"Romance","imdb":"https://www.imdb.com/title/tt0120275"},{"title":"Some Folks Call It a Sling Blade (1993)","genres":"Drama|Thriller","imdb":"https://www.imdb.com/title/tt0108181"}]
 ```
 
 ## Roles
@@ -78,9 +81,3 @@ Output (part 2):
 1. Azamat Myrzabekov - Team Lead and Main Programmer (Algorithm Implementation)
 2. Nursultan Kobeisinov - Tester and JaCoCo Implementation
 3. Nodirkhuja Khujaev - Debugger and Readme writing
-
-to check the project use the following commands:
-```shell
-sudo docker build -t image_name /path/to/Dockerfile
-sudo docker run -it image_name
-```
