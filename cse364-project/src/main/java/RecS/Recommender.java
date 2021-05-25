@@ -178,8 +178,7 @@ public class Recommender    {
         return "https://www.imdb.com/title/tt" + link;
     }
 
-    //has changes from mile2
-    public static boolean isValidInput(String age, String gender, String occupation, String genre) {
+    public static boolean isValidInput(String gender, String age, String occupation, String genre) {
         boolean isValid = true;
 
         // Invalid gender error
@@ -224,6 +223,7 @@ public class Recommender    {
         } catch (IOException e) {
             System.out.println("Internal error! The following file is missing\n \"./data/movies.dat\"");
         }
+
         return allGenres.containsAll(genres);
     }
 
