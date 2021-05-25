@@ -1,7 +1,6 @@
 package RecS;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -71,12 +70,9 @@ public class Recommender {
         return movies;
     }
 
-    public static String getIMDB(String movieID) throws IOException, FileNotFoundException{
-        // to be implemented
-        String link = ""; // get this from links.dat
-
-
-        BufferedReader movies = new BufferedReader(new FileReader("../../../data/links.dat"));
+    public static String getIMDB(String movieID) throws IOException{
+        BufferedReader movies = new BufferedReader(new FileReader("./data/links.dat"));
+        String link = ""; // get this from links.da
 
         String line = movies.readLine();
 
@@ -88,10 +84,6 @@ public class Recommender {
             }
             line = movies.readLine();
         }
-
-
-
-
 
         return "https://www.imdb.com/title/tt" + link;
     }
