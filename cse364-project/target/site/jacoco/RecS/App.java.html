@@ -12,7 +12,7 @@ import java.util.List;
 <span class="nc" id="L12">public class App {</span>
     //here will be functions mapped to GET
 
-    @GetMapping(&quot;/users/recommendations &quot;)
+    @GetMapping(&quot;/users/recommendations&quot;)
     public List&lt;Movies&gt; recommendForUser(@RequestBody Users newUser){
         // this part to be implemented
 <span class="nc" id="L18">        String age = newUser.getAge();</span>
@@ -21,12 +21,12 @@ import java.util.List;
 <span class="nc" id="L21">        String occupation = newUser.getOccupation();</span>
 
         // check the input validity
-<span class="nc bnc" id="L24" title="All 2 branches missed.">        if(!Recommender.isValidInput(age, gender, occupation, genre)) { return null;}</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        if(!Recommender.isValidInput(Recommender.parseAge(age), gender, Recommender.parseStringOccupation(occupation), genre)) { return null;}</span>
 
 <span class="nc" id="L26">        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}));</span>
     }
 
-    @GetMapping(&quot;/movies/recommendations &quot;)
+    @GetMapping(&quot;/movies/recommendations&quot;)
     public List&lt;Movies&gt; recommendByMovie(@RequestBody LimitedRec newRequest) {
         // this part to be implemented
 <span class="nc" id="L32">        return null;</span>
