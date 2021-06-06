@@ -1,4 +1,4 @@
-package recs;
+package RecS;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
