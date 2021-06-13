@@ -1,5 +1,8 @@
 package RecS;
 
+import RecS.Models.Movies;
+import RecS.Models.Users;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
