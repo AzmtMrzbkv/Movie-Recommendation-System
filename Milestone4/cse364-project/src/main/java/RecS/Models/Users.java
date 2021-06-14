@@ -1,6 +1,11 @@
 package RecS.Models;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
 public class Users {
+    @Id
     private final String userID;
     private final String gender;
     private final String age;
