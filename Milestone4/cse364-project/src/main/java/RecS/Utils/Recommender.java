@@ -1,4 +1,4 @@
-package RecS;
+package RecS.Utils;
 
 import RecS.Models.Movies;
 import RecS.Models.Users;
@@ -116,24 +116,24 @@ public class Recommender {
     }
 
     //find the user that has given the greatest rating to the movie with movieID
-    public static Users posFanFromMovieID(String movieID) throws IOException {
-        String userId = "";
-        int maxRating = 0;// get this from ratings.dat file
-        BufferedReader ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
-        String line = ratings.readLine();
-
-        while ((line != null)) {
-            String[] arr = line.split("::");
-            if (arr[1].equals(movieID) && Integer.parseInt(arr[2]) > maxRating) {
-                maxRating = Integer.parseInt(arr[2]);
-                userId = arr[0];
-            }
-            line = ratings.readLine();
-        }
-        ratings.close();
-
-        return getUserById(userId);
-    }
+//    public static Users posFanFromMovieID(String movieID) throws IOException {
+//        String userId = "";
+//        int maxRating = 0;// get this from ratings.dat file
+//        BufferedReader ratings = new BufferedReader(new FileReader("./data/ratings.dat"));
+//        String line = ratings.readLine();
+//
+//        while ((line != null)) {
+//            String[] arr = line.split("::");
+//            if (arr[1].equals(movieID) && Integer.parseInt(arr[2]) > maxRating) {
+//                maxRating = Integer.parseInt(arr[2]);
+//                userId = arr[0];
+//            }
+//            line = ratings.readLine();
+//        }
+//        ratings.close();
+//
+//        return getUserById(userId);
+//    }
 
     // in the movies.dat file searches for movies with given ID and returns its title
     public static String getTitleByID(String movieID) throws IOException {
@@ -154,19 +154,19 @@ public class Recommender {
     }
 
     //find user with given userId
-    public static Users getUserById(String userID) throws IOException {
-        BufferedReader users = new BufferedReader(new FileReader("./data/users.dat"));
-        String line = users.readLine();
-
-        while ((line != null)) {
-            String[] arr = line.split("::");
-            if (arr[0].equals(userID)) {
-                return new Users(arr[1], arr[2], arr[3], "");
-            }
-            line = users.readLine();
-        }
-        return null;
-    }
+//    public static Users getUserById(String userID) throws IOException {
+//        BufferedReader users = new BufferedReader(new FileReader("./data/users.dat"));
+//        String line = users.readLine();
+//
+//        while ((line != null)) {
+//            String[] arr = line.split("::");
+//            if (arr[0].equals(userID)) {
+//                return new Users(arr[1], arr[2], arr[3], "");
+//            }
+//            line = users.readLine();
+//        }
+//        return null;
+//    }
 
     public static String getImdbByID(String movieID) throws IOException {
         String link = ""; // get this from links.dat

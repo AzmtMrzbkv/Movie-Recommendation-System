@@ -1,39 +1,34 @@
 package RecS;
 
-// this class will be the controller
+// this class is the controller
 
-import RecS.Models.Movies;
-import RecS.Models.Users;
+import RecS.Models.*;
+
+
+import RecS.MongoReps.MovieRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.List;
 
+import static RecS.Utils.CsvReader.readMoviesCsv;
+
 @RestController
+@EnableMongoRepositories
 public class App {
+    @Autowired
+    private MovieRepository movieRepository;
 
-
-    @GetMapping("/users/recommendations")
-    public List<Movies> recommendForUser(@RequestBody Users newUser) throws IOException {
-        String age = newUser.getAge();
-        String genre = newUser.getGenres();
-        String gender = newUser.getGender();
-        String occupation = newUser.getOccupation();
-
-        // check the input validity
-        if (!Recommender.isValidInput(gender, age, occupation, genre)) {
-            return null;
-        }
-
-        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{gender, age, occupation, genre}), 10);
+    @GetMapping("/movies")
+    // if movie title is specified it returns data for just one movie
+    public List<Movies> listAllMovies() throws IOException {
+        //check validity of name
+        //to be implemented
+        return movieRepository.findAll();
     }
-
-    @GetMapping("/movies/recommendations")
-    public List<Movies> recommendByMovie(@RequestBody LimitedRec newRequest) throws IOException {
-        Users newUser = Recommender.posFanFromMovieID(Recommender.getIdByTitle(newRequest.getTitle()));
-        return Recommender.limitedTop(Recommender.gradeMovies(new String[]{newUser.getGender(), newUser.getAge(), newUser.getOccupation(), newUser.getGenres()}), (newRequest.getLimit() == null) ? 10 :Integer.parseInt(newRequest.getLimit()));
-    }
-
 }
