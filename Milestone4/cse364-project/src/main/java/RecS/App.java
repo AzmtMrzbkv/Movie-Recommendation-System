@@ -27,8 +27,12 @@ public class App {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public App(MovieRepository movieRepository) {
+    public App(MovieRepository movieRepository) throws IOException {
         this.movieRepository = movieRepository;
+
+        LOG.info("\nLoading movies to Movies Mongo DB\n");
+        movieRepository.saveAll(readMoviesCsv());
+        LOG.info("\nLoading movies to Movies Mongo DB: Success\n");
     }
 
     // if movie title is specified it returns data for just one movie, otherwise all movies
@@ -39,10 +43,7 @@ public class App {
         //to be implemented
 
         //return all movies
-        LOG.info("\nwe are here\n");
-        //movieRepository.saveAll(readMoviesCsv());
-        movieRepository.save(new Movies("id", "title", "genre"));
-        LOG.info("\nwe passed it\n");
+        LOG.info("\nReturning all movies\n");
         return movieRepository.findAll();
     }
 }
