@@ -40,7 +40,8 @@ public class App {
 
         //return all movies
         LOG.info("\nwe are here\n");
-        movieRepository.saveAll(readMoviesCsv());
+        //movieRepository.saveAll(readMoviesCsv());
+        movieRepository.save(new Movies("id", "title", "genre"));
         LOG.info("\nwe passed it\n");
         return movieRepository.findAll();
     }
