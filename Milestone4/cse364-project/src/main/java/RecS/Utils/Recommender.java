@@ -8,6 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+import static RecS.Utils.CsvReader.getImdbByID;
+import static RecS.Utils.CsvReader.getPosterLinkByID;
+
 public class Recommender {
 
     // Creates the List of #limit-top movies and returns it
@@ -24,7 +27,7 @@ public class Recommender {
                     id = key;
                 }
             }
-            top.add(new Movies(getTitleByID(id), getImdbByID(id), getGenreByID(id)));
+            //top.add(new Movies(getTitleByID(id), getImdbByID(id), getGenreByID(id), getPosterLinkByID(id), getImdbByID(id)));
             map.remove(id);
         }
 
@@ -96,24 +99,24 @@ public class Recommender {
     }
 
 
-    // in the movies.dat file searches for movies with given ID and returns its genre
-    public static String getGenreByID(String movieID) throws IOException {
-        String genre = "";
-        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-
-        String line = movies.readLine();
-
-        while ((line != null)) {
-            String[] film = line.split("::");
-            if (film[0].equals(movieID)) {
-                genre = film[2];
-                break;
-            }
-            line = movies.readLine();
-        }
-        movies.close();
-        return genre;
-    }
+//    // in the movies.dat file searches for movies with given ID and returns its genre
+//    public static String getGenreByID(String movieID) throws IOException {
+//        String genre = "";
+//        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+//
+//        String line = movies.readLine();
+//
+//        while ((line != null)) {
+//            String[] film = line.split("::");
+//            if (film[0].equals(movieID)) {
+//                genre = film[2];
+//                break;
+//            }
+//            line = movies.readLine();
+//        }
+//        movies.close();
+//        return genre;
+//    }
 
     //find the user that has given the greatest rating to the movie with movieID
 //    public static Users posFanFromMovieID(String movieID) throws IOException {
@@ -135,23 +138,23 @@ public class Recommender {
 //        return getUserById(userId);
 //    }
 
-    // in the movies.dat file searches for movies with given ID and returns its title
-    public static String getTitleByID(String movieID) throws IOException {
-        String title = "";
-        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-        String line = movies.readLine();
-
-        while ((line != null)) {
-            String[] film = line.split("::");
-            if (film[0].equals(movieID)) {
-                title = film[1];
-                break;
-            }
-            line = movies.readLine();
-        }
-        movies.close();
-        return title;
-    }
+//    // in the movies.dat file searches for movies with given ID and returns its title
+//    public static String getTitleByID(String movieID) throws IOException {
+//        String title = "";
+//        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+//        String line = movies.readLine();
+//
+//        while ((line != null)) {
+//            String[] film = line.split("::");
+//            if (film[0].equals(movieID)) {
+//                title = film[1];
+//                break;
+//            }
+//            line = movies.readLine();
+//        }
+//        movies.close();
+//        return title;
+//    }
 
     //find user with given userId
 //    public static Users getUserById(String userID) throws IOException {
@@ -167,42 +170,6 @@ public class Recommender {
 //        }
 //        return null;
 //    }
-
-    public static String getImdbByID(String movieID) throws IOException {
-        String link = ""; // get this from links.dat
-        BufferedReader movies = new BufferedReader(new FileReader("./data/links.dat"));
-        String line = movies.readLine();
-
-        while ((line != null)) {
-            String[] film = line.split("::");
-            if (film[0].equals(movieID)) {
-                link = film[1];
-                break;
-            }
-            line = movies.readLine();
-        }
-        movies.close();
-        return "https://www.imdb.com/title/tt" + link;
-    }
-
-
-    // in the movies.dat file searches for movie with given title and returns its ID
-    public static String getIdByTitle(String title) throws IOException {
-        String id = ""; // get this from movies.dat file
-        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
-        String line = movies.readLine();
-
-        while ((line != null)) {
-            String[] film = line.split("::");
-            if (film[1].equals(title)) {
-                id = film[0];
-                break;
-            }
-            line = movies.readLine();
-        }
-        movies.close();
-        return id;
-    }
 
     public static boolean isValidInput(String gender, String age, String occupation, String genre) throws IOException {
         boolean isValid = true;

@@ -6,6 +6,8 @@ import RecS.Models.*;
 
 
 import RecS.MongoReps.MovieRepository;
+import RecS.MongoReps.RatingRepository;
+import RecS.MongoReps.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,32 +20,35 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
 
-import static RecS.Utils.CsvReader.readMoviesCsv;
+import static RecS.Utils.CsvReader.*;
 
 @RestController
 @EnableMongoRepositories
 public class App {
     private final MovieRepository movieRepository;
+    private final RatingRepository ratingRepository;
+    private final UserRepository userRepository;
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public App(MovieRepository movieRepository) throws IOException {
+    public App(MovieRepository movieRepository, RatingRepository ratingRepository, UserRepository userRepository) throws IOException {
         this.movieRepository = movieRepository;
+        this.ratingRepository = ratingRepository;
+        this.userRepository = userRepository;
 
-        LOG.info("\nLoading movies to Movies Mongo DB\n");
+        LOG.info("\nLoading csv files to Mongo DB ...");
         movieRepository.saveAll(readMoviesCsv());
-        LOG.info("\nLoading movies to Movies Mongo DB: Success\n");
+        LOG.info("\nLoading movies to Movies Mongo DB: Success");
+        ratingRepository.saveAll(readRatingsCsv());
+        LOG.info("\nLoading ratings to Ratings Mongo DB: Success");
+        userRepository.saveAll(readUsersCsv());
+        LOG.info("\nLoading users to Users Mongo DB: Success");
     }
 
-    // if movie title is specified it returns data for just one movie, otherwise all movies
-    // to be implemented
     @GetMapping("/movies")
     public List<Movies> listAllMovies() throws IOException {
-        //check validity of name
-        //to be implemented
-
         //return all movies
-        LOG.info("\nReturning all movies\n");
+        LOG.info("\nReturning all movies");
         return movieRepository.findAll();
     }
 }

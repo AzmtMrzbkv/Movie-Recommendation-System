@@ -11,12 +11,12 @@ import java.util.List;
 public class CsvReader {
     public static List<Movies> readMoviesCsv() throws IOException {
         List<Movies> movies = new ArrayList<>();
-        
+
         BufferedReader csvReader = new BufferedReader(new FileReader("./src/main/resources/movies_corrected.csv"));
         String line = csvReader.readLine();
         while (line != null) {
             String[] data = line.split(",");
-            movies.add(new Movies(data[0], data[1], data[2]));
+            movies.add(new Movies(data[0], data[1], data[2], getImdbByID(data[0]), getPosterLinkByID(data[0])));
             line = csvReader.readLine();
         }
         csvReader.close();
@@ -29,6 +29,7 @@ public class CsvReader {
 
         BufferedReader csvReader = new BufferedReader(new FileReader("./src/main/resources/users.csv"));
         String line = csvReader.readLine();
+
         while (line != null) {
             String[] data = line.split(" ");
             users.add(new Users(data[0], data[1], data[2], data[3], data[4]));
@@ -44,6 +45,7 @@ public class CsvReader {
 
         BufferedReader csvReader = new BufferedReader(new FileReader("./src/main/resources/ratings.csv"));
         String line = csvReader.readLine();
+
         while (line != null) {
             String[] data = line.split(" ");
             ratings.add(new Ratings(data[0], data[1], data[2], data[3]));
@@ -54,33 +56,55 @@ public class CsvReader {
         return ratings;
     }
 
-    public static List<Posters> readPostersCsv() throws IOException {
-        List<Posters> posters = new ArrayList<>();
+//    // in the movies.dat file searches for movie with given title and returns its ID
+//    public static String getIdByTitle(String title) throws IOException {
+//        String id = ""; // get this from movies.dat file
+//        BufferedReader movies = new BufferedReader(new FileReader("./data/movies.dat"));
+//        String line = movies.readLine();
+//
+//        while ((line != null)) {
+//            String[] film = line.split("::");
+//            if (film[1].equals(title)) {
+//                id = film[0];
+//                break;
+//            }
+//            line = movies.readLine();
+//        }
+//        movies.close();
+//        return id;
+//    }
 
-        BufferedReader csvReader = new BufferedReader(new FileReader("./src/main/resources/movie_poster.csv"));
-        String line = csvReader.readLine();
-        while (line != null) {
-            String[] data = line.split(" ");
-            posters.add(new Posters(data[0], data[1]));
-            line = csvReader.readLine();
+    public static String getImdbByID(String movieID) throws IOException {
+        String link = "";
+        BufferedReader links = new BufferedReader(new FileReader("./src/main/resources/links.csv"));
+        String line = links.readLine();
+
+        while ((line != null)) {
+            String[] film = line.split("::");
+            if (film[0].equals(movieID)) {
+                link = film[1];
+                break;
+            }
+            line = links.readLine();
         }
-        csvReader.close();
-
-        return posters;
+        links.close();
+        return "https://www.imdb.com/title/tt" + link;
     }
 
-    public static List<Links> readLinksCsv() throws IOException {
-        List<Links> links = new ArrayList<>();
+    public static String getPosterLinkByID(String movieID) throws IOException {
+        String posterLink = "";
+        BufferedReader posters = new BufferedReader(new FileReader("./src/main/resources/movie_poster.csv"));
+        String line = posters.readLine();
 
-        BufferedReader csvReader = new BufferedReader(new FileReader("./src/main/resources/movie_poster.csv"));
-        String line = csvReader.readLine();
-        while (line != null) {
-            String[] data = line.split(" ");
-            links.add(new Links(data[0], data[1]));
-            line = csvReader.readLine();
+        while ((line != null)) {
+            String[] film = line.split("::");
+            if (film[0].equals(movieID)) {
+                posterLink = film[1];
+                break;
+            }
+            line = posters.readLine();
         }
-        csvReader.close();
-
-        return links;
+        posters.close();
+        return posterLink;
     }
 }
