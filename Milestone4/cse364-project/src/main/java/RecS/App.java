@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -28,6 +26,7 @@ public class App {
     private final MovieRepository movieRepository;
     private final RatingRepository ratingRepository;
     private final UserRepository userRepository;
+
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -37,12 +36,12 @@ public class App {
         this.userRepository = userRepository;
 
         LOG.info("\nLoading csv files to Mongo DB ...");
-        movieRepository.saveAll(readMoviesCsv());
+        this.movieRepository.saveAll(readMoviesCsv());
         LOG.info("\nLoading movies to Movies Mongo DB: Success");
-        ratingRepository.saveAll(readRatingsCsv());
-        LOG.info("\nLoading ratings to Ratings Mongo DB: Success");
-        userRepository.saveAll(readUsersCsv());
-        LOG.info("\nLoading users to Users Mongo DB: Success");
+//        this.ratingRepository.saveAll(readRatingsCsv());
+//        LOG.info("\nLoading ratings to Ratings Mongo DB: Success");
+//        this.userRepository.saveAll(readUsersCsv());
+//        LOG.info("\nLoading users to Users Mongo DB: Success");
     }
 
     @GetMapping("/movies")

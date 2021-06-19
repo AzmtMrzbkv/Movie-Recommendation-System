@@ -16,7 +16,7 @@ public class CsvReader {
         String line = csvReader.readLine();
         while (line != null) {
             String[] data = line.split(",");
-            movies.add(new Movies(data[0], data[1], data[2], getImdbByID(data[0]), getPosterLinkByID(data[0])));
+            movies.add(new Movies(data[0], data[1], data[2], getPosterLinkByID(data[0]), getImdbByID(data[0])));
             line = csvReader.readLine();
         }
         csvReader.close();
@@ -76,35 +76,35 @@ public class CsvReader {
 
     public static String getImdbByID(String movieID) throws IOException {
         String link = "";
-        BufferedReader links = new BufferedReader(new FileReader("./src/main/resources/links.csv"));
-        String line = links.readLine();
+        BufferedReader linkReader = new BufferedReader(new FileReader("./src/main/resources/links.csv"));
+        String line = linkReader.readLine();
 
         while ((line != null)) {
-            String[] film = line.split("::");
+            String[] film = line.split(",");
             if (film[0].equals(movieID)) {
                 link = film[1];
                 break;
             }
-            line = links.readLine();
+            line = linkReader.readLine();
         }
-        links.close();
+        linkReader.close();
         return "https://www.imdb.com/title/tt" + link;
     }
 
     public static String getPosterLinkByID(String movieID) throws IOException {
         String posterLink = "";
-        BufferedReader posters = new BufferedReader(new FileReader("./src/main/resources/movie_poster.csv"));
-        String line = posters.readLine();
+        BufferedReader posterReader = new BufferedReader(new FileReader("./src/main/resources/movie_poster.csv"));
+        String line = posterReader.readLine();
 
         while ((line != null)) {
-            String[] film = line.split("::");
+            String[] film = line.split(",");
             if (film[0].equals(movieID)) {
                 posterLink = film[1];
                 break;
             }
-            line = posters.readLine();
+            line = posterReader.readLine();
         }
-        posters.close();
+        posterReader.close();
         return posterLink;
     }
 }
