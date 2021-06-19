@@ -6,4 +6,3 @@ RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mon
 RUN apt-get update && apt-get -y install mongodb-org
 WORKDIR /root/project
 ADD run.sh .
-RUN mongod --fork --syslog --dbpath src/main/resources
