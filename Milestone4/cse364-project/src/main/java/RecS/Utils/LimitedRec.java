@@ -1,4 +1,4 @@
-package RecS;
+package RecS.Utils;
 
 public class LimitedRec {
     private final String title;
