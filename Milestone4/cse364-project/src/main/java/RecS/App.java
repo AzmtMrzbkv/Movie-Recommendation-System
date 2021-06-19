@@ -13,8 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -26,22 +24,25 @@ import static RecS.Utils.CsvReader.*;
 @EnableMongoRepositories
 public class App {
     @Autowired
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
     @Autowired
-    private RatingRepository ratingRepository;
+    private final RatingRepository ratingRepository;
     @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     private Logger LOG = LoggerFactory.getLogger(getClass());
 
-    public App() throws IOException {
+    public App(MovieRepository movieRepository, RatingRepository ratingRepository, UserRepository userRepository) throws IOException {
+        this.movieRepository = movieRepository;
+        this.ratingRepository = ratingRepository;
+        this.userRepository = userRepository;
 
         LOG.info("\nLoading csv files to Mongo DB ...");
-        movieRepository.saveAll(readMoviesCsv());
+        this.movieRepository.saveAll(readMoviesCsv());
         LOG.info("\nLoading movies to Movies Mongo DB: Success");
-        ratingRepository.saveAll(readRatingsCsv());
+        this.ratingRepository.saveAll(readRatingsCsv());
         LOG.info("\nLoading ratings to Ratings Mongo DB: Success");
-        userRepository.saveAll(readUsersCsv());
+        this.userRepository.saveAll(readUsersCsv());
         LOG.info("\nLoading users to Users Mongo DB: Success");
     }
 
