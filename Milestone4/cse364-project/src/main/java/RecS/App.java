@@ -23,15 +23,13 @@ import static RecS.Utils.CsvReader.*;
 @RestController
 @EnableMongoRepositories
 public class App {
-    @Autowired
     private final MovieRepository movieRepository;
-    @Autowired
     private final RatingRepository ratingRepository;
-    @Autowired
     private final UserRepository userRepository;
 
     private Logger LOG = LoggerFactory.getLogger(getClass());
 
+    @Autowired
     public App(MovieRepository movieRepository, RatingRepository ratingRepository, UserRepository userRepository) throws IOException {
         this.movieRepository = movieRepository;
         this.ratingRepository = ratingRepository;
