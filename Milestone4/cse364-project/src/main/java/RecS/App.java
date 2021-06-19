@@ -25,16 +25,16 @@ import static RecS.Utils.CsvReader.*;
 @RestController
 @EnableMongoRepositories
 public class App {
-    private final MovieRepository movieRepository;
-    private final RatingRepository ratingRepository;
-    private final UserRepository userRepository;
-    private final Logger LOG = LoggerFactory.getLogger(getClass());
-
     @Autowired
-    public App(MovieRepository movieRepository, RatingRepository ratingRepository, UserRepository userRepository) throws IOException {
-        this.movieRepository = movieRepository;
-        this.ratingRepository = ratingRepository;
-        this.userRepository = userRepository;
+    private MovieRepository movieRepository;
+    @Autowired
+    private RatingRepository ratingRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    private Logger LOG = LoggerFactory.getLogger(getClass());
+
+    public App() throws IOException {
 
         LOG.info("\nLoading csv files to Mongo DB ...");
         movieRepository.saveAll(readMoviesCsv());
