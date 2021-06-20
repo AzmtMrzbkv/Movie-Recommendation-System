@@ -25,4 +25,5 @@ jobs:
       run: mvn -B package --file Milestone4/cse364-project/pom.xml
     
     - name: test
+      #for now it checks milestone 3 unit tests as we dont have unit tests for 4th -> i will copy it later to new folder
       run: mvn test --file Milestone3/cse364-project
