@@ -20,14 +20,6 @@ public class Users {
         this.zip = zip;
     }
 
-    public Users(String gender, String age, String occupation) {
-        this.gender = gender;
-        this.age = age;
-        this.occupation = occupation;
-        this.zip = null;
-        this.userID = null;
-    }
-
     public String getAge() {
         return age;
     }
