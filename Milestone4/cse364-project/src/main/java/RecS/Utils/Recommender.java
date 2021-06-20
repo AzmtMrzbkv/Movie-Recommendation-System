@@ -1,6 +1,7 @@
 package RecS.Utils;
 
 import RecS.Models.Movies;
+import RecS.Models.UserRec;
 import RecS.Models.Users;
 
 import java.io.BufferedReader;
@@ -35,7 +36,9 @@ public class Recommender {
     }
 
     // Calculate and assign relevancy score for each movie
-    public static HashMap<String, Double> gradeMovies(String[] args) throws IOException {
+    public static HashMap<String, Double> gradeMovies(UserRec user) throws IOException {
+        String[] args = {user.getGender(), user.getAge(), user.getOccupation(), user.getGenre()};
+
         double[] coef = {0.333, 0.333, 0.333};
         HashMap<String, Double> simUsers = new HashMap<>();
         HashMap<String, Double> movies = new HashMap<>();

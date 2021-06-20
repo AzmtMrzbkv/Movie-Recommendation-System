@@ -1,10 +1,10 @@
-package RecS.Utils;
+package RecS.Models;
 
-public class LimitedRec {
+public class MovieRec {
     private final String title;
     private final String limit;
 
-    public LimitedRec(String title, String limit) {
+    public MovieRec(String title, String limit) {
         this.title = title;
         this.limit = limit;
     }
