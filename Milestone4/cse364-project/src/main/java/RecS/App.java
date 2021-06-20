@@ -13,12 +13,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static RecS.Utils.CsvReader.*;
+import static RecS.Utils.Recommender.gradeMovies;
+import static RecS.Utils.Recommender.limitedTop;
 
 @RestController
 @EnableMongoRepositories
@@ -35,19 +39,26 @@ public class App {
         this.ratingRepository = ratingRepository;
         this.userRepository = userRepository;
 
-        LOG.info("\nLoading csv files to Mongo DB ...");
+        LOG.info("\n*************** Loading csv files to Mongo DB ... ***************");
         this.movieRepository.saveAll(readMoviesCsv());
-        LOG.info("\nLoading movies to Movies Mongo DB: Success");
+        LOG.info("\n*************** Loading movies to Movies Mongo DB: Success ***************");
         this.ratingRepository.saveAll(readRatingsCsv());
-        LOG.info("\nLoading ratings to Ratings Mongo DB: Success");
+        LOG.info("\n*************** Loading ratings to Ratings Mongo DB: Success ***************");
         this.userRepository.saveAll(readUsersCsv());
-        LOG.info("\nLoading users to Users Mongo DB: Success");
+        LOG.info("\n*************** Loading users to Users Mongo DB: Success ***************");
     }
 
     @GetMapping("/movies")
-    public List<Movies> listAllMovies() throws IOException {
+    public List<Movies> listAllMovies(){
         //return all movies
-        LOG.info("\nReturning all movies");
+        LOG.info("\n*************** Returning all movies ***************");
         return movieRepository.findAll();
     }
+
+    @GetMapping("/user/reccomendation")
+    public List<Movies> recommendByUser(@RequestParam(value = "user") UserRec user) throws IOException {
+        return limitedTop(gradeMovies(user), 10);
+    }
+
+
 }
