@@ -31,7 +31,7 @@ public class CsvReader {
         String line = csvReader.readLine();
 
         while (line != null) {
-            String[] data = line.split(" ");
+            String[] data = line.split(",");
             users.add(new Users(data[0], data[1], data[2], data[3], data[4]));
             line = csvReader.readLine();
         }
@@ -47,7 +47,7 @@ public class CsvReader {
         String line = csvReader.readLine();
 
         while (line != null) {
-            String[] data = line.split(" ");
+            String[] data = line.split(",");
             ratings.add(new Ratings(data[0], data[1], data[2], data[3]));
             line = csvReader.readLine();
         }
