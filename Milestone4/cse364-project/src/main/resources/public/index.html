@@ -2,14 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RecS</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="GetUserRec.js"></script>
+    <style>
+        body {
+            padding: 25px;
+            background-color: white;
+            color: black;
+            font-size: 25px;
+        }
+
+        .dark-mode {
+            background-color: black;
+            color: white;
+        }
+
+        .vertical-center {
+            margin: 0;
+            position: absolute;
+            top: 3%;
+            left: 90%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+        .button_blue {
+            background-color: blue;
+            color: white;
+            font-size: 14px;
+        }
+
+        .header {
+            padding: 10px;
+            text-align: center;
+            background: inherit;
+            color: inherit;
+            font-size: 27px;
+        }
+    </style>
 </head>
 <body>
-  <p class="gender">Gender</p>
-  <p class="age">Age</p>
-  <p class="occupation">Occupation</p>
-  <p class="genre">Genre</p>
+    <h1 class="header">Recommendation System by Group-7</h1>
+    <hr style="border-bottom-style: double">
+
+    <div class="container">
+        <div class="vertical-center">
+            <button class="button_blue" onclick="darkMode()" id="modeSwitcher">Dark Mode</button>
+        </div>
+    </div>
+
+    <script>
+        function darkMode() {
+            const element = document.body;
+            const btn = document.getElementById("modeSwitcher");
+            element.classList.toggle("dark-mode");
+            if(element.classList.contains("dark-mode"))
+                btn.innerHTML= "Normal Mode";
+            else
+                btn.innerHTML= "Dark Mode";
+        }
+    </script>
 </body>
 </html>
