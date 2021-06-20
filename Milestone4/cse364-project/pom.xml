@@ -14,6 +14,7 @@
 	<artifactId>RecS</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cse364-project</name>
+	<packaging>war</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -62,6 +63,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+   			<groupId>org.springframework.boot</groupId>
+   			<artifactId>spring-boot-starter-tomcat</artifactId>
+   			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
