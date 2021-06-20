@@ -1,10 +1,14 @@
 <!-- COPY FROM MILESTONE3-->
-# This is the third project of CSE36401 course
+# MOVIE RECOMMENDATION PROGRAM. 
+## This is the project of team SEbeasts
 
-## Algorithm Overview
+## Overview
 
-The Milestone 3 (part 1) project proposes a Top-10 Movie Recommendation System based on User's Age, Gender, Occupation and Favorite Genres.
-The suggested Algorithm works as follows: 
+This project proposes a Movie Recommendation System based on User's Personal Data and Requested Favorite Genres. Our goal is to provide quality service to find the film you are interested in. Whole process of building webservice completed solely on the enthusiasm of 3 members.
+
+Here the 
+
+The principle of code and backend algorithms works as follows:
 
 1. An input is parsed into a Gender, Age and Occupation (GAO) triplet and compared with the data in users.dat file.
 
