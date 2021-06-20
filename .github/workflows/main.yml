@@ -28,6 +28,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: package
+        working-directory: ./Milestone4/cse364-project
         run: mvn package
         
       - name: test
