@@ -1,7 +1,7 @@
-#NURSULTAN: THIF FILE IS RAW, NOT COMPLETE
+#NURSULTAN: THIF FILE IS RAW, NOT COMPLETED
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Github actions
 
 # Controls when the action will run. 
 on:
@@ -17,7 +17,8 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  test:
+    name: unit tests
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -25,13 +26,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      
+      - name: package
+        run: mvn package
+        
+      - name: test
+        run: mvn test
+     
+      
