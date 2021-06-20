@@ -38,10 +38,10 @@ public class App {
         LOG.info("\nLoading csv files to Mongo DB ...");
         this.movieRepository.saveAll(readMoviesCsv());
         LOG.info("\nLoading movies to Movies Mongo DB: Success");
-//        this.ratingRepository.saveAll(readRatingsCsv());
-//        LOG.info("\nLoading ratings to Ratings Mongo DB: Success");
-//        this.userRepository.saveAll(readUsersCsv());
-//        LOG.info("\nLoading users to Users Mongo DB: Success");
+        this.ratingRepository.saveAll(readRatingsCsv());
+        LOG.info("\nLoading ratings to Ratings Mongo DB: Success");
+        this.userRepository.saveAll(readUsersCsv());
+        LOG.info("\nLoading users to Users Mongo DB: Success");
     }
 
     @GetMapping("/movies")
