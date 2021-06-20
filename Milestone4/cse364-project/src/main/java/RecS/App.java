@@ -17,12 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static RecS.Utils.CsvReader.*;
-import static RecS.Utils.Recommender.gradeMovies;
-import static RecS.Utils.Recommender.limitedTop;
+import static RecS.Utils.Recommender.*;
 
 @RestController
 @EnableMongoRepositories
@@ -55,10 +53,44 @@ public class App {
         return movieRepository.findAll();
     }
 
-    @GetMapping("/user/reccomendation")
-    public List<Movies> recommendByUser(@RequestParam(value = "user") UserRec user) throws IOException {
-        return limitedTop(gradeMovies(user), 10);
+    @GetMapping("/users/recommendations")
+    public List<Movies> recommendByUser(
+            @RequestParam("gender") String gender,
+            @RequestParam("age") String age,
+            @RequestParam("occupation") String occupation,
+            @RequestParam("genres") String genre
+    ){
+        List<Users> userList = userRepository.findAll();
+        List<Ratings> ratingList = ratingRepository.findAll();
+        List<Movies> movieList = movieRepository.findAll();
+
+        //Mojno proverkuu dobavit vot zdes
+
+        UserRec user = new UserRec(gender, parseAge(age), parseStringOccupation(occupation.toLowerCase(Locale.ROOT)), genre);
+
+        if (!user.getGenre().equals("")) return getMovies(limitedTop(promoteFavGenre(gradeMovies(user, userList, ratingList), user.getGenre(), movieList), 10));
+        return getMovies(limitedTop(gradeMovies(user, userList, ratingList), 10));
     }
 
+    @GetMapping("/movies/recommendations")
+    public List<Movies> recommendByFavGenre(@RequestParam("title") String title, @RequestParam("limit") int limit){
+        Movies movie = movieRepository.findByTitle(title);
+        List<Users> userList = userRepository.findAll();
+        List<Ratings> ratingList = ratingRepository.findAll();
 
+        Optional<Users> user = userRepository.findById(posFanFromMovieID(movie.getMovieID(), ratingList));
+
+        if(user.isPresent()) return getMovies(limitedTop(gradeMovies(new UserRec(user.get().getGender(), user.get().getAge(), user.get().getOccupation(), ""), userList, ratingList),limit));
+        return new ArrayList<>();
+    }
+
+    // Returns a List of Movies given List of movieIDs
+    public List<Movies> getMovies(List<String> movieIDs){
+        List<Movies> movies = new ArrayList<>();
+        for(String movieID: movieIDs){
+            Optional<Movies> movie = movieRepository.findById(movieID);
+            movie.ifPresent(movies::add);
+        }
+        return movies;
+    }
 }
