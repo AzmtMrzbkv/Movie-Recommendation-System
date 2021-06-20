@@ -53,15 +53,35 @@ public class App {
         return movieRepository.findAll();
     }
 
-    @GetMapping("/user/reccomendation")
-    public List<Movies> recommendByUser(@RequestParam("gender") String gender, @RequestParam("age") String age, @RequestParam("occupation") String occupation, @RequestParam("genres") String genre){
+    @GetMapping("/users/recommendations")
+    public List<Movies> recommendByUser(
+            @RequestParam("gender") String gender,
+            @RequestParam("age") String age,
+            @RequestParam("occupation") String occupation,
+            @RequestParam("genres") String genre
+    ){
         List<Users> userList = userRepository.findAll();
         List<Ratings> ratingList = ratingRepository.findAll();
         List<Movies> movieList = movieRepository.findAll();
-        UserRec user = new UserRec(gender, age, occupation, genre);
+
+        //Mojno proverkuu dobavit vot zdes
+
+        UserRec user = new UserRec(gender, parseAge(age), parseStringOccupation(occupation.toLowerCase(Locale.ROOT)), genre);
 
         if (!user.getGenre().equals("")) return getMovies(limitedTop(promoteFavGenre(gradeMovies(user, userList, ratingList), user.getGenre(), movieList), 10));
         return getMovies(limitedTop(gradeMovies(user, userList, ratingList), 10));
+    }
+
+    @GetMapping("/movies/recommendations")
+    public List<Movies> recommendByFavGenre(@RequestParam("title") String title, @RequestParam("limit") int limit){
+        Movies movie = movieRepository.findByTitle(title);
+        List<Users> userList = userRepository.findAll();
+        List<Ratings> ratingList = ratingRepository.findAll();
+
+        Optional<Users> user = userRepository.findById(posFanFromMovieID(movie.getMovieID(), ratingList));
+
+        if(user.isPresent()) return getMovies(limitedTop(gradeMovies(new UserRec(user.get().getGender(), user.get().getAge(), user.get().getOccupation(), ""), userList, ratingList),limit));
+        return new ArrayList<>();
     }
 
     // Returns a List of Movies given List of movieIDs

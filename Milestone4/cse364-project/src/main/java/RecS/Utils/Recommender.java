@@ -71,6 +71,21 @@ public class Recommender{
         return map;
     }
 
+    //find the user that has given the greatest rating to the movie with movieID
+    public static String posFanFromMovieID(String movieID, List<Ratings> ratingsList){
+        String userId = "";
+        int maxRating = 0;// get this from ratings.dat file
+
+        for(Ratings r: ratingsList){
+            if (r.getMovieID().equals(movieID) && Integer.parseInt(r.getRating()) > maxRating) {
+                maxRating = Integer.parseInt(r.getRating());
+                userId = r.getUserID();
+            }
+        }
+
+        return userId;
+    }
+
     public static boolean isValidInput(String gender, String age, String occupation, String genre) throws IOException {
         boolean isValid = true;
 
