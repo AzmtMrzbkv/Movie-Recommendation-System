@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,7 @@ import java.util.*;
 import static RecS.Utils.CsvReader.*;
 import static RecS.Utils.Recommender.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 @EnableMongoRepositories
 public class App {
@@ -53,15 +55,37 @@ public class App {
         return movieRepository.findAll();
     }
 
-    @GetMapping("/user/reccomendation")
-    public List<Movies> recommendByUser(@RequestParam("gender") String gender, @RequestParam("age") String age, @RequestParam("occupation") String occupation, @RequestParam("genres") String genre){
+    @GetMapping("/users/recommendations")
+    public List<Movies> recommendByUser(
+            @RequestParam(value = "gender", defaultValue = "") String gender,
+            @RequestParam(value = "age", defaultValue = "") String age,
+            @RequestParam(value = "occupation", defaultValue = "") String occupation,
+            @RequestParam(value = "genre", defaultValue = "") String genre,
+            @RequestParam(value="limit", defaultValue = "10") int limit
+    ){
         List<Users> userList = userRepository.findAll();
         List<Ratings> ratingList = ratingRepository.findAll();
         List<Movies> movieList = movieRepository.findAll();
-        UserRec user = new UserRec(gender, age, occupation, genre);
+
+        //Mojno proverkuu dobavit vot zdes
+
+        UserRec user = new UserRec(gender, parseAge(age), parseStringOccupation(occupation.toLowerCase(Locale.ROOT)), genre);
 
         if (!user.getGenre().equals("")) return getMovies(limitedTop(promoteFavGenre(gradeMovies(user, userList, ratingList), user.getGenre(), movieList), 10));
-        return getMovies(limitedTop(gradeMovies(user, userList, ratingList), 10));
+        return getMovies(limitedTop(gradeMovies(user, userList, ratingList), limit));
+    }
+
+    @GetMapping("/movies/recommendations")
+    public List<Movies> recommendByFavGenre(@RequestParam("title") String title, @RequestParam(value = "limit", defaultValue = "10") int limit){
+        Movies movie = movieRepository.findByTitle(title);
+        List<Users> userList = userRepository.findAll();
+        List<Ratings> ratingList = ratingRepository.findAll();
+
+        Optional<Users> user = userRepository.findById(posFanFromMovieID(movie.getMovieID(), ratingList));
+
+        // What if there is no any user who rated this movie
+        if(user.isPresent()) return getMovies(limitedTop(gradeMovies(new UserRec(user.get().getGender(), user.get().getAge(), user.get().getOccupation(), ""), userList, ratingList),limit));
+        return getMovies(limitedTop(gradeMovies(new UserRec("", "", "", ""),userList, ratingList),limit));
     }
 
     // Returns a List of Movies given List of movieIDs

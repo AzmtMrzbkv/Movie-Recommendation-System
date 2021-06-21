@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommend by Fav Movie</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="GetMovieRec.js"></script>
+</head>
+<body>
+    <div style="position: absolute; top:1%; left:1%">
+        <a href="../index.html"><button >Home</button></a>
+    </div>
+    <div style="position: absolute; top:15%; left:5%">
+        <h3>Recommend by Favorite Movie</h3>
+        <form action="http://localhost:8080/movies/recommendations" method="get">
+            <label for="title">Movie Title:</label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="limit">Limit:</label><br>
+            <input type="text" id="limit" name="limit"><br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
