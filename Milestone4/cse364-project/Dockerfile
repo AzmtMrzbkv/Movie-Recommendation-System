@@ -6,5 +6,7 @@ RUN apt-get update && apt-get -y install apt-utils wget git vim maven openjdk-11
 #RUN apt-get update && apt-get -y install mongodb-org
 WORKDIR /root/project
 ADD run.sh .
+ADD RecS-1.0-SNAPSHOT.war .
 EXPOSE 8080
-#CMD ["/to/tomcat/bin/catalina.sh","run"]
+
+CMD ["/to/tomcat/bin/catalina.sh","run"]
