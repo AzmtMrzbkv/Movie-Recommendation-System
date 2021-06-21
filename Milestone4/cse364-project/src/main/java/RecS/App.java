@@ -58,7 +58,7 @@ public class App {
             @RequestParam("gender") String gender,
             @RequestParam("age") String age,
             @RequestParam("occupation") String occupation,
-            @RequestParam("genres") String genre,
+            @RequestParam("genre") String genre,
             @RequestParam(value="limit", defaultValue = "10") int limit
     ){
         List<Users> userList = userRepository.findAll();

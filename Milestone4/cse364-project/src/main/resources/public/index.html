@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RecS</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="GetUserRec.js"></script>
+
     <style>
         body {
             padding: 25px;
@@ -59,6 +58,12 @@
             color: inherit;
             font-size: 27px;
         }
+
+        .image {
+            width: 125px;
+            height: 175px;
+            border: solid 2px red;
+        }
     </style>
 </head>
 <body>
@@ -81,33 +86,24 @@
         <div class="vertical-center">
             <button class="button_1 button_1b" onclick="darkMode()" id="modeSwitcher" >Dark Mode</button>
         </div>
-        <div style="position: absolute; top:15%; left:5%">
-            <h3>Recommend by User</h3>
-            <form action="./users/recommendations.html" method="get">
-                <label for="gender">Gender:</label><br>
-                <input type="text" id="gender" name="gender"><br>
-                <label for="age">Age:</label><br>
-                <input type="text" id="age" name="age"><br>
-                <label for="occupation">Occupation:</label><br>
-                <input type="text" id="occupation" name="occupation"><br>
-                <label for="genre">Genre:</label><br>
-                <input type="text" id="genre" name="genre"><br>
-                <input type="submit" value="Submit">
-            </form>
+        <div>
+            <a href="./users/recommendations.html">
+                <h2>Recommends by User</h2>
+            </a>
+            <a href="./movies/recommendations.html" style="position:relative;">
+                <h2>Recommends by Favorite Genre</h2>
+            </a>
         </div>
-        <div style="position: absolute; top:55%; left:5%">
-            <h3>Recommend by Favorite Movie</h3>
-            <form action="./movies/recommendations.html" method="get">
-                <label for="title">Movie Title:</label><br>
-                <input type="text" id="title" name="title"><br>
-                <label for="limit">Limit:</label><br>
-                <input type="text" id="limit" name="limit"><br>
-                <input type="submit" value="Submit">
-            </form>
-        </div>
-
-        <div style="position: absolute; top:15%; left:60%">
+        <div style="position: center">
             <h3>Most popular movies</h3>
+            <div class="blockList">
+                <div class="card">
+                    <img src="no-cover.png" class="image">
+                </div>
+                <div class="card">
+                    <img src="no-cover.png" class="image">
+                </div>
+            </div>
         </div>
     </div>
 </body>
