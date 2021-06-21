@@ -12,15 +12,14 @@ $(document).ready(function() {
         });
 
         url += '?' + str;
-        console.log(str, method, url);
         $.ajax({
             url : url,
             type: method,
-            dataType: "jsonp",
+
 
         }).done(function(response){
-            $('#springResponse').html(response);
-            console.log(response,"UNIStvdfsg");
+            $('.springResponse').html(response[0]);
+            console.log(response);
         }).fail(function(er){
             console.log(er);
         });
