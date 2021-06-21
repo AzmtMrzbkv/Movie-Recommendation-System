@@ -52,7 +52,6 @@
             width: 200px
         }
 
-
         .header {
             padding: 5px;
             text-align: center;
@@ -82,9 +81,9 @@
         <div class="vertical-center">
             <button class="button_1 button_1b" onclick="darkMode()" id="modeSwitcher" >Dark Mode</button>
         </div>
-        <div style="position: absolute; top:20%; left:10%">
+        <div style="position: absolute; top:15%; left:5%">
             <h3>Recommend by User</h3>
-            <form action="http://localhost:8080/users/recommendations.html" method="get">
+            <form action="./users/recommendations.html" method="get">
                 <label for="gender">Gender:</label><br>
                 <input type="text" id="gender" name="gender"><br>
                 <label for="age">Age:</label><br>
@@ -96,15 +95,19 @@
                 <input type="submit" value="Submit">
             </form>
         </div>
-        <div style="position: absolute; top:20%; left:65%">
+        <div style="position: absolute; top:55%; left:5%">
             <h3>Recommend by Favorite Movie</h3>
-            <form action="http://localhost:8080/movies/recommendations.html" method="get">
+            <form action="./movies/recommendations.html" method="get">
                 <label for="title">Movie Title:</label><br>
                 <input type="text" id="title" name="title"><br>
                 <label for="limit">Limit:</label><br>
                 <input type="text" id="limit" name="limit"><br>
                 <input type="submit" value="Submit">
             </form>
+        </div>
+
+        <div style="position: absolute; top:15%; left:60%">
+            <h3>Most popular movies</h3>
         </div>
     </div>
 </body>
