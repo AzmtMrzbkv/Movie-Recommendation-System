@@ -2,7 +2,23 @@
 # MOVIE RECOMMENDATION PROGRAM. 
 ## This is the project of team SEbeasts
 
-## Overview
+## How to run
+
+```sh
+$ docker build -t image_name /path/to/Dockerfile
+```
+```sh
+$ docker run -p 8080:8080 -it image_name
+```
+For Part I, inside Docker run:
+
+```sh
+root@containerID$ . run.sh
+```
+You can view the following result using any browser:
+![alt text](https://user-images.githubusercontent.com/62408255/122774380-16b0e400-d2e4-11eb-899e-8b364707bef2.png)
+
+## Overview of Algorithm
 
 This project proposes a Movie Recommendation System based on User's Personal Data and Requested Favorite Genres. Our goal is to provide quality service to find the film you are interested in. Whole process of building webservice completed solely on the enthusiasm of 3 members.
 
@@ -26,20 +42,12 @@ The suggested Algorithm works as follows:
 1. Find a user that has given the greatest rating for movie with given Movie Title
 2. Use found-user's Gender, Age, and Occupation to recommend top-N movies using the algorithm for part 1.
 
+## Roles
 
-## How to run
+1. Azamat Myrzabekov - Team Lead and Main Programmer (Algorithm Implementation)
+2. Nursultan Kobeisinov - Tester and JaCoCo Implementation
+3. Nodirkhuja Khujaev - Debugger and Readme writing
 
-```sh
-$ docker build -t image_name /path/to/Dockerfile
-```
-```sh
-$ docker run -it image_name
-```
-Inside the Dockerfile:
-
-```sh
-root@containerID$ . run.sh
-```
 
 
 ## Example input/output
@@ -81,8 +89,3 @@ Output (part 2.2):
 [{"title":"Bittersweet Motel (2000)","genres":"Documentary","imdb":"https://www.imdb.com/title/tt0168515"},{"title":"Song of Freedom (1936)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0028282"},{"title":"One Little Indian (1973)","genres":"Comedy|Drama|Western","imdb":"https://www.imdb.com/title/tt0070481"},{"title":"Alley Cats, The (1968)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0064006"},{"title":"Marcello Mastroianni: I Remember Yes, I Remember (1997)","genres":"Documentary","imdb":"https://www.imdb.com/title/tt0119614"},{"title":"Three Seasons (1999)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0138874"},{"title":"Close Shave, A (1995)","genres":"Animation|Comedy|Thriller","imdb":"https://www.imdb.com/title/tt0112691"},{"title":"Firelight (1997)","genres":"Drama","imdb":"https://www.imdb.com/title/tt0119125"},{"title":"Tango Lesson, The (1997)","genres":"Romance","imdb":"https://www.imdb.com/title/tt0120275"},{"title":"Some Folks Call It a Sling Blade (1993)","genres":"Drama|Thriller","imdb":"https://www.imdb.com/title/tt0108181"}]
 ```
 
-## Roles
-
-1. Azamat Myrzabekov - Team Lead and Main Programmer (Algorithm Implementation)
-2. Nursultan Kobeisinov - Tester and JaCoCo Implementation
-3. Nodirkhuja Khujaev - Debugger and Readme writing
