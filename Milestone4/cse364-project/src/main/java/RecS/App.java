@@ -58,7 +58,8 @@ public class App {
             @RequestParam("gender") String gender,
             @RequestParam("age") String age,
             @RequestParam("occupation") String occupation,
-            @RequestParam("genres") String genre
+            @RequestParam("genres") String genre,
+            @RequestParam(value="limit", defaultValue = "10") int limit
     ){
         List<Users> userList = userRepository.findAll();
         List<Ratings> ratingList = ratingRepository.findAll();
@@ -69,7 +70,7 @@ public class App {
         UserRec user = new UserRec(gender, parseAge(age), parseStringOccupation(occupation.toLowerCase(Locale.ROOT)), genre);
 
         if (!user.getGenre().equals("")) return getMovies(limitedTop(promoteFavGenre(gradeMovies(user, userList, ratingList), user.getGenre(), movieList), 10));
-        return getMovies(limitedTop(gradeMovies(user, userList, ratingList), 10));
+        return getMovies(limitedTop(gradeMovies(user, userList, ratingList), limit));
     }
 
     @GetMapping("/movies/recommendations")
