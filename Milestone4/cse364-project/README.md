@@ -1,6 +1,6 @@
 <!-- COPY FROM MILESTONE3-->
-# MOVIE RECOMMENDATION PROGRAM. 
-## This is the project of team SEbeasts
+# RecS - MOVIE RECOMMENDATION APPLICATION. 
+## This is the project of team SWEbeasts
 
 ## How to run
 
