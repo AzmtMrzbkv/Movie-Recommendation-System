@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recommend by User</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src = "GetUserRec.js"></script>
+</head>
+<body>
+    <div style="position: absolute; top:1%; left:1%">
+        <a href="../index.html"><button >Home</button></a>
+    </div>
+    <div style="position: absolute; top:15%; left:5%">
+        <h3>Recommend by User</h3>
+        <form action="http://localhost:8080/users/recommendations" method="get" id="search-form">
+            <label for="gender">Gender:</label><br>
+            <input type="text" id="gender" name="gender"><br>
+            <label for="age">Age:</label><br>
+            <input type="text" id="age" name="age"><br>
+            <label for="occupation">Occupation:</label><br>
+            <input type="text" id="occupation" name="occupation"><br>
+            <label for="genre">Genre:</label><br>
+            <input type="text" id="genre" name="genre"><br>
+            <input type="submit" value="Submit">
+            <div id="springResponse"></div>
+        </form>
+    </div>
+
+</body>
+</html>
