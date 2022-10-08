@@ -1,107 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>RecS</title>
-
-    <style>
-        body {
-            padding: 25px;
-            background-color: white;
-            color: black;
-            font-size: 25px;
-        }
-
-        .dark-mode {
-            background-color: black;
-            color: white;
-        }
-
-        .vertical-center {
-            margin: 0;
-            position: absolute;
-            top: 3%;
-            left: 90%;
-            -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-        }
-
-        .button_1 {
-            background-color: #008CBA;
-            color: blue;
-            display: inline-block;
-            font-size: 14px;
-            border: 2px solid white;
-            font-family: "JetBrains Mono";
-            border-radius: 12px;
-            transition-duration: 1ms;
-            cursor: pointer;
-            margin: 4px 2px;
-            width: 100px
-        }
-        .button_1b {
-            color: white;
-            border: 2px solid #008CBA;
-        }
-        .button_1b:hover {
-            background-color: #008CBA;
-            color: white;
-            font-size: 30px;
-            width: 200px
-        }
-
-        .header {
-            padding: 5px;
-            text-align: center;
-            background: inherit;
-            color: inherit;
-            font-size: 27px;
-        }
-
-        .image {
-            width: 125px;
-            height: 175px;
-            border: solid 2px red;
-        }
-    </style>
+    <title>Movie-Recommendation-System</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <h1 class="header">Recommendation System by Group-7</h1>
-    <hr style="border-bottom-style: double">
+    <h1>Movie Recommendation System</h1>
+    <nav>
+        <a href="./users/recommendations.html">Recommends by User</a>
+        <a href="./movies/recommendations.html">Recommends by Favorite Genre</a>
+    </nav>
 
-    <script>
-        function darkMode() {
-            const element = document.body;
-            const btn = document.getElementById("modeSwitcher");
-            element.classList.toggle("dark-mode");
-            if(element.classList.contains("dark-mode"))
-                btn.innerHTML= "Normal Mode";
-            else
-                btn.innerHTML= "Dark Mode";
-        }
-    </script>
-
-    <div class="container">
-        <div class="vertical-center">
-            <button class="button_1 button_1b" onclick="darkMode()" id="modeSwitcher" >Dark Mode</button>
-        </div>
-        <div>
-            <a href="./users/recommendations.html">
-                <h2>Recommends by User</h2>
-            </a>
-            <a href="./movies/recommendations.html" style="position:relative;">
-                <h2>Recommends by Favorite Genre</h2>
-            </a>
-        </div>
-        <div style="position: center">
-            <h3>Most popular movies</h3>
-            <div class="blockList">
-                <div class="card">
-                    <img src="no-cover.png" class="image">
-                </div>
-            </div>
-        </div>
+    <div>
+        <h2>Popular movies</h2>
+        <span>
+            <img src="no-cover.png">
+        </span>
+        <span>
+            <img src="no-cover.png">
+        </span>
+        <span>
+            <img src="no-cover.png">
+        </span>
     </div>
+
 </body>
+
 </html>
