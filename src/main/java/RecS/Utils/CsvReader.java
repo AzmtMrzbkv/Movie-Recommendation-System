@@ -14,7 +14,8 @@ public class CsvReader {
 
         BufferedReader csvReader = new BufferedReader(new FileReader("./src/main/resources/movies_corrected.csv"));
         String line = csvReader.readLine();
-        while (line != null) {
+        int i = 0;
+        while (line != null && i++ < 20) {
             String[] data = line.split(",");
             movies.add(new Movies(data[0], data[1], data[2], getPosterLinkByID(data[0]), getImdbByID(data[0])));
             line = csvReader.readLine();
@@ -30,7 +31,8 @@ public class CsvReader {
         BufferedReader csvReader = new BufferedReader(new FileReader("./src/main/resources/users.csv"));
         String line = csvReader.readLine();
 
-        while (line != null) {
+        int i = 0;
+        while (line != null && i++ < 20) {
             String[] data = line.split(",");
             users.add(new Users(data[0], data[1], data[2], data[3], data[4]));
             line = csvReader.readLine();
@@ -46,7 +48,8 @@ public class CsvReader {
         BufferedReader csvReader = new BufferedReader(new FileReader("./src/main/resources/ratings.csv"));
         String line = csvReader.readLine();
 
-        while (line != null) {
+        int i = 0;
+        while (line != null && i++ < 20) {
             String[] data = line.split(",");
             ratings.add(new Ratings(data[0], data[1], data[2], data[3]));
             line = csvReader.readLine();
@@ -79,7 +82,8 @@ public class CsvReader {
         BufferedReader linkReader = new BufferedReader(new FileReader("./src/main/resources/links.csv"));
         String line = linkReader.readLine();
 
-        while ((line != null)) {
+        int i = 0;
+        while (line != null && i++ < 20) {
             String[] film = line.split(",");
             if (film[0].equals(movieID)) {
                 link = film[1];
@@ -96,7 +100,8 @@ public class CsvReader {
         BufferedReader posterReader = new BufferedReader(new FileReader("./src/main/resources/movie_poster.csv"));
         String line = posterReader.readLine();
 
-        while ((line != null)) {
+        int i = 0;
+        while (line != null && i++ < 20) {
             String[] film = line.split(",");
             if (film[0].equals(movieID)) {
                 posterLink = film[1];

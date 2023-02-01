@@ -7,7 +7,7 @@
 $ docker build -t image_name /path/to/Dockerfile
 ```
 ```sh
-$ docker run -p 8080:8080 -it image_name
+$ docker run -v ${PWD}:/root/project -p 8080:8080 -it image_name
 ```
 For Part I, inside Docker run:
 

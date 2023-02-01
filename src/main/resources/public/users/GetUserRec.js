@@ -1,27 +1,87 @@
-$(document).ready(function () {
-    $("#search-form").submit(function (event) {
-        event.preventDefault();
-        let url = $(this).attr("action"); //get form action url
-        let method = $(this).attr("method"); //get form GET/POST method
-        let data = new FormData(this); //Encode form elements for submission
+const form = document.getElementById('search-form');
+const resultsContainer = document.getElementById('results-container');
 
-        var str = "";
-        data.forEach(function (value, key) {
-            if (str != "") str += "&";
-            str += key + "=" + value;
+async function fetchMoviePoster(posterLink) {
+    return fetch(posterLink)
+        .then(response => {
+            if (response.ok) {
+                return posterLink;
+            } else {
+                return '../no-cover.png';
+            }
+        })
+        .catch(error => {
+            return '../no-cover.png';
         });
+};
 
-        url += '?' + str;
-        $.ajax({
-            url: url,
-            type: method,
+async function displayResults(movies) {
+    resultsContainer.innerHTML = '';
 
+    let html = `
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-4">Recommended Movies</h3>
+                </div>
+            </div>
+            `;
 
-        }).done(function (response) {
-            $('.springResponse').html(response[0]);
-            console.log(response);
-        }).fail(function (er) {
-            console.log(er);
-        });
-    });
+    for (const movie of movies) {
+        const posterUrl = await fetchMoviePoster(movie.posterLink);
+        const card = `
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-img-top-wrapper">
+                        <img src="${posterUrl}" class="card-img-top" alt="${movie.title}">
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div class="mt-auto">
+                            <!-- Additional content or actions can go here -->
+                        </div>
+                        <div>
+                            <a href=${movie.imdbID}>
+                                <h5 class="card-title">${movie.title}</h5>
+                            </a>
+                            <p class="card-text">${movie.genres}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+        html += card;
+    }
+    resultsContainer.innerHTML = html;
+}
+
+form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const gender = document.getElementById('gender').value;
+    const age = document.getElementById('age').value;
+    const occupation = document.getElementById('occupation').value;
+    const genre = document.getElementById('genre').value;
+    const limit = document.getElementById('limit').value;
+
+    const base_url = 'http://localhost:8080/users/recommendations';
+    let query = `?gender=${gender}&age=${age}&occupation=${occupation}&genre=${genre}`;
+    if(limit !== '')
+    {
+        query += `&limit=${limit}`;
+    }
+
+    try {
+        // const response = await fetch(base_url + query);
+        const response = await fetch(`http://localhost:8080/movies/`);
+
+        if (response.ok) {
+            const movies = await response.json();
+            displayResults(movies);
+        } else {
+            console.error('Error fetching recommendations:', response.status);
+            resultsContainer.innerHTML = '<p>Error fetching recommendations. Please try again later.</p>';
+        }
+    } catch (error) {
+        console.error('Error fetching recommendations:', error);
+        resultsContainer.innerHTML = '<p>Error fetching recommendations. Please try again later.</p>';
+    }
 });

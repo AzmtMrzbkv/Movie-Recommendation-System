@@ -1,33 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+        
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Movie Recommendation System</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Movie-Recommendation-System</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <body>
+        <div class="container my-5">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h1 class="mb-4">Movie Recommendation System</h1>
+                </div>
+            </div>
+        
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+                <div class="container-fluid justify-content-center">
+                    <div class="navbar-nav gap-3">
+                        <a class="btn btn-outline-secondary btn-lg" role="button" href="users/recommendations.html" id="user-recommendations">Recommends by User</a>
+                        <a class="btn btn-outline-secondary btn-lg" role="button" href="movies/recommendations.html" id="genre-recommendations">Recommends by Favorite Genre</a>
+                    </div>
+                </div>
+            </nav>
 
-<body>
-    <h1>Movie Recommendation System</h1>
-    <nav>
-        <a href="./users/recommendations.html">Recommends by User</a>
-        <a href="./movies/recommendations.html">Recommends by Favorite Genre</a>
-    </nav>
+            <div class="row justify-content-center">
+                <div class="col-12 text-center">
+                    <h3 class="mb-4">Popular Movies</h3>
+                </div>
+            </div>
+            <div class="row justify-content-center" id="movie-cards">
+                <!-- Placeholder for top recommended movies -->
+            </div>
+        </div>
 
-    <div>
-        <h2>Popular movies</h2>
-        <span>
-            <img src="no-cover.png">
-        </span>
-        <span>
-            <img src="no-cover.png">
-        </span>
-        <span>
-            <img src="no-cover.png">
-        </span>
-    </div>
-
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="popular.js" defer></script>
+    </body>
 
 </html>
