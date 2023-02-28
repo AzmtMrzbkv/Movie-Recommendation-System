@@ -1,8 +1,7 @@
 #! /bin/sh
 
-git clone https://github.com/AzmtMrzbkv/Software-Engineering---CSE36401.git
-
-cd ./Software-Engineering---CSE36401/Milestone4/cse364-project || exit
+git clone https://github.com/AzmtMrzbkv/Movie-Recommendation-System.git
+cd ./Movie-Recommendation-System/
 
 mongod --fork --syslog --dbpath src/main/resources
 mvn clean spring-boot:run
